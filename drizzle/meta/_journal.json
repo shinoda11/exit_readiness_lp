@@ -1,0 +1,20 @@
+{
+  "version": "7",
+  "dialect": "mysql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1765904694756,
+      "tag": "0000_open_black_panther",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1765904817424,
+      "tag": "0001_handy_logan",
+      "breakpoints": true
+    }
+  ]
+}
