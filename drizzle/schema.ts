@@ -50,3 +50,56 @@ export const testSessions = mysqlTable("testSessions", {
 
 export type TestSession = typeof testSessions.$inferSelect;
 export type InsertTestSession = typeof testSessions.$inferInsert;
+
+/**
+ * Fit Gate 12-question responses table
+ */
+export const fitGateResponses = mysqlTable("fitGateResponses", {
+  id: int("id").autoincrement().primaryKey(),
+  email: varchar("email", { length: 320 }),
+  q1DecisionDeadline: varchar("q1DecisionDeadline", { length: 64 }),
+  q2HousingStatus: varchar("q2HousingStatus", { length: 64 }),
+  q3PriceRange: varchar("q3PriceRange", { length: 64 }),
+  q4IncomeRange: varchar("q4IncomeRange", { length: 64 }),
+  q5AssetRange: varchar("q5AssetRange", { length: 64 }),
+  q6NumberInputTolerance: varchar("q6NumberInputTolerance", { length: 128 }),
+  q7CareerChange: varchar("q7CareerChange", { length: 128 }),
+  q8LifeEvent: varchar("q8LifeEvent", { length: 128 }),
+  q9CurrentQuestion: varchar("q9CurrentQuestion", { length: 255 }),
+  q10PreferredApproach: varchar("q10PreferredApproach", { length: 128 }),
+  q11PrivacyConsent: boolean("q11PrivacyConsent").notNull(),
+  q12BudgetSense: varchar("q12BudgetSense", { length: 64 }),
+  invitationToken: varchar("invitationToken", { length: 64 }),
+  judgmentResult: mysqlEnum("judgmentResult", ["prep", "pass", "session"]),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type FitGateResponse = typeof fitGateResponses.$inferSelect;
+export type InsertFitGateResponse = typeof fitGateResponses.$inferInsert;
+
+/**
+ * Prep Mode subscribers (newsletter/preparation guidance)
+ */
+export const prepModeSubscribers = mysqlTable("prepModeSubscribers", {
+  id: int("id").autoincrement().primaryKey(),
+  email: varchar("email", { length: 320 }).notNull().unique(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type PrepModeSubscriber = typeof prepModeSubscribers.$inferSelect;
+export type InsertPrepModeSubscriber = typeof prepModeSubscribers.$inferInsert;
+
+/**
+ * Invitation tokens for Session access
+ */
+export const invitationTokens = mysqlTable("invitationTokens", {
+  id: int("id").autoincrement().primaryKey(),
+  token: varchar("token", { length: 64 }).notNull().unique(),
+  isUsed: boolean("isUsed").default(false).notNull(),
+  usedBy: varchar("usedBy", { length: 320 }),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  usedAt: timestamp("usedAt"),
+});
+
+export type InvitationToken = typeof invitationTokens.$inferSelect;
+export type InsertInvitationToken = typeof invitationTokens.$inferInsert;

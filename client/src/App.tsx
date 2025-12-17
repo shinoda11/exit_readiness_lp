@@ -5,12 +5,18 @@ import { Route, Switch } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import Home from "./pages/Home";
+import FitGate from "./pages/FitGate";
+import FitResult from "./pages/FitResult";
+import PrepMode from "./pages/PrepMode";
 
 function Router() {
   // make sure to consider if you need authentication for certain routes
   return (
     <Switch>
       <Route path={"/"} component={Home} />
+      <Route path={"/fit-gate"} component={FitGate} />
+      <Route path={"/fit-result"} component={FitResult} />
+      <Route path={"/prep-mode"} component={PrepMode} />
       <Route path={"/404"} component={NotFound} />
       {/* Final fallback route */}
       <Route component={NotFound} />

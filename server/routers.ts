@@ -2,7 +2,14 @@ import { COOKIE_NAME } from "@shared/const";
 import { getSessionCookieOptions } from "./_core/cookies";
 import { systemRouter } from "./_core/systemRouter";
 import { publicProcedure, router } from "./_core/trpc";
-import { insertTestSession } from "./db";
+import {
+  insertTestSession,
+  insertFitGateResponse,
+  getFitGateResponseById,
+  insertPrepModeSubscriber,
+  getInvitationTokenByToken,
+  markInvitationTokenAsUsed,
+} from "./db";
 import { z } from "zod";
 
 export const appRouter = router({
@@ -40,6 +47,106 @@ export const appRouter = router({
       .mutation(async ({ input }) => {
         await insertTestSession(input);
         return { success: true };
+      }),
+  }),
+
+  fitGate: router({
+    submit: publicProcedure
+      .input(
+        z.object({
+          email: z.string().email().optional(),
+          q1DecisionDeadline: z.string(),
+          q2HousingStatus: z.string(),
+          q3PriceRange: z.string(),
+          q4IncomeRange: z.string(),
+          q5AssetRange: z.string(),
+          q6NumberInputTolerance: z.string(),
+          q7CareerChange: z.string(),
+          q8LifeEvent: z.string(),
+          q9CurrentQuestion: z.string(),
+          q10PreferredApproach: z.string(),
+          q11PrivacyConsent: z.boolean(),
+          q12BudgetSense: z.string(),
+          invitationToken: z.string().optional(),
+        })
+      )
+      .mutation(async ({ input }) => {
+        // Judgment logic
+        let judgmentResult: "prep" | "pass" | "session" = "prep";
+
+        // Check invitation token
+        let hasValidToken = false;
+        if (input.invitationToken) {
+          const token = await getInvitationTokenByToken(input.invitationToken);
+          if (token && !token.isUsed) {
+            hasValidToken = true;
+            // Mark token as used
+            if (input.email) {
+              await markInvitationTokenAsUsed(input.invitationToken, input.email);
+            }
+          }
+        }
+
+        // Judgment criteria
+        const incomeOk = ["1,500万〜2,499万", "2,500万以上"].includes(input.q4IncomeRange);
+        const assetOk = ["2,000万〜4,999万", "5,000万以上"].includes(input.q5AssetRange);
+        const numberInputOk = input.q6NumberInputTolerance === "年収/資産/支出/物件価格を入力できる";
+        const budgetOk = ["3万〜4.9万なら検討", "5万円以上でも意思決定が進むなら払う"].includes(input.q12BudgetSense);
+
+        if (hasValidToken && incomeOk && assetOk && numberInputOk) {
+          judgmentResult = "session";
+        } else if (incomeOk && assetOk && numberInputOk && budgetOk) {
+          judgmentResult = "pass";
+        } else {
+          judgmentResult = "prep";
+        }
+
+        // Insert response
+        const result = await insertFitGateResponse({
+          ...input,
+          judgmentResult,
+        });
+
+        return {
+          success: true,
+          judgmentResult,
+          id: result[0].insertId,
+        };
+      }),
+
+    getById: publicProcedure
+      .input(z.object({ id: z.number() }))
+      .query(async ({ input }) => {
+        const response = await getFitGateResponseById(input.id);
+        return response;
+      }),
+  }),
+
+  prepMode: router({
+    subscribe: publicProcedure
+      .input(
+        z.object({
+          email: z.string().email(),
+        })
+      )
+      .mutation(async ({ input }) => {
+        await insertPrepModeSubscriber(input);
+        return { success: true };
+      }),
+  }),
+
+  invitationToken: router({
+    validate: publicProcedure
+      .input(z.object({ token: z.string() }))
+      .query(async ({ input }) => {
+        const token = await getInvitationTokenByToken(input.token);
+        if (!token) {
+          return { valid: false, message: "トークンが見つかりません" };
+        }
+        if (token.isUsed) {
+          return { valid: false, message: "このトークンは既に使用されています" };
+        }
+        return { valid: true };
       }),
   }),
 });

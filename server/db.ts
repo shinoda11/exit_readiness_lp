@@ -1,6 +1,17 @@
 import { eq } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
-import { InsertUser, users, testSessions, InsertTestSession } from "../drizzle/schema";
+import {
+  InsertUser,
+  users,
+  testSessions,
+  InsertTestSession,
+  fitGateResponses,
+  InsertFitGateResponse,
+  prepModeSubscribers,
+  InsertPrepModeSubscriber,
+  invitationTokens,
+  InsertInvitationToken,
+} from "../drizzle/schema";
 import { ENV } from './_core/env';
 
 let _db: ReturnType<typeof drizzle> | null = null;
@@ -112,4 +123,120 @@ export async function getAllTestSessions() {
   }
 
   return await db.select().from(testSessions).orderBy(testSessions.createdAt);
+}
+
+/**
+ * Insert a new Fit Gate response
+ */
+export async function insertFitGateResponse(entry: InsertFitGateResponse) {
+  const db = await getDb();
+  if (!db) {
+    throw new Error("Database not available");
+  }
+
+  const result = await db.insert(fitGateResponses).values(entry);
+  return result;
+}
+
+/**
+ * Get Fit Gate response by ID
+ */
+export async function getFitGateResponseById(id: number) {
+  const db = await getDb();
+  if (!db) {
+    throw new Error("Database not available");
+  }
+
+  const result = await db.select().from(fitGateResponses).where(eq(fitGateResponses.id, id)).limit(1);
+  return result.length > 0 ? result[0] : undefined;
+}
+
+/**
+ * Get all Fit Gate responses (admin only)
+ */
+export async function getAllFitGateResponses() {
+  const db = await getDb();
+  if (!db) {
+    throw new Error("Database not available");
+  }
+
+  return await db.select().from(fitGateResponses).orderBy(fitGateResponses.createdAt);
+}
+
+/**
+ * Insert a new Prep Mode subscriber
+ */
+export async function insertPrepModeSubscriber(entry: InsertPrepModeSubscriber) {
+  const db = await getDb();
+  if (!db) {
+    throw new Error("Database not available");
+  }
+
+  const result = await db.insert(prepModeSubscribers).values(entry);
+  return result;
+}
+
+/**
+ * Get all Prep Mode subscribers (admin only)
+ */
+export async function getAllPrepModeSubscribers() {
+  const db = await getDb();
+  if (!db) {
+    throw new Error("Database not available");
+  }
+
+  return await db.select().from(prepModeSubscribers).orderBy(prepModeSubscribers.createdAt);
+}
+
+/**
+ * Insert a new invitation token
+ */
+export async function insertInvitationToken(entry: InsertInvitationToken) {
+  const db = await getDb();
+  if (!db) {
+    throw new Error("Database not available");
+  }
+
+  const result = await db.insert(invitationTokens).values(entry);
+  return result;
+}
+
+/**
+ * Get invitation token by token string
+ */
+export async function getInvitationTokenByToken(tokenStr: string) {
+  const db = await getDb();
+  if (!db) {
+    throw new Error("Database not available");
+  }
+
+  const result = await db.select().from(invitationTokens).where(eq(invitationTokens.token, tokenStr)).limit(1);
+  return result.length > 0 ? result[0] : undefined;
+}
+
+/**
+ * Mark invitation token as used
+ */
+export async function markInvitationTokenAsUsed(tokenStr: string, usedBy: string) {
+  const db = await getDb();
+  if (!db) {
+    throw new Error("Database not available");
+  }
+
+  return await db
+    .update(invitationTokens)
+    .set({ isUsed: true, usedBy, usedAt: new Date() })
+    .where(eq(invitationTokens.token, tokenStr));
+}
+
+/**
+ * Get all invitation tokens (admin only)
+ */
+export async function getAllInvitationTokens() {
+  const db = await getDb();
+  if (!db) {
+    throw new Error("Database not available");
+  }
+
+  return await db.select().from(invitationTokens).orderBy(invitationTokens.createdAt);
 }

@@ -154,12 +154,12 @@ export default function Home() {
                 一般的なFPツールや住宅サイトのように、「売りたい商品」や「売りたい物件」が決まっているわけではなく、どの世界線を選んでもよい前提で数字だけを並べる、フラットなOSです。
               </p>
               <div className="flex flex-col gap-4">
-                <Button size="lg" className="w-full md:w-auto" onClick={() => formRef.current?.scrollIntoView({ behavior: "smooth" })}>
-                  1on1テストセッションに応募する
+                <Button size="lg" className="w-full md:w-auto" onClick={() => window.location.href = "/fit-gate"}>
+                  適合チェックに進む
                   <ArrowRight className="ml-2 w-5 h-5" />
                 </Button>
                 <p className="text-sm text-muted-foreground">
-                  まずは60分の1on1で、あなたの「いまの世界線」と「3つの候補」を一緒に可視化します。
+                  12問の質問に答えて、あなたに最適なステップを確認してください。
                 </p>
               </div>
               <p className="text-xs text-muted-foreground">
@@ -168,49 +168,94 @@ export default function Home() {
               </p>
             </div>
 
-            {/* 右側：Asset Cockpit イメージ */}
+            {/* 右側：準備チェック3問 */}
             <div className="bg-card border rounded-xl p-8 shadow-lg">
-              <h3 className="text-xl font-bold mb-6">Asset Cockpit</h3>
+              <h3 className="text-xl font-bold mb-6">準備チェック（3問）</h3>
               <div className="space-y-6">
-                <div className="flex justify-between items-center p-4 bg-secondary/20 rounded-lg">
-                  <span className="text-sm text-muted-foreground">Exit Score</span>
-                  <span className="text-3xl font-bold text-accent">72</span>
+                {/* Question 1 */}
+                <div className="p-4 bg-secondary/10 rounded-lg">
+                  <p className="text-sm font-semibold mb-2">Q1. 世帯年収は？</p>
+                  <p className="text-xs text-muted-foreground">
+                    1,500万円以上の方を想定しています
+                  </p>
                 </div>
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="p-4 bg-secondary/10 rounded-lg">
-                    <p className="text-xs text-muted-foreground mb-1">現在の資産</p>
-                    <p className="text-lg font-bold">3,200万円</p>
-                  </div>
-                  <div className="p-4 bg-secondary/10 rounded-lg">
-                    <p className="text-xs text-muted-foreground mb-1">月次CF</p>
-                    <p className="text-lg font-bold">+42万円</p>
-                  </div>
+
+                {/* Question 2 */}
+                <div className="p-4 bg-secondary/10 rounded-lg">
+                  <p className="text-sm font-semibold mb-2">Q2. 金融資産は？</p>
+                  <p className="text-xs text-muted-foreground">
+                    2,000万円以上の方を想定しています
+                  </p>
                 </div>
-                <div>
-                  <p className="text-sm text-muted-foreground mb-3">世界線シナリオ</p>
-                  <div className="grid grid-cols-2 gap-2">
-                    <button className="p-3 bg-accent text-accent-foreground rounded-lg text-sm font-medium flex items-center gap-2">
-                      <HomeIcon className="w-4 h-4" />
-                      住宅
-                    </button>
-                    <button className="p-3 bg-secondary/20 text-muted-foreground rounded-lg text-sm font-medium flex items-center gap-2">
-                      <Globe className="w-4 h-4" />
-                      海外駐在
-                    </button>
-                    <button className="p-3 bg-secondary/20 text-muted-foreground rounded-lg text-sm font-medium flex items-center gap-2">
-                      <Briefcase className="w-4 h-4" />
-                      ゆるExit
-                    </button>
-                    <button className="p-3 bg-secondary/20 text-muted-foreground rounded-lg text-sm font-medium flex items-center gap-2">
-                      <Calendar className="w-4 h-4" />
-                      イベント
-                    </button>
-                  </div>
+
+                {/* Question 3 */}
+                <div className="p-4 bg-secondary/10 rounded-lg">
+                  <p className="text-sm font-semibold mb-2">Q3. 数字入力はできますか？</p>
+                  <p className="text-xs text-muted-foreground">
+                    年収・資産・支出・物件価格を入力できる方
+                  </p>
                 </div>
-                <p className="text-xs text-muted-foreground">
-                  右のカードはAsset Cockpitのイメージです。上部にExit Scoreと現在の資産やマリ、下部に「住宅」「海外駐在」「ゆるExit」「イベント」などの世界線を切り替えるタブが並びます。
-                </p>
+
+                <div className="pt-4 border-t">
+                  <p className="text-xs text-muted-foreground text-center">
+                    これらの質問を含む12問の適合チェックで、<br />
+                    あなたに最適なステップを判定します。
+                  </p>
+                </div>
               </div>
+            </div>
+          </div>
+        </section>
+
+        {/* 証拠パックセクション */}
+        <section className="py-12 md:py-16 bg-card border-y">
+          <div className="container max-w-4xl">
+            <h3 className="text-2xl font-bold text-center mb-8">証拠パック：このツールが実際に機能する理由</h3>
+            <div className="grid md:grid-cols-3 gap-6">
+              {/* Evidence 1 */}
+              <Card className="p-6">
+                <div className="flex items-start gap-3 mb-3">
+                  <div className="w-10 h-10 rounded-full bg-accent/20 flex items-center justify-center flex-shrink-0">
+                    <Check className="w-5 h-5 text-accent" />
+                  </div>
+                  <div>
+                    <h4 className="font-semibold mb-2">二本線比較の実装</h4>
+                    <p className="text-sm text-muted-foreground leading-relaxed">
+                      Rent vs Buyを「同じ前提」で並べることが、最初のハードルです。このツールは、二本の世界線を比較するためのロジックが実装済みです。
+                    </p>
+                  </div>
+                </div>
+              </Card>
+
+              {/* Evidence 2 */}
+              <Card className="p-6">
+                <div className="flex items-start gap-3 mb-3">
+                  <div className="w-10 h-10 rounded-full bg-accent/20 flex items-center justify-center flex-shrink-0">
+                    <Check className="w-5 h-5 text-accent" />
+                  </div>
+                  <div>
+                    <h4 className="font-semibold mb-2">3指標の可視化</h4>
+                    <p className="text-sm text-muted-foreground leading-relaxed">
+                      CF余裕、60歳資産、取り崩し開始年。この3つの指標を見ることで、「安心ライン」と「余白」を判断できます。
+                    </p>
+                  </div>
+                </div>
+              </Card>
+
+              {/* Evidence 3 */}
+              <Card className="p-6">
+                <div className="flex items-start gap-3 mb-3">
+                  <div className="w-10 h-10 rounded-full bg-accent/20 flex items-center justify-center flex-shrink-0">
+                    <Check className="w-5 h-5 text-accent" />
+                  </div>
+                  <div>
+                    <h4 className="font-semibold mb-2">フラットなポジション</h4>
+                    <p className="text-sm text-muted-foreground leading-relaxed">
+                      特定の商品や物件を売ることが出口ではありません。どの世界線を選んでも、このツールの側の利益は変わりません。
+                    </p>
+                  </div>
+                </div>
+              </Card>
             </div>
           </div>
         </section>
@@ -505,13 +550,13 @@ export default function Home() {
           </div>
         </section>
 
-        {/* S7: この1on1で一緒にやること（オファー設計） */}
+        {/* S7: 1on1テストセッションについて（紹介制） */}
         <section ref={sessionRef} className="container py-16 md:py-24 opacity-0">
           <div className="max-w-4xl mx-auto text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-6">この1on1で一緒にやること（オファー設計）</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-6">1on1テストセッションについて（紹介制）</h2>
             <p className="text-lg text-muted-foreground leading-relaxed">
-              1on1テストセッションでは、あなたの「いまの世界線」と「3つの候補」を一緒に可視化します。<br />
-              住宅だけでなく、海外駐在・ゆるExit・子どもプランなど、他の世界線にも触れながら、全体の絵を整理します。
+              1on1テストセッションは、現在「紹介制」で提供しています。<br />
+              適合チェックで「Session解放」と判定された方、または招待トークンをお持ちの方のみが応募できます。
             </p>
           </div>
 
@@ -647,145 +692,22 @@ export default function Home() {
           </div>
         </section>
 
-        {/* S10: 1on1テストセッション応募フォーム */}
-        <section ref={formRef} className="bg-secondary/30 py-16 md:py-24 opacity-0">
-          <div className="container max-w-2xl">
-            <h2 className="text-3xl md:text-4xl font-bold text-center mb-4">1on1テストセッションに応募する</h2>
-            <p className="text-center text-muted-foreground mb-8">
-              住宅だけでなく、「海外」「仕事」「子ども・イベント」も含めてモヤモヤしている前提を、1度すべて棚卸ししたい方のための1on1です。
+        {/* CTA Section */}
+        <section className="bg-secondary/30 py-16 md:py-24">
+          <div className="container max-w-2xl text-center">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">次のステップ</h2>
+            <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
+              Exit Readiness OS の利用には、適合チェックが必要です。<br />
+              12問の質問に答えて、あなたに最適なステップを確認してください。
             </p>
-            <p className="text-center text-muted-foreground mb-12">
-              以下のフォームに入力して応募してください。<br />
-              ご登録いただいたメールアドレスに、1on1セッションの詳細をお送りします。
-            </p>
-
-            <Card className="p-8 bg-card">
-              <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-                {/* メールアドレス */}
-                <div className="space-y-2">
-                  <Label htmlFor="email">メールアドレス *</Label>
-                  <Input
-                    id="email"
-                    type="email"
-                    placeholder="your@email.com"
-                    {...register("email")}
-                  />
-                  {errors.email && (
-                    <p className="text-sm text-destructive">{errors.email.message}</p>
-                  )}
-                </div>
-
-                {/* お名前 */}
-                <div className="space-y-2">
-                  <Label htmlFor="name">お名前（任意）</Label>
-                  <Input
-                    id="name"
-                    type="text"
-                    placeholder="山田 太郎"
-                    {...register("name")}
-                  />
-                </div>
-
-                {/* 現在の状況 */}
-                <div className="space-y-2">
-                  <Label>現在の状況 *</Label>
-                  <RadioGroup
-                    defaultValue="賃貸"
-                    onValueChange={(value) => setValue("currentHousing", value as "賃貸" | "持ち家")}
-                  >
-                    <div className="flex items-center space-x-2">
-                      <RadioGroupItem value="賃貸" id="rent" />
-                      <Label htmlFor="rent">賃貸</Label>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <RadioGroupItem value="持ち家" id="own" />
-                      <Label htmlFor="own">持ち家</Label>
-                    </div>
-                  </RadioGroup>
-                </div>
-
-                {/* 世帯年収レンジ */}
-                <div className="space-y-2">
-                  <Label htmlFor="income">世帯年収レンジ *</Label>
-                  <Select onValueChange={(value) => setValue("incomeRange", value as "1000-1500" | "1500-2000" | "2000-3000" | "3000以上")}>
-                    <SelectTrigger id="income">
-                      <SelectValue placeholder="選択してください" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="1000-1500">1,000〜1,500万円</SelectItem>
-                      <SelectItem value="1500-2000">1,500〜2,000万円</SelectItem>
-                      <SelectItem value="2000-3000">2,000〜3,000万円</SelectItem>
-                      <SelectItem value="3000以上">3,000万円以上</SelectItem>
-                    </SelectContent>
-                  </Select>
-                  {errors.incomeRange && (
-                    <p className="text-sm text-destructive">{errors.incomeRange.message}</p>
-                  )}
-                </div>
-
-                {/* 検討中物件レンジ */}
-                <div className="space-y-2">
-                  <Label htmlFor="property">検討中物件レンジ *</Label>
-                  <Select onValueChange={(value) => setValue("propertyRange", value as "賃貸継続" | "6000" | "8000" | "1億以上")}>
-                    <SelectTrigger id="property">
-                      <SelectValue placeholder="選択してください" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="賃貸継続">賃貸継続</SelectItem>
-                      <SelectItem value="6000">6,000万円クラス</SelectItem>
-                      <SelectItem value="8000">8,000万円クラス</SelectItem>
-                      <SelectItem value="1億以上">1億円以上</SelectItem>
-                    </SelectContent>
-                  </Select>
-                  {errors.propertyRange && (
-                    <p className="text-sm text-destructive">{errors.propertyRange.message}</p>
-                  )}
-                </div>
-
-                {/* Goal Mode */}
-                <div className="space-y-2">
-                  <Label htmlFor="goal">Goal Mode *</Label>
-                  <Select onValueChange={(value) => setValue("goalMode", value as "守り" | "ゆるExit" | "フルFIRE視野")}>
-                    <SelectTrigger id="goal">
-                      <SelectValue placeholder="選択してください" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="守り">守り（安心ラインを明確にしたい）</SelectItem>
-                      <SelectItem value="ゆるExit">ゆるExit（数年後に年収を落とす前提）</SelectItem>
-                      <SelectItem value="フルFIRE視野">フルFIRE視野（早期リタイアも視野）</SelectItem>
-                    </SelectContent>
-                  </Select>
-                  {errors.goalMode && (
-                    <p className="text-sm text-destructive">{errors.goalMode.message}</p>
-                  )}
-                </div>
-
-                {/* 1on1希望時間帯 */}
-                <div className="space-y-2">
-                  <Label htmlFor="time">1on1希望時間帯（任意）</Label>
-                  <Input
-                    id="time"
-                    type="text"
-                    placeholder="例: 平日夜、土日午前"
-                    {...register("preferredTime")}
-                  />
-                </div>
-
-                {/* その他 */}
-                <div className="space-y-2">
-                  <Label htmlFor="notes">その他、お伝えしたいことがあればご記入ください</Label>
-                  <Textarea
-                    id="notes"
-                    placeholder="その他、お伝えしたいことがあればご記入ください"
-                    {...register("notes")}
-                  />
-                </div>
-
-                <Button type="submit" size="lg" className="w-full" disabled={createTestSession.isPending}>
-                  {createTestSession.isPending ? "送信中..." : "この内容で応募する"}
-                </Button>
-              </form>
-            </Card>
+            <Button
+              size="lg"
+              className="text-lg px-8 py-6"
+              onClick={() => window.location.href = "/fit-gate"}
+            >
+              適合チェックに進む
+              <ArrowRight className="w-5 h-5 ml-2" />
+            </Button>
           </div>
         </section>
 
