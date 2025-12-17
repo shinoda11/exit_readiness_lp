@@ -135,6 +135,9 @@ export default function Home() {
               「賃貸 vs 購入」の<br />
               世界線比較に変える。
             </h1>
+            <p className="text-base text-muted-foreground mb-4">
+              都内DINK/プレDINK・世帯年収1,500〜3,000万円・6,000〜8,000万円レンジで迷っている方へ
+            </p>
             <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
               Rent と Buy を同じ前提で二本線として並べ、40〜50代のキャッシュフロー余裕、60歳資産、取り崩し開始年が一気に見えます。結論を押し付けず、「どの年代に余白が欲しいかで選べる」設計です。
             </p>
@@ -200,7 +203,7 @@ export default function Home() {
             年収も貯蓄もあるのに、<br />「買っていい」と言い切れない。
           </h2>
           <p className="text-lg text-center text-muted-foreground mb-12 max-w-3xl mx-auto">
-            都内在住、世帯年収1,500〜3,000万円。金融資産も数千万円ある。それでも、6,000万にするか、8,000万にするか、あるいは1億まで攻めるかで数年単位で止まっている。感情だけで決めたくないが、数字を見ても「じゃあどうする?」に落ちない。
+            都内在住、世帯年収1,500〜3,000万円。金融資産も数千万円ある。それでも、6,000万にするか、8,000万にするか、あるいは1億まで攻めるかで数年単位で止まっている。計算しても変数が多すぎて決めきれない。
           </p>
           <div className="grid md:grid-cols-2 gap-6">
             {[
@@ -236,7 +239,7 @@ export default function Home() {
               step: "2",
               icon: <TrendingUp className="w-6 h-6" />,
               title: "Rent vs Buy を世界線として比較する",
-              description: "賃貸継続と購入を、同じ前提で二本線として並べます。物件価格、頭金、購入諸費用、金利、ローン年数を変えながら、「どの年代でどちらの方が楽か」を会話できるようにします。",
+              description: "賃貸継続と購入を、同じ前提で二本線として並べます。40〜50代のキャッシュフロー余裕、60歳時点の資産、取り崩し開始年の3指標で、「どの年代でどちらの方が楽か」を会話できるようにします。",
             },
             {
               step: "3",
