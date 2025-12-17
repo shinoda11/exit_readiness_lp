@@ -129,7 +129,7 @@ export default function Home() {
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* 左側：テキスト */}
           <div className="space-y-8">
-            <div className="inline-block px-4 py-2 bg-accent/10 text-accent-foreground rounded-full text-sm font-medium mb-4">
+            <div className="inline-block px-4 py-2 bg-accent/10 text-foreground rounded-full text-sm font-medium mb-4">
               高収入DINKs向け Exit OS β版
             </div>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
@@ -387,7 +387,7 @@ export default function Home() {
                 </div>
                 <div className="flex gap-2 mt-4">
                   {scenario.tags.map((tag, tagIndex) => (
-                    <span key={tagIndex} className="px-3 py-1 bg-accent/10 text-accent-foreground rounded-full text-xs font-medium">
+                    <span key={tagIndex} className="px-3 py-1 bg-accent/10 text-foreground rounded-full text-xs font-medium">
                       {tag}
                     </span>
                   ))}
