@@ -196,3 +196,50 @@
 
 ### 6. Prep Modeサイドの微調整
 - [x] Prep Mode説明に目的を1文追加
+
+## LP v5 α公開準備（次ステップ指示）
+
+### 1. α公開を本当に開始する
+- [ ] 現行LP v5を本番環境に反映済み確認
+- [ ] 表から誰でも到達できる状態にする（hidden URLではなく）
+- [ ] 旧LPが残っている場合は/beta等に退避または301リダイレクト
+- [ ] Exit Readiness OSの正式リンクを1本に決定（例：https://exit-os.xxx/）
+
+### 2. Umamiイベントの動作確認とダッシュボード整備
+- [ ] Umamiで以下のイベントが正しく発火しているか確認
+  - [ ] lp_hero_cta_clicked
+  - [ ] fitgate_started
+  - [ ] fitgate_submitted
+  - [ ] fitgate_result_session
+  - [ ] fitgate_result_prep
+  - [ ] fitgate_result_notyet
+  - [ ] prep_registered
+- [ ] LP専用ダッシュボードを1枚用意（1週間あたりのファネル可視化）
+  - [ ] LP訪問数
+  - [ ] Hero CTA → Fit Gate Start率
+  - [ ] Fit Gate結果内訳（Session / Prep / Not yet）
+  - [ ] Prep登録数
+- [ ] 命名規則調整が必要なら統一
+
+### 3. Evidence Packセクション：運用ルール定義
+- [ ] 運用ルールをNotionにドキュメント化
+  - [ ] 条件：fitgate_result_session → 1on1実施 → 3件溜まったタイミング
+  - [ ] 各ケースカード（Case A/B/C）に載せる要素
+    - [ ] 匿名化した前提（世帯年収レンジ/子ども有無/住宅レンジ/海外・仕事・イベント前提）
+    - [ ] 比較した世界線（例：賃貸継続 vs 8,000万購入＋海外駐在）
+    - [ ] 指標差分（40〜50代CF余裕/60歳資産/取り崩し開始年）
+    - [ ] 1行インサイト（「このケースでは〜」で始まる結論）
+  - [ ] 実装方法：3件出揃った時点でPdMとすり合わせてテキスト差し替え
+
+### 4. Fit Gate / Prep Modeのログ設計
+- [ ] スプレッドシートまたはDBテーブルで「FitGateLog」作成
+  - [ ] カラム：timestamp, email, session_id/uuid, Q1〜Q12回答, 判定結果
+- [ ] fitgate_result_*イベント発火時にログに行追加する実装
+  - [ ] バックエンド側またはフロントからAPI経由
+
+### 5. 1on1申込→実際のセッションまでの最低限オペ整備
+- [ ] session_form_submitted時に飛ばすメールテンプレ（ドラフト）作成
+  - [ ] 件名：[Exit OS] 1on1テストセッションのお申込みありがとうございます
+  - [ ] 本文：申込内容サマリ、日程調整方法、セッションで用意してほしいもの
+- [ ] 1on1セッション後に送る「世界線メモ」フォーマット作成（Google Docs可）
+  - [ ] Evidence Packにも流用する前提

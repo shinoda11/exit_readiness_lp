@@ -101,8 +101,12 @@ export const appRouter = router({
           judgmentResult = "prep";
         }
 
+        // Generate session ID (UUID)
+        const sessionId = `fg_${Date.now()}_${Math.random().toString(36).substring(2, 15)}`;
+
         // Insert response
         const result = await insertFitGateResponse({
+          sessionId,
           ...input,
           judgmentResult,
         });

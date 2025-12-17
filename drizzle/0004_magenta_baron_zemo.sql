@@ -1,0 +1,1 @@
+ALTER TABLE `fitGateResponses` ADD `sessionId` varchar(64) NOT NULL;

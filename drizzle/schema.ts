@@ -56,6 +56,7 @@ export type InsertTestSession = typeof testSessions.$inferInsert;
  */
 export const fitGateResponses = mysqlTable("fitGateResponses", {
   id: int("id").autoincrement().primaryKey(),
+  sessionId: varchar("sessionId", { length: 64 }).notNull(),
   email: varchar("email", { length: 320 }),
   q1DecisionDeadline: varchar("q1DecisionDeadline", { length: 64 }),
   q2HousingStatus: varchar("q2HousingStatus", { length: 64 }),
