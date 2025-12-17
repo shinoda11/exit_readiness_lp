@@ -10,7 +10,8 @@ import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
 import { useLocation } from "wouter";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { trackEvent, AnalyticsEvents } from "@/lib/analytics";
 
 const fitGateSchema = z.object({
   email: z.string().email("有効なメールアドレスを入力してください").optional(),
@@ -38,6 +39,11 @@ export default function FitGate() {
   const [currentStep, setCurrentStep] = useState(1);
   const totalSteps = 12;
 
+  // Track page view
+  useEffect(() => {
+    trackEvent(AnalyticsEvents.FITGATE_STARTED);
+  }, []);
+
   const {
     register,
     handleSubmit,
@@ -64,6 +70,7 @@ export default function FitGate() {
   });
 
   const onSubmit = (data: FitGateFormData) => {
+    trackEvent(AnalyticsEvents.FITGATE_SUBMITTED);
     submitFitGate.mutate(data);
   };
 

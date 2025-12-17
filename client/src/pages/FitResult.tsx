@@ -3,6 +3,7 @@ import { Card } from "@/components/ui/card";
 import { Check, X, Mail, ArrowRight } from "lucide-react";
 import { useLocation } from "wouter";
 import { useEffect, useState } from "react";
+import { trackEvent, AnalyticsEvents } from "@/lib/analytics";
 
 export default function FitResult() {
   const [, setLocation] = useLocation();
@@ -13,6 +14,15 @@ export default function FitResult() {
     const params = new URLSearchParams(window.location.search);
     const resultParam = params.get("result") as "prep" | "pass" | "session" | null;
     setResult(resultParam);
+
+    // Track result event
+    if (resultParam === "prep") {
+      trackEvent(AnalyticsEvents.FITGATE_RESULT_PREP);
+    } else if (resultParam === "pass") {
+      trackEvent(AnalyticsEvents.FITGATE_RESULT_NOTYET);
+    } else if (resultParam === "session") {
+      trackEvent(AnalyticsEvents.FITGATE_RESULT_SESSION);
+    }
   }, []);
 
   if (!result) {

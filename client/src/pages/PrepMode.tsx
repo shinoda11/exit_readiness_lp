@@ -9,6 +9,7 @@ import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
 import { useState } from "react";
+import { trackEvent, AnalyticsEvents } from "@/lib/analytics";
 
 const prepModeSchema = z.object({
   email: z.string().email("有効なメールアドレスを入力してください"),
@@ -42,6 +43,7 @@ export default function PrepMode() {
   });
 
   const onSubmit = (data: PrepModeFormData) => {
+    trackEvent(AnalyticsEvents.PREP_REGISTERED);
     subscribePrepMode.mutate(data);
   };
 

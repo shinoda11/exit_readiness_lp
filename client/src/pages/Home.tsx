@@ -29,6 +29,7 @@ import {
   Briefcase,
 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import { trackEvent, AnalyticsEvents } from "@/lib/analytics";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
@@ -154,7 +155,10 @@ export default function Home() {
                 「この商品が正解です」「この物件が一番お得です」とゴールを決めてから逆算するのではなく、まずはすべての世界線を同じスケールで並べるところから始めます。一般的なFPツールや住宅サイトのように、「売りたい商品」や「売りたい物件」が決まっているわけではなく、どの世界線を選んでもよい前提で数字だけを並べる、フラットなOSです。
               </p>
               <div className="flex flex-col gap-4">
-                <Button size="lg" className="w-full md:w-auto" onClick={() => window.location.href = "/fit-gate"}>
+                <Button size="lg" className="w-full md:w-auto" onClick={() => {
+                  trackEvent(AnalyticsEvents.LP_HERO_CTA_CLICKED);
+                  window.location.href = "/fit-gate";
+                }}>
                   適合チェックに進む
                   <ArrowRight className="ml-2 w-5 h-5" />
                 </Button>
@@ -449,6 +453,48 @@ export default function Home() {
           </div>
         </section>
 
+        {/* Evidence Pack（匿名ケース例）- 枠のみ */}
+        <section className="bg-secondary/20 py-16 md:py-24 opacity-0">
+          <div className="container max-w-5xl">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl md:text-4xl font-bold mb-6">Evidence Pack（匿名ケース例）</h2>
+              <p className="text-lg text-muted-foreground leading-relaxed max-w-3xl mx-auto">
+                ここに1on1の匿名アウトプット例を載せる予定です。<br />
+                実際のセッションが3〜5件溜まったタイミングで、具体的なケース例を追加します。
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-3 gap-8">
+              {/* Case A */}
+              <Card className="p-8 bg-card">
+                <div className="h-48 bg-secondary/30 rounded-lg flex items-center justify-center mb-4">
+                  <p className="text-muted-foreground text-sm">Case A</p>
+                </div>
+                <h3 className="text-lg font-bold mb-2">ケース例 A</h3>
+                <p className="text-sm text-muted-foreground">準備中</p>
+              </Card>
+
+              {/* Case B */}
+              <Card className="p-8 bg-card">
+                <div className="h-48 bg-secondary/30 rounded-lg flex items-center justify-center mb-4">
+                  <p className="text-muted-foreground text-sm">Case B</p>
+                </div>
+                <h3 className="text-lg font-bold mb-2">ケース例 B</h3>
+                <p className="text-sm text-muted-foreground">準備中</p>
+              </Card>
+
+              {/* Case C */}
+              <Card className="p-8 bg-card">
+                <div className="h-48 bg-secondary/30 rounded-lg flex items-center justify-center mb-4">
+                  <p className="text-muted-foreground text-sm">Case C</p>
+                </div>
+                <h3 className="text-lg font-bold mb-2">ケース例 C</h3>
+                <p className="text-sm text-muted-foreground">準備中</p>
+              </Card>
+            </div>
+          </div>
+        </section>
+
         {/* S5: いま実際にできること（AS-IS：住宅モジュール中心） */}
         <section ref={nowRef} className="container py-16 md:py-24 opacity-0">
           <div className="max-w-4xl mx-auto text-center mb-12">
@@ -703,7 +749,10 @@ export default function Home() {
             <Button
               size="lg"
               className="text-lg px-8 py-6"
-              onClick={() => window.location.href = "/fit-gate"}
+              onClick={() => {
+                trackEvent(AnalyticsEvents.LP_HERO_CTA_CLICKED);
+                window.location.href = "/fit-gate";
+              }}
             >
               適合チェックに進む
               <ArrowRight className="w-5 h-5 ml-2" />
