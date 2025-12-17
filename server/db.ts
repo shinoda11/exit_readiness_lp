@@ -11,6 +11,14 @@ import {
   InsertPrepModeSubscriber,
   invitationTokens,
   InsertInvitationToken,
+  passSubscriptions,
+  InsertPassSubscription,
+  passOnboarding,
+  InsertPassOnboarding,
+  upgradeRequests,
+  InsertUpgradeRequest,
+  sessionCheckouts,
+  InsertSessionCheckout,
 } from "../drizzle/schema";
 import { ENV } from './_core/env';
 
@@ -239,4 +247,142 @@ export async function getAllInvitationTokens() {
   }
 
   return await db.select().from(invitationTokens).orderBy(invitationTokens.createdAt);
+}
+
+/**
+ * Insert a new Pass subscription
+ */
+export async function insertPassSubscription(entry: InsertPassSubscription) {
+  const db = await getDb();
+  if (!db) {
+    throw new Error("Database not available");
+  }
+
+  const result = await db.insert(passSubscriptions).values(entry);
+  return result;
+}
+
+/**
+ * Get Pass subscription by email
+ */
+export async function getPassSubscriptionByEmail(email: string) {
+  const db = await getDb();
+  if (!db) {
+    throw new Error("Database not available");
+  }
+
+  const result = await db.select().from(passSubscriptions).where(eq(passSubscriptions.email, email)).orderBy(passSubscriptions.createdAt).limit(1);
+  return result.length > 0 ? result[0] : undefined;
+}
+
+/**
+ * Check if user has active Pass subscription
+ */
+export async function hasActivePassSubscription(email: string): Promise<boolean> {
+  const db = await getDb();
+  if (!db) {
+    return false;
+  }
+
+  const result = await db.select().from(passSubscriptions)
+    .where(eq(passSubscriptions.email, email))
+    .orderBy(passSubscriptions.createdAt);
+  
+  if (result.length === 0) return false;
+  
+  const latestSubscription = result[0];
+  return latestSubscription.status === 'active' && new Date() < new Date(latestSubscription.expiryDate);
+}
+
+/**
+ * Insert or update Pass Onboarding progress
+ */
+export async function upsertPassOnboarding(entry: InsertPassOnboarding) {
+  const db = await getDb();
+  if (!db) {
+    throw new Error("Database not available");
+  }
+
+  const result = await db.insert(passOnboarding).values(entry).onDuplicateKeyUpdate({
+    set: {
+      compareViewed: entry.compareViewed ?? false,
+      leverChanged: entry.leverChanged ?? false,
+      memoGenerated: entry.memoGenerated ?? false,
+      completedAt: entry.completedAt,
+    },
+  });
+  return result;
+}
+
+/**
+ * Get Pass Onboarding progress by email
+ */
+export async function getPassOnboardingByEmail(email: string) {
+  const db = await getDb();
+  if (!db) {
+    throw new Error("Database not available");
+  }
+
+  const result = await db.select().from(passOnboarding).where(eq(passOnboarding.email, email)).limit(1);
+  return result.length > 0 ? result[0] : undefined;
+}
+
+/**
+ * Check if user has completed Pass Onboarding
+ */
+export async function hasCompletedPassOnboarding(email: string): Promise<boolean> {
+  const onboarding = await getPassOnboardingByEmail(email);
+  if (!onboarding) return false;
+  return onboarding.compareViewed && onboarding.leverChanged && onboarding.memoGenerated;
+}
+
+/**
+ * Insert a new Upgrade request
+ */
+export async function insertUpgradeRequest(entry: InsertUpgradeRequest) {
+  const db = await getDb();
+  if (!db) {
+    throw new Error("Database not available");
+  }
+
+  const result = await db.insert(upgradeRequests).values(entry);
+  return result;
+}
+
+/**
+ * Get all Upgrade requests (admin only)
+ */
+export async function getAllUpgradeRequests() {
+  const db = await getDb();
+  if (!db) {
+    throw new Error("Database not available");
+  }
+
+  return await db.select().from(upgradeRequests).orderBy(upgradeRequests.createdAt);
+}
+
+/**
+ * Insert a new Session checkout
+ */
+export async function insertSessionCheckout(entry: InsertSessionCheckout) {
+  const db = await getDb();
+  if (!db) {
+    throw new Error("Database not available");
+  }
+
+  const result = await db.insert(sessionCheckouts).values(entry);
+  return result;
+}
+
+/**
+ * Get Session checkout by token
+ */
+export async function getSessionCheckoutByToken(token: string) {
+  const db = await getDb();
+  if (!db) {
+    throw new Error("Database not available");
+  }
+
+  const result = await db.select().from(sessionCheckouts).where(eq(sessionCheckouts.checkoutToken, token)).limit(1);
+  return result.length > 0 ? result[0] : undefined;
 }

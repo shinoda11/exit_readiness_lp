@@ -50,6 +50,20 @@
       "when": 1765982115710,
       "tag": "0006_dear_albert_cleary",
       "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "5",
+      "when": 1765984634558,
+      "tag": "0007_chubby_hardball",
+      "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "5",
+      "when": 1765984757202,
+      "tag": "0008_chilly_santa_claus",
+      "breakpoints": true
     }
   ]
 }

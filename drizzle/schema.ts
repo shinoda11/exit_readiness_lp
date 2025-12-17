@@ -105,3 +105,76 @@ export const invitationTokens = mysqlTable("invitationTokens", {
 
 export type InvitationToken = typeof invitationTokens.$inferSelect;
 export type InsertInvitationToken = typeof invitationTokens.$inferInsert;
+
+/**
+ * Pass subscriptions table (29,800円, 90日間)
+ */
+export const passSubscriptions = mysqlTable("passSubscriptions", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("userId"),
+  email: varchar("email", { length: 320 }).notNull(),
+  stripeCustomerId: varchar("stripeCustomerId", { length: 255 }),
+  stripePaymentIntentId: varchar("stripePaymentIntentId", { length: 255 }),
+  purchaseDate: timestamp("purchaseDate").defaultNow().notNull(),
+  expiryDate: timestamp("expiryDate").notNull(),
+  price: int("price").notNull(), // 29800
+  status: mysqlEnum("status", ["active", "expired", "cancelled"]).default("active").notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type PassSubscription = typeof passSubscriptions.$inferSelect;
+export type InsertPassSubscription = typeof passSubscriptions.$inferInsert;
+
+/**
+ * Pass Onboarding progress (3 tasks)
+ */
+export const passOnboarding = mysqlTable("passOnboarding", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("userId"),
+  email: varchar("email", { length: 320 }).notNull().unique(),
+  compareViewed: boolean("compareViewed").default(false).notNull(),
+  leverChanged: boolean("leverChanged").default(false).notNull(),
+  memoGenerated: boolean("memoGenerated").default(false).notNull(),
+  completedAt: timestamp("completedAt"),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type PassOnboarding = typeof passOnboarding.$inferSelect;
+export type InsertPassOnboarding = typeof passOnboarding.$inferInsert;
+
+/**
+ * Upgrade requests (Pass → Session)
+ */
+export const upgradeRequests = mysqlTable("upgradeRequests", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("userId"),
+  email: varchar("email", { length: 320 }).notNull(),
+  requestDate: timestamp("requestDate").defaultNow().notNull(),
+  status: mysqlEnum("status", ["pending", "approved", "rejected"]).default("pending").notNull(),
+  approvedAt: timestamp("approvedAt"),
+  checkoutUrl: varchar("checkoutUrl", { length: 512 }),
+  checkoutExpiry: timestamp("checkoutExpiry"),
+  notes: text("notes"),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type UpgradeRequest = typeof upgradeRequests.$inferSelect;
+export type InsertUpgradeRequest = typeof upgradeRequests.$inferInsert;
+
+/**
+ * Session checkouts (Private, 48-hour expiry, one-time use)
+ */
+export const sessionCheckouts = mysqlTable("sessionCheckouts", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("userId"),
+  email: varchar("email", { length: 320 }).notNull(),
+  checkoutToken: varchar("checkoutToken", { length: 64 }).notNull().unique(),
+  checkoutUrl: varchar("checkoutUrl", { length: 512 }).notNull(),
+  expiryDate: timestamp("expiryDate").notNull(),
+  isUsed: boolean("isUsed").default(false).notNull(),
+  usedAt: timestamp("usedAt"),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type SessionCheckout = typeof sessionCheckouts.$inferSelect;
+export type InsertSessionCheckout = typeof sessionCheckouts.$inferInsert;

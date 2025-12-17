@@ -9,7 +9,10 @@ import {
   insertPrepModeSubscriber,
   getInvitationTokenByToken,
   markInvitationTokenAsUsed,
+  hasActivePassSubscription,
 } from "./db";
+import { stripe } from "./stripe";
+import { PRODUCTS } from "./products";
 import { z } from "zod";
 
 export const appRouter = router({
@@ -151,6 +154,75 @@ export const appRouter = router({
           return { valid: false, message: "このトークンは既に使用されています" };
         }
         return { valid: true };
+      }),
+  }),
+
+  pass: router({
+    /**
+     * Create Stripe Checkout Session for Pass purchase
+     */
+    createCheckoutSession: publicProcedure
+      .input(
+        z.object({
+          email: z.string().email(),
+          name: z.string().optional(),
+        })
+      )
+      .mutation(async ({ input, ctx }) => {
+        // Check if user already has active Pass subscription
+        const hasActivePass = await hasActivePassSubscription(input.email);
+        if (hasActivePass) {
+          throw new Error("既にアクティブなPass購入があります");
+        }
+
+        const product = PRODUCTS.PASS_90_DAYS;
+        const origin = ctx.req.headers.origin || 'http://localhost:3000';
+
+        try {
+          const session = await stripe.checkout.sessions.create({
+            mode: 'payment',
+            payment_method_types: ['card'],
+            line_items: [
+              {
+                price_data: {
+                  currency: product.currency,
+                  product_data: {
+                    name: product.name,
+                    description: product.description,
+                  },
+                  unit_amount: product.price,
+                },
+                quantity: 1,
+              },
+            ],
+            customer_email: input.email,
+            client_reference_id: input.email,
+            metadata: {
+              product_type: 'pass',
+              customer_email: input.email,
+              customer_name: input.name || '',
+              duration_days: product.durationDays.toString(),
+            },
+            success_url: `${origin}/pass/onboarding?session_id={CHECKOUT_SESSION_ID}`,
+            cancel_url: `${origin}/fit-result?result=ready`,
+            allow_promotion_codes: true,
+          });
+
+          return { url: session.url };
+        } catch (error) {
+          console.error('[Pass] Failed to create checkout session:', error);
+          throw new Error('決済URLの発行に失敗しました');
+        }
+      }),
+
+    /**
+     * Check if user has active Pass subscription
+     */
+    checkSubscription: publicProcedure
+      .input(z.object({ email: z.string().email() }))
+      .query(async ({ input }) => {
+        const hasActive = await hasActivePassSubscription(input.email);
+        return { hasActivePass: hasActive };
       }),
   }),
 });

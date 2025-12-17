@@ -59,8 +59,9 @@ export default function FitGate() {
 
   const submitFitGate = trpc.fitGate.submit.useMutation({
     onSuccess: (data) => {
-      // Navigate to result page with judgment result
-      setLocation(`/fit-result?result=${data.judgmentResult}&id=${data.id}`);
+      // Navigate to result page with judgment result and email
+      const email = watch("email") || "";
+      setLocation(`/fit-result?result=${data.judgmentResult}&id=${data.id}&email=${encodeURIComponent(email)}`);
     },
     onError: (error: any) => {
       toast.error("エラーが発生しました", {

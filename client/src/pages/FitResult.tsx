@@ -1,9 +1,11 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Check, X, Mail, ArrowRight } from "lucide-react";
+import { Check, X, Mail, ArrowRight, Loader2 } from "lucide-react";
 import { useLocation } from "wouter";
 import { useEffect, useState } from "react";
 import { trackEvent, AnalyticsEvents } from "@/lib/analytics";
+import { trpc } from "@/lib/trpc";
+import { toast } from "sonner";
 
 export default function FitResult() {
   const [, setLocation] = useLocation();
@@ -125,6 +127,33 @@ function PrepResult({ setLocation }: { setLocation: (path: string) => void }) {
 
 // Ready Result Component (Pass推奨)
 function ReadyResult() {
+  const [isLoading, setIsLoading] = useState(false);
+  const createCheckout = trpc.pass.createCheckoutSession.useMutation();
+
+  const handlePurchase = async () => {
+    // Get email from URL params (passed from Fit Gate)
+    const params = new URLSearchParams(window.location.search);
+    const email = params.get("email");
+
+    if (!email) {
+      toast.error("メールアドレスが見つかりません。適合チェックからやり直してください。");
+      return;
+    }
+
+    setIsLoading(true);
+    try {
+      const result = await createCheckout.mutateAsync({ email });
+      if (result.url) {
+        toast.success("決済ページに移動します...");
+        window.open(result.url, "_blank");
+      }
+    } catch (error: any) {
+      toast.error(error.message || "決済URLの発行に失敗しました");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <Card className="p-8">
       <div className="text-center mb-6">
@@ -138,40 +167,56 @@ function ReadyResult() {
       </div>
 
       <div className="space-y-6">
-        <div>
-          <h3 className="font-semibold mb-3">次のステップ</h3>
-          <p className="text-sm text-muted-foreground leading-relaxed mb-4">
-            現在、Exit Readiness OS はクローズドβ版として、招待制で1on1 Decision Sessionを実施しています。
-          </p>
+        <div className="bg-accent/10 p-4 rounded-lg">
+          <h3 className="font-semibold mb-2">Exit Readiness OS Pass</h3>
+          <p className="text-2xl font-bold text-primary mb-2">¥29,800 <span className="text-sm font-normal text-muted-foreground">/ 90日間</span></p>
           <p className="text-sm text-muted-foreground leading-relaxed">
-            招待トークンをお持ちの方は、適合チェック時に入力することで、Session に進むことができます。
+            シナリオ比較、レバー操作、意思決定メモ生成機能を90日間利用可能
           </p>
         </div>
 
         <div>
-          <h3 className="font-semibold mb-3">招待トークンをお持ちでない方</h3>
-          <p className="text-sm text-muted-foreground leading-relaxed mb-4">
-            現在、招待トークンの新規発行は、既存ユーザーからの紹介のみとなっております。
-          </p>
-          <p className="text-sm text-muted-foreground leading-relaxed">
-            ご興味がある方は、Prep Mode に登録いただくと、今後の展開をメールでお知らせします。
-          </p>
+          <h3 className="font-semibold mb-3">Passで何ができるか</h3>
+          <ul className="space-y-2 text-sm text-muted-foreground">
+            <li className="flex items-start gap-2">
+              <Check className="w-4 h-4 text-accent mt-0.5 flex-shrink-0" />
+              <span><strong>シナリオ比較</strong>：固定3本（Rent/Buy/Buy+Shock）の世界線を比較</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <Check className="w-4 h-4 text-accent mt-0.5 flex-shrink-0" />
+              <span><strong>レバー操作</strong>：物件価格/頭金/投資入金/ショック選択を調整</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <Check className="w-4 h-4 text-accent mt-0.5 flex-shrink-0" />
+              <span><strong>意思決定メモ生成</strong>：上限レンジ/3シナリオ結論/次の30日アクション</span>
+            </li>
+          </ul>
         </div>
 
         <div className="pt-4">
           <Button
             size="lg"
-            variant="outline"
             className="w-full"
-            onClick={() => window.location.href = "/prep-mode"}
+            onClick={handlePurchase}
+            disabled={isLoading}
           >
-            Prep Mode に登録する
+            {isLoading ? (
+              <>
+                <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                処理中...
+              </>
+            ) : (
+              <>
+                Pass購入（¥29,800）
+                <ArrowRight className="w-4 h-4 ml-2" />
+              </>
+            )}
           </Button>
         </div>
 
         <div className="pt-4 border-t">
           <p className="text-xs text-muted-foreground text-center">
-            招待トークンをお持ちの方は、適合チェックページに戻って入力してください。
+            決済完了後、Onboarding 3タスクから始めていただけます。
           </p>
         </div>
       </div>

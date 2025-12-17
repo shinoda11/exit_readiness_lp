@@ -327,3 +327,69 @@
 - [ ] Prep Modeに再診断リンクが常設
 - [ ] Pass購入者がOnboarding 3タスクを完了できる
 - [ ] 意思決定メモの匿名サンプルが公開LPで見れる
+
+## 京都モデル v0.3 End to End 実装
+
+### フェーズ1: DBスキーマ追加
+- [ ] passSubscriptionsテーブル作成（userId, email, purchaseDate, expiryDate, price, status）
+- [ ] passOnboardingテーブル作成（userId, compareViewed, leverChanged, memoGenerated, completedAt）
+- [ ] upgradeRequestsテーブル作成（userId, email, requestDate, status, approvedAt, checkoutUrl, checkoutExpiry）
+- [ ] sessionCheckoutsテーブル作成（userId, checkoutUrl, expiryDate, isUsed, usedAt）
+
+### フェーズ2: Pass購入フロー実装
+- [ ] Ready判定結果ページに「Pass購入」ボタン追加
+- [ ] Pass決済URL発行API実装（29,800円、90日期限）
+- [ ] Pass購入完了後のリダイレクト処理
+- [ ] Pass有効期限管理（90日後の同時刻まで）
+
+### フェーズ3: Pass Onboarding 3タスク実装
+- [ ] Onboardingページ作成（/pass/onboarding）
+- [ ] タスク1: 比較を1回実行（compare_viewed=true）
+- [ ] タスク2: レバーを1回操作（lever_changed=true）
+- [ ] タスク3: 意思決定メモを1回生成（memo_generated=true）
+- [ ] Onboarding完了判定ロジック
+- [ ] Onboarding未完了時のメイン機能アクセス制限
+
+### フェーズ4: Cockpit実装（シナリオ固定3本、レバー4つ）
+- [ ] Cockpitページ作成（/pass/cockpit）
+- [ ] シナリオA: Rent（現状ベースライン）
+- [ ] シナリオB: Buy（物件価格を入れて比較）
+- [ ] シナリオC: Buy + Shock（Buyに加えてショックを1つ適用）
+- [ ] レバー1: 物件価格（数値入力＋スライダー）
+- [ ] レバー2: 頭金（数値入力）
+- [ ] レバー3: 毎月の投資入金（数値入力）
+- [ ] レバー4: ショック選択（収入低下/-20% / 無収入期間/3か月 / 大型支出/100万円）
+- [ ] 各シナリオの主要指標を横並びで表示（生存確率、FIRE/Exit到達指標、資産推移要約）
+
+### フェーズ5: Decision Memo実装（3ブロック固定）
+- [ ] Decision Memoページ作成（/pass/memo）
+- [ ] ブロック1: 上限レンジ（OKライン/NGライン）
+- [ ] ブロック2: 3シナリオ結論（Rent/Buy/Buy+Shockの要点）
+- [ ] ブロック3: 次の30日アクション（更新すべき数字と順番）
+- [ ] メモ生成ボタン実装
+- [ ] メモ画面表示＋コピー可能機能
+
+### フェーズ6: Upgrade申請フォーム実装
+- [ ] Upgrade申請ボタン（Onboarding完了後のみ表示）
+- [ ] Upgrade申請フォーム作成（期限、価格帯、分岐を短く聞く）
+- [ ] Upgrade申請API実装
+- [ ] 承認フロー実装（管理者承認）
+
+### フェーズ7: Private Checkout実装（Session、48時間期限）
+- [ ] Private CheckoutページURL生成（/checkout/session/:token）
+- [ ] Session決済URL発行API（48時間期限、1回決済で無効化）
+- [ ] SessionのSOWサマリー表示
+- [ ] 決済完了後の処理（isUsed=true、usedAt記録）
+- [ ] 期限切れチェック機能
+
+### フェーズ8: Fit Gate判定結果ページ修正
+- [ ] Ready結果ページ：Pass推奨のみ表示、Sessionは一切出さない
+- [ ] Session解放結果ページ：Session購入導線を表示、併記でPassも表示
+- [ ] Prep結果ページ：再診断リンク常設
+
+### 完了条件（End to End）
+- [ ] 公開LP → Fit Gate → Ready → Pass購入 → Onboarding 3タスク → Cockpit/Decision Memo の全フローが動作
+- [ ] Pass購入者 → Upgrade申請 → 承認 → Private Checkout（Session）の全フローが動作
+- [ ] Sessionは招待トークン有効 OR Upgrade承認時のみ解放
+- [ ] Pass決済URLは公開LPに置かない、Gate通過後の導線でのみ到達
+- [ ] Session決済URLは必ず秘匿、48時間期限、1回決済で無効化
