@@ -142,10 +142,10 @@ export default function Home() {
                 Exit Readiness OS は、都内の高収入DINKが「家」「仕事」「暮らす場所」「人生で大事にしたいイベント」を、1つのPLとキャッシュフローの上で世界線として比較するためのOSです。
               </p>
               <p>
-                最初の入口として、「賃貸を続ける」「都心で買う」といった住宅シナリオからスタートしますが、少しずつ「海外駐在を取る」「数年後にゆるい働き方に切り替える」「子どもの教育プランを変える」など、人生の大きな選択肢を横串で扱えるようにしていきます。
+                最初の入口として「いまの賃貸を続ける」「都心でマンションを買う」といった住宅シナリオからスタートしますが、少しずつ「海外駐在を取りに行く」「数年だけゆるい働き方に切り替える」「子どもの教育プランを変える」など、横串の選択肢も扱えるようにしていきます。
               </p>
               <p>
-                どのケースでも、「どこまで攻めていいか」と「どこに余白を残すか」を、安心ラインと人生の余白という2つの軸で見えるようにすることがゴールです。
+                一般的なFPツールや住宅サイトのように「売りたい商品」や「売りたい物件」が決まっているわけではなく、どの世界線を選んでもよい前提で、数字と世界線の比較に徹するフラットなOSです。
               </p>
             </div>
             <div className="space-y-4">
@@ -157,7 +157,8 @@ export default function Home() {
                 1on1テストセッションに応募する
               </Button>
               <p className="text-sm text-muted-foreground">
-                対象：年収1,000〜2,000万円・パートナーあり（DINKs または子ども1人）・東京圏など都市部在住の方を想定しています。
+                対象：年収1,000〜2,000万円・パートナーあり（DINKs または子ども1人）・東京圏など都市部在住の方を想定しています。<br />
+                特に、都内で6,000〜8,000万円クラスのマンションを検討している、年収1,000〜2,000万円のDINK／プレDINK世帯の方を主な想定ユーザーとしています。
               </p>
             </div>
           </div>
@@ -218,8 +219,8 @@ export default function Home() {
                   </div>
                 </div>
                 <p className="text-sm text-muted-foreground pt-4 border-t border-border">
-                  画面右側は、Asset Cockpit のイメージです。上半分に Exit Score や現在の資産・キャッシュフロー、下半分に「住宅」「海外駐在」「ゆるExit」「イベント」などの世界線タブが並びます。<br />
-                  いま触れるのは「住宅」タブですが、将来的にはここに「海外駐在を取る世界線」「数年だけ年収を落としてゆるい働き方をする世界線」などが増えていきます。
+                  右のカードは Asset Cockpit のイメージです。上部に Exit Readiness Score と現在の資産サマリ、下部に「住宅」「海外駐在」「ゆるExit」「イベント」などのタブが並びます。<br />
+                  いま触れられるのは「住宅」タブですが、将来的には「海外駐在を取る世界線」「数年だけ年収を落としてゆるい働き方をする世界線」なども追加され、同じPL上で比較できるようになります。
                 </p>
               </div>
             </Card>
@@ -258,7 +259,7 @@ export default function Home() {
               },
               {
                 icon: <Target className="w-5 h-5" />,
-                text: "いくつもの選択肢を同時に頭の中で動かしているうちに、「どこから計算すればいいのか」が分からなくなる。",
+                text: "6,000万円で抑えるか、8,000万円まで攻めるか、その差が「40代・50代・退職後」のどこに効いてくるのかをイメージしきれていない。",
               },
             ].map((item, index) => (
               <Card key={index} className="p-6 bg-card flex items-start gap-4">
@@ -315,21 +316,90 @@ export default function Home() {
             <div className="text-accent flex-shrink-0 mt-1">
               <Target className="w-6 h-6" />
             </div>
-            <div>
-              <h3 className="text-xl font-bold mb-3">フラットなOSであること ─ 何も「売らない」立場</h3>
-              <p className="text-muted-foreground leading-relaxed mb-3">
-                従来のFPツールは「金融商品を売る」こと、住宅ツールは「家を売る」ことが出口として決まっている。Exit Readiness OS の出口は「特定の商品や物件」ではなく、「どの世界線を選んでもいい状態をつくること」である。
-              </p>
-              <p className="text-muted-foreground leading-relaxed">
-                どのシナリオを選んでも、このツールの側の利益は変わらない。だからこそ、数字と世界線をフラットに見せられる──それが、Exit Readiness OS の設計思想です。
-              </p>
-            </div>
+          <div>
+            <h3 className="text-xl font-bold mb-3">フラットなOSであること ─ 何も「売らない」立場</h3>
+            <p className="text-muted-foreground leading-relaxed mb-3">
+              FPツールは金融商品、住宅ツールは物件という「出口」があらかじめ決まっている。Exit Readiness OS は、特定の商品や物件に誘導することではなく、「どの世界線を選んでもよい状態」を作ることが目的である。
+            </p>
+            <p className="text-muted-foreground leading-relaxed">
+              どのシナリオを選んでもこのツール側の利益は変わらないからこそ、フラットに数字を見せられる──それが、Exit Readiness OS の設計思想です。
+            </p>
+          </div>
           </div>
         </Card>
       </section>
 
-      {/* S4: いま実際にできること - AS-IS：住宅モジュール */}
-      <section ref={asIsRef} className="bg-secondary/30 py-16 md:py-24 opacity-0">
+      {/* S4: 実際の世界線は、例えばこんな組み合わせです */}
+      <section ref={scenariosRef} className="bg-secondary/30 py-16 md:py-24 opacity-0">
+        <div className="container">
+          <h2 className="text-3xl md:text-4xl font-bold text-center mb-8">
+            実際の世界線は、例えばこんな組み合わせです。
+          </h2>
+          <p className="text-lg text-center text-muted-foreground mb-12 max-w-3xl mx-auto">
+            抽象的な概念だけでなく、「家」「仕事」「場所」「イベント」がセットになった世界線を3つだけ例として示します。数字は概算ですが、読んだ人が自分ごとにできるレベルの具体性を入れています。
+          </p>
+          <div className="space-y-8 max-w-4xl mx-auto">
+            {[
+              {
+                title: "Scenario 1：都内DINK、海外駐在の可能性あり",
+                premise: "世帯年収1,800万円、子どもなし、現在賃貸、検討中の物件価格帯8,000万円",
+                worldlines: "賃貸継続＋海外駐在 vs 8,000万購入＋日本ベース継続",
+                diff: "40代CF余裕は賃貸＋駐在の方が月+15万円程度、60歳資産は購入の方が+500万円、取り崩し開始は賃貸70歳・購入68歳",
+                insight: "この場合、住宅よりキャリア選択（駐在の有無）の方が支配的。駐在を取るなら賃貸継続が合理的。",
+                tags: ["住宅", "海外駐在"],
+              },
+              {
+                title: "Scenario 2：賃貸継続＋ゆるExit準備",
+                premise: "世帯年収2,000万円、子ども1人、現在賃貸、数年後に年収800万円にダウン予定",
+                worldlines: "賃貸継続＋年収維持 vs 賃貸継続＋年収ダウン",
+                diff: "40代CF余裕は年収維持で月+25万円、60歳資産は年収維持で+2,000万円、取り崩し開始は年収維持65歳・ダウン72歳",
+                insight: "年収ダウンのインパクトは大きいが、取り崩し開始は遅くなる。余白の置き方次第で選べる。",
+                tags: ["住宅", "ゆるExit"],
+              },
+              {
+                title: "Scenario 3：都内購入＋子どもプラン変更",
+                premise: "世帯年収1,500万円、現在賃貸、検討中の物件価格帯6,000万円",
+                worldlines: "6,000万購入＋子ども1人 vs 6,000万購入＋子ども2人",
+                diff: "40代CF余裕は子ども1人で月+8万円、60歳資産は子ども1人で+1,500万円、取り崩し開始は子ども1人68歳・2人73歳",
+                insight: "子ども1人増えるだけで、40〜50代の余白が大きく変わる。教育費の影響は住宅価格より大きい。",
+                tags: ["住宅", "子どもプラン"],
+              },
+            ].map((scenario, index) => (
+              <Card key={index} className="p-8 bg-card">
+                <h3 className="text-xl font-bold mb-4">{scenario.title}</h3>
+                <div className="space-y-3 text-sm">
+                  <div>
+                    <span className="font-semibold text-foreground">前提：</span>
+                    <span className="text-muted-foreground ml-2">{scenario.premise}</span>
+                  </div>
+                  <div>
+                    <span className="font-semibold text-foreground">比較している世界線：</span>
+                    <span className="text-muted-foreground ml-2">{scenario.worldlines}</span>
+                  </div>
+                  <div>
+                    <span className="font-semibold text-foreground">出てくる差分：</span>
+                    <span className="text-muted-foreground ml-2">{scenario.diff}</span>
+                  </div>
+                  <div className="pt-2 border-t border-border">
+                    <span className="font-semibold text-accent">インサイト：</span>
+                    <span className="text-muted-foreground ml-2">{scenario.insight}</span>
+                  </div>
+                </div>
+                <div className="flex gap-2 mt-4">
+                  {scenario.tags.map((tag, tagIndex) => (
+                    <span key={tagIndex} className="px-3 py-1 bg-accent/10 text-accent-foreground rounded-full text-xs font-medium">
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* S5: いま実際にできること - AS-IS：住宅モジュール */}
+      <section ref={asIsRef} className="container py-16 md:py-24 opacity-0">
         <div className="container">
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-8">
             いま実際にできること
@@ -357,8 +427,8 @@ export default function Home() {
               },
               {
                 icon: <Target className="w-6 h-6" />,
-                title: "Goal Lens による読み方の違い",
-                description: "「守り重視」「ゆるExit」「FIRE視野」のモードを選ぶことで、同じ数字でもどこに注目すべきかのガイドが変わります。働き方や人生設計に合わせて、最適な読み方ができます。",
+                title: "例：6,000万と8,000万で、どこがどれくらい変わるか",
+                description: "例として、世帯年収1,800万円・金融資産3,000万円・子ども1人という前提で、賃貸継続と8,000万円購入を比べるとします。40代の可処分キャッシュはほぼ同じでも、資産の取り崩し開始は「68歳」と「73歳」で5年ずれる、といった差分が見えるようになります。こうした数字はあくまで一例ですが、「どの年代の余白を厚くするか」を議論する材料になります。",
               },
             ].map((item, index) => (
               <Card key={index} className="p-6 bg-card flex items-start gap-4">
@@ -373,8 +443,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* S5: これから増えていく横串 - To-Be */}
-      <section ref={toBeRef} className="container py-16 md:py-24 opacity-0">
+      {/* S6: これから増えていく横串 - To-Be */}
+      <section ref={toBeRef} className="bg-secondary/30 py-16 md:py-24 opacity-0">
         <h2 className="text-3xl md:text-4xl font-bold text-center mb-8">
           これから増えていく横串
         </h2>
@@ -419,52 +489,7 @@ export default function Home() {
         </p>
       </section>
 
-      {/* S6: 3つの代表シナリオ */}
-      <section ref={scenariosRef} className="bg-secondary/30 py-16 md:py-24 opacity-0">
-        <div className="container">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-8">
-            3つの代表シナリオ
-          </h2>
-          <p className="text-lg text-center text-muted-foreground mb-12 max-w-3xl mx-auto">
-            住宅だけでなく、キャリアやイベントが絡んだ「混合シナリオ」で考える。<br />
-            OSとしての世界線比較のイメージを、具体例で見ていきます。
-          </p>
-          <div className="space-y-8 max-w-4xl mx-auto">
-            {[
-              {
-                title: "Scenario 1: 都内購入 × 海外駐在オプション",
-                description: "「都内で8,000万円の物件を買う」前提で、数年後に「海外駐在のオファーを受ける／断る」という選択肢が出てきた場合。住宅ローンを抱えたまま海外に行くリスク、賃貸に出す場合の収支、帰国後の資産状況などを、世界線として並べて比較します。",
-                tags: ["住宅", "海外駐在"],
-              },
-              {
-                title: "Scenario 2: 賃貸継続 × ゆるExit準備",
-                description: "「賃貸を続けながら、数年後にゆるい働き方に切り替える」前提で、年収が1,500万円から800万円にダウンした場合のPLを比較します。40〜50代のキャッシュフロー余裕、60歳時点の資産、取り崩し開始年などを、世界線として見えるようにします。",
-                tags: ["住宅", "ゆるExit"],
-              },
-              {
-                title: "Scenario 3: 都内購入 × 子どもプラン変更",
-                description: "「都内で6,000万円の物件を買う」前提で、「子どもを1人持つ／2人持つ」という選択肢が出てきた場合。教育費、生活費、住宅の広さ、キャリアへの影響などを、世界線として並べて比較します。",
-                tags: ["住宅", "子どもプラン"],
-              },
-            ].map((scenario, index) => (
-              <Card key={index} className="p-8 bg-card">
-                <h3 className="text-xl font-bold mb-3">{scenario.title}</h3>
-                <p className="text-muted-foreground mb-4">{scenario.description}</p>
-                <div className="flex gap-2">
-                  {scenario.tags.map((tag, tagIndex) => (
-                    <span key={tagIndex} className="px-3 py-1 bg-accent/10 text-accent-foreground rounded-full text-xs font-medium">
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-              </Card>
-            ))}
-          </div>
-          <p className="text-center text-muted-foreground mt-8 max-w-3xl mx-auto text-sm">
-            これらのシナリオは、完全に実装済みではありません。ただし、OSとしてこう並べて見る予定で設計しています。
-          </p>
-        </div>
-      </section>
+
 
       {/* S7: この1on1で一緒にやること */}
       <section className="container py-16 md:py-24">
@@ -485,7 +510,7 @@ export default function Home() {
             {
               step: "2",
               title: "余力があれば他の軸も軽く触る",
-              description: "「海外駐在あり／なし」「数年後にゆるい働き方に切り替える」など、他の選択肢も軽く触ります。OSとしての世界線比較のイメージを体感していただきます。",
+              description: "まずは住宅の Rent vs Buy から整理し、必要に応じて「海外駐在を取る場合」「数年だけ年収を落としてゆるい働き方に切り替える場合」など、他の世界線にも軽く触れていきます。OSとしての世界線比較のイメージを体感していただきます。",
             },
             {
               step: "3",
@@ -603,7 +628,7 @@ export default function Home() {
           <p className="text-center text-lg text-muted-foreground mb-12">
             現在は少人数のクローズドテストとして、1on1でのオンラインセッションを行っています。<br />
             事前にいくつかの情報を入力いただき、条件が近い方から順にご案内します。<br />
-            セッションでは、住宅の話から始めつつ、「海外」「仕事」「イベント」の話も前提として聞かせてください。
+            セッションでは、住宅の話から始めつつ、「海外」「仕事」「子どもやイベント」の話も前提として伺い、必要に応じて世界線に反映していきます。
           </p>
 
           {showThankYou ? (
