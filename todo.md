@@ -393,3 +393,20 @@
 - [ ] Sessionは招待トークン有効 OR Upgrade承認時のみ解放
 - [ ] Pass決済URLは公開LPに置かない、Gate通過後の導線でのみ到達
 - [ ] Session決済URLは必ず秘匿、48時間期限、1回決済で無効化
+
+## Pass購入後のVercel版アプリ連携（実装方針確定）
+
+### 実装方針
+- Pass購入後、Vercel版アプリ（https://exit-readiness-os.vercel.app/）のログインID/パスワードを発行
+- PassOnboarding画面で、ログインID/パスワードを表示し、Vercel版アプリへのリンクを提供
+- PassCockpit.tsx、PassDecisionMemo.tsxは不要（Vercel版アプリで完結）
+
+### タスク
+- [x] PassCockpit.tsxを削除
+- [x] PassDecisionMemo.tsxを削除
+- [x] App.tsxから不要なルーティングを削除
+- [x] passSubscriptionsテーブルにloginId、loginPasswordフィールドを追加
+- [x] Webhook処理修正（ログインID/パスワード生成）
+- [x] PassOnboarding.tsx修正（Vercel版アプリへの導線）
+- [x] Upgrade申請API実装
+- [x] Private Checkout（Session）API実装

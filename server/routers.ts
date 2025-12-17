@@ -10,6 +10,9 @@ import {
   getInvitationTokenByToken,
   markInvitationTokenAsUsed,
   hasActivePassSubscription,
+  getPassSubscriptionByEmail,
+  insertUpgradeRequest,
+  insertSessionCheckout,
 } from "./db";
 import { stripe } from "./stripe";
 import { PRODUCTS } from "./products";
@@ -223,6 +226,122 @@ export const appRouter = router({
       .query(async ({ input }) => {
         const hasActive = await hasActivePassSubscription(input.email);
         return { hasActivePass: hasActive };
+      }),
+
+    /**
+     * Get Pass subscription details (including login credentials)
+     */
+    getSubscription: publicProcedure
+      .input(z.object({ email: z.string().email() }))
+      .query(async ({ input }) => {
+        const subscription = await getPassSubscriptionByEmail(input.email);
+        if (!subscription) {
+          throw new Error('Pass subscription not found');
+        }
+        return {
+          email: subscription.email,
+          loginId: subscription.loginId,
+          loginPassword: subscription.loginPassword,
+          expiryDate: subscription.expiryDate,
+          status: subscription.status,
+        };
+      }),
+
+    /**
+     * Submit Upgrade request (Pass → Session)
+     */
+    submitUpgradeRequest: publicProcedure
+      .input(
+        z.object({
+          email: z.string().email(),
+          name: z.string().optional(),
+          reason: z.string().optional(),
+          notes: z.string().optional(),
+        })
+      )
+      .mutation(async ({ input }) => {
+        // Check if user has active Pass subscription
+        const hasActive = await hasActivePassSubscription(input.email);
+        if (!hasActive) {
+          throw new Error('Pass subscription not found or expired');
+        }
+
+        // Insert Upgrade request
+        await insertUpgradeRequest({
+          email: input.email,
+          notes: input.notes || `Name: ${input.name || 'N/A'}, Reason: ${input.reason || 'N/A'}`,
+          status: 'pending',
+        });
+
+        return { success: true };
+      }),
+
+    /**
+     * Create Private Checkout for Session (48-hour expiry, one-time use)
+     * Only for approved Upgrade requests or invitation token holders
+     */
+    createSessionCheckout: publicProcedure
+      .input(
+        z.object({
+          email: z.string().email(),
+          name: z.string().optional(),
+        })
+      )
+      .mutation(async ({ input }) => {
+        try {
+          const product = PRODUCTS.SESSION;
+          const origin = process.env.VITE_FRONTEND_FORGE_API_URL?.replace('/api', '') || 'http://localhost:3000';
+
+          // Generate unique checkout token
+          const checkoutToken = `session_${Date.now()}_${Math.random().toString(36).substring(2, 15)}`;
+
+          // Create Stripe Checkout Session
+          const session = await stripe.checkout.sessions.create({
+            payment_method_types: ['card'],
+            line_items: [
+              {
+                price_data: {
+                  currency: product.currency,
+                  product_data: {
+                    name: product.name,
+                    description: product.description,
+                  },
+                  unit_amount: product.price,
+                },
+                quantity: 1,
+              },
+            ],
+            mode: 'payment',
+            customer_email: input.email,
+            metadata: {
+              product_type: 'session',
+              customer_email: input.email,
+              customer_name: input.name || '',
+              checkout_token: checkoutToken,
+            },
+            success_url: `${origin}/session/confirmed?session_id={CHECKOUT_SESSION_ID}`,
+            cancel_url: `${origin}/pass/upgrade`,
+            expires_at: Math.floor(Date.now() / 1000) + 48 * 60 * 60, // 48 hours
+          });
+
+          // Calculate expiry date (48 hours from now)
+          const expiryDate = new Date();
+          expiryDate.setHours(expiryDate.getHours() + 48);
+
+          // Insert Session checkout record
+          await insertSessionCheckout({
+            email: input.email,
+            checkoutToken,
+            checkoutUrl: session.url || '',
+            expiryDate,
+            isUsed: false,
+          });
+
+          return { url: session.url };
+        } catch (error) {
+          console.error('[Session] Failed to create checkout session:', error);
+          throw new Error('Session決済URLの発行に失敗しました');
+        }
       }),
   }),
 });

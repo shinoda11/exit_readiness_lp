@@ -64,6 +64,13 @@
       "when": 1765984757202,
       "tag": "0008_chilly_santa_claus",
       "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "5",
+      "when": 1765987644713,
+      "tag": "0009_bitter_whistler",
+      "breakpoints": true
     }
   ]
 }

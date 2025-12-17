@@ -115,6 +115,8 @@ export const passSubscriptions = mysqlTable("passSubscriptions", {
   email: varchar("email", { length: 320 }).notNull(),
   stripeCustomerId: varchar("stripeCustomerId", { length: 255 }),
   stripePaymentIntentId: varchar("stripePaymentIntentId", { length: 255 }),
+  loginId: varchar("loginId", { length: 320 }),
+  loginPassword: varchar("loginPassword", { length: 64 }),
   purchaseDate: timestamp("purchaseDate").defaultNow().notNull(),
   expiryDate: timestamp("expiryDate").notNull(),
   price: int("price").notNull(), // 29800

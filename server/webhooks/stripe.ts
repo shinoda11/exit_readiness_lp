@@ -3,6 +3,16 @@ import { stripe } from "../stripe";
 import { insertPassSubscription } from "../db";
 import { PRODUCTS } from "../products";
 
+function generateRandomPassword(length: number): string {
+  const charset = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  let password = "";
+  for (let i = 0; i < length; i++) {
+    const randomIndex = Math.floor(Math.random() * charset.length);
+    password += charset[randomIndex];
+  }
+  return password;
+}
+
 export async function handleStripeWebhook(req: Request, res: Response) {
   const sig = req.headers["stripe-signature"];
 
@@ -63,11 +73,17 @@ export async function handleStripeWebhook(req: Request, res: Response) {
         const expiryDate = new Date(purchaseDate);
         expiryDate.setDate(expiryDate.getDate() + durationDays);
 
+        // Generate login credentials for Vercel app
+        const loginId = email;
+        const loginPassword = generateRandomPassword(12);
+
         // Insert Pass subscription
         await insertPassSubscription({
           email,
           stripeCustomerId: session.customer as string,
           stripePaymentIntentId: session.payment_intent as string,
+          loginId,
+          loginPassword,
           purchaseDate,
           expiryDate,
           price: PRODUCTS.PASS_90_DAYS.price,
