@@ -142,7 +142,7 @@ export default function Home() {
               </div>
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
                 家と、仕事と、暮らす場所。<br />
-                大きな選択ぜんぶを、6,000万〜8,000万クラスの意思決定ごと、世界線で比べるOS。
+                大きな選択ぜんぶを、6,000万〜8,000万クラスの"人生の決断"ごと、世界線で比べるOS。
               </h1>
               <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
                 Exit Readiness OS は、都内の高収入DINKが「家」「仕事」「暮らす場所」「人生で大事にしたいイベント」を、1つのPLとキャッシュフローの上で世界線として比較するためのOSです。
@@ -151,7 +151,7 @@ export default function Home() {
                 最初の入口として「いまの賃貸を続ける」「都心でマンションを買う」といった住宅シナリオからスタートしますが、少しずつ「海外駐在を取り/取らない」「数年後にゆるい働き方に切り替える」「子どもの教育プランを変える」など、横串の選択肢を扱えるように していきます。
               </p>
               <p className="text-base text-muted-foreground leading-relaxed">
-                一般的なFPツールや住宅サイトのように、「売りたい商品」や「売りたい物件」が決まっているわけではなく、どの世界線を選んでもよい前提で数字だけを並べる、フラットなOSです。
+                「この商品が正解です」「この物件が一番お得です」とゴールを決めてから逆算するのではなく、まずはすべての世界線を同じスケールで並べるところから始めます。一般的なFPツールや住宅サイトのように、「売りたい商品」や「売りたい物件」が決まっているわけではなく、どの世界線を選んでもよい前提で数字だけを並べる、フラットなOSです。
               </p>
               <div className="flex flex-col gap-4">
                 <Button size="lg" className="w-full md:w-auto" onClick={() => window.location.href = "/fit-gate"}>
@@ -159,7 +159,7 @@ export default function Home() {
                   <ArrowRight className="ml-2 w-5 h-5" />
                 </Button>
                 <p className="text-sm text-muted-foreground">
-                  12問の質問に答えて、あなたに最適なステップを確認してください。
+                  いきなり1on1を申し込むのではなく、「いまOSを使うフェーズか」「まずPrep Modeで基礎を整えるべきか」を簡単な適合チェックで確認してから進んでもらいます。12問の質問に答えて、あなたに最適なステップを確認してください。
                 </p>
               </div>
               <p className="text-xs text-muted-foreground">
@@ -485,18 +485,18 @@ export default function Home() {
             {[
               {
                 icon: <Layers className="w-6 h-6" />,
-                title: "Rent vs Buy の二本線比較",
-                description: "同じ前提（年収・資産・支出）で、「賃貸を続ける」「都心で買う」の2つの世界線を並べて、どちらがどの年代で有利かを見える化します。",
+                title: "「買うか買わないか」ではなく「どのラインまで攻めるか」が判断できる",
+                description: "賃貸継続、都心で買う、郊外で広めに買う…などの世界線を並べて、どのラインが自分の人生にフィットするかを比較できます。",
               },
               {
                 icon: <Shield className="w-6 h-6" />,
-                title: "安心ラインの可視化",
-                description: "資産が尽き始める年齢、取り崩しペース、最低限必要なキャッシュフローを、Rent / Buy両方で明示します。",
+                title: "「安心ライン」を守れるかどうかが判断できる",
+                description: "資産が尽き始める年齢、取り崩し開始年、最低限必要なキャッシュフローを世界線ごとに比較し、「守るべき下限」を割らない選択ができるかどうかを判断できます。",
               },
               {
                 icon: <Sparkles className="w-6 h-6" />,
-                title: "人生の余白の翻訳",
-                description: "世界線AとBの差分Δを、「旅に使える予算」「追加投資に回せる額」「残業を減らせる期間」などに翻訳します。",
+                title: "「人生の余白」をどこに置くかが判断できる",
+                description: "世界線間の差分Δを、「旅に使える予算」「追加投資に回せる額」「残業を減らせる期間」などに翻訳し、余白をどこに置くかを判断できます。",
               },
             ].map((item, index) => (
               <Card key={index} className="p-8 bg-card">
@@ -524,20 +524,20 @@ export default function Home() {
             </p>
             <div className="grid md:grid-cols-3 gap-8">
               {[
-                {
+              {
                   icon: <Globe className="w-6 h-6" />,
                   title: "Overseas / Expat Lens",
-                  description: "海外駐在を取る／取らない、あるいは海外ベースで働く世界線を、住宅や子どもプランと同じPL上で比較します。",
+                  description: "海外駐在を取る／取らない、あるいは海外ベースで働く世界線を、住宅や子どもプランと同じPL上で比較できるようにしていきます。",
                 },
                 {
                   icon: <Briefcase className="w-6 h-6" />,
                   title: "Work Mode Lens",
-                  description: "「今の会社で走り切る」「数年後に年収を落としてゆるい働き方に切り替える」「独立する」など、働き方のモードごとの世界線を並べます。",
+                  description: "「今の会社で走り切る」「数年後に年収を落としてゆるい働き方に切り替える」など、働き方のモードごとの世界線を並べて比較できるようにしていきます。",
                 },
                 {
                   icon: <Calendar className="w-6 h-6" />,
                   title: "Life Event Lens",
-                  description: "子どもを持つ／持たない、留学させる／させない、世界一周やサバティカルを挟むなど、人生の大きなイベント前提を変えたときのPLを比較します。",
+                  description: "子どもを持つ／持たない、留学させる／させない、世界一周やサバティカルを挿むなど、人生イベント前提を切り替えたときのPLを比較できるようにしていきます。",
                 },
               ].map((item, index) => (
                 <Card key={index} className="p-8 bg-card">

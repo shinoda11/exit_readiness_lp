@@ -73,7 +73,7 @@ export default function PrepMode() {
           <Card className="p-8 mb-8">
             <h3 className="text-2xl font-bold mb-4">Prep Mode とは</h3>
             <p className="text-muted-foreground leading-relaxed mb-6">
-              Exit Readiness OS を使いこなすための準備ガイドです。年収・資産・支出の整理方法、数字の扱い方、よくある質問への回答などを、メールレターでお届けします。
+              Exit Readiness OS 本体を使う前に、「年収・資産・支出の棚卸し」と「Rent vs Buy以前に決めておくべき前提（どこに住みたいか、どこまで働きたいか）」を整えることを目的としています。年収・資産・支出の整理方法、数字の扱い方、よくある質問への回答などを、メールレターでお届けします。
             </p>
             <p className="text-muted-foreground leading-relaxed">
               準備が整ったら、再度適合チェックにお越しください。招待トークンをお持ちの方は、適合チェック時に入力してください。
