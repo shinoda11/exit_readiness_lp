@@ -15,6 +15,13 @@
       "when": 1765904817424,
       "tag": "0001_handy_logan",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1765943607415,
+      "tag": "0002_familiar_owl",
+      "breakpoints": true
     }
   ]
 }

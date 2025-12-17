@@ -1,6 +1,6 @@
 import { eq } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
-import { InsertUser, users, waitlist, InsertWaitlist } from "../drizzle/schema";
+import { InsertUser, users, testSessions, InsertTestSession } from "../drizzle/schema";
 import { ENV } from './_core/env';
 
 let _db: ReturnType<typeof drizzle> | null = null;
@@ -90,26 +90,26 @@ export async function getUserByOpenId(openId: string) {
 }
 
 /**
- * Insert a new waitlist entry
+ * Insert a new test session application
  */
-export async function insertWaitlistEntry(entry: InsertWaitlist) {
+export async function insertTestSession(entry: InsertTestSession) {
   const db = await getDb();
   if (!db) {
     throw new Error("Database not available");
   }
 
-  const result = await db.insert(waitlist).values(entry);
+  const result = await db.insert(testSessions).values(entry);
   return result;
 }
 
 /**
- * Get all waitlist entries (admin only)
+ * Get all test session applications (admin only)
  */
-export async function getAllWaitlistEntries() {
+export async function getAllTestSessions() {
   const db = await getDb();
   if (!db) {
     throw new Error("Database not available");
   }
 
-  return await db.select().from(waitlist).orderBy(waitlist.createdAt);
+  return await db.select().from(testSessions).orderBy(testSessions.createdAt);
 }

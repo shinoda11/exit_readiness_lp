@@ -2,7 +2,7 @@ import { COOKIE_NAME } from "@shared/const";
 import { getSessionCookieOptions } from "./_core/cookies";
 import { systemRouter } from "./_core/systemRouter";
 import { publicProcedure, router } from "./_core/trpc";
-import { insertWaitlistEntry } from "./db";
+import { insertTestSession } from "./db";
 import { z } from "zod";
 
 export const appRouter = router({
@@ -19,18 +19,18 @@ export const appRouter = router({
     }),
   }),
 
-  waitlist: router({
+  testSession: router({
     submit: publicProcedure
       .input(
         z.object({
           email: z.string().email(),
+          name: z.string().optional(),
           currentHousing: z.enum(["賃貸", "持ち家"]),
-          purchaseStatus: z.enum(["検討中", "未検討", "購入済"]),
-          incomeRange: z.string().optional(),
-          propertyRange: z.string().optional(),
-          workStyle: z.string().optional(),
-          interests: z.array(z.string()).optional(),
-          oneOnOneInterest: z.boolean().optional(),
+          incomeRange: z.enum(["1000-1500", "1500-2000", "2000-3000", "3000以上"]),
+          propertyRange: z.enum(["賃貸継続", "6000", "8000", "1億以上"]),
+          goalMode: z.enum(["守り", "ゆるExit", "フルFIRE視野"]),
+          preferredTime: z.string().optional(),
+          notes: z.string().optional(),
           utmSource: z.string().optional(),
           utmMedium: z.string().optional(),
           utmCampaign: z.string().optional(),
@@ -38,11 +38,7 @@ export const appRouter = router({
         })
       )
       .mutation(async ({ input }) => {
-        const entry = {
-          ...input,
-          interests: input.interests ? JSON.stringify(input.interests) : null,
-        };
-        await insertWaitlistEntry(entry);
+        await insertTestSession(input);
         return { success: true };
       }),
   }),

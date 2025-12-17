@@ -26,20 +26,18 @@ export type User = typeof users.$inferSelect;
 export type InsertUser = typeof users.$inferInsert;
 
 /**
- * Waitlist table for storing user registrations
+ * 1on1 test session applications table
  */
-export const waitlist = mysqlTable("waitlist", {
+export const testSessions = mysqlTable("testSessions", {
   id: int("id").autoincrement().primaryKey(),
   email: varchar("email", { length: 320 }).notNull(),
+  name: varchar("name", { length: 255 }),
   currentHousing: mysqlEnum("currentHousing", ["賃貸", "持ち家"]).notNull(),
-  purchaseStatus: mysqlEnum("purchaseStatus", ["検討中", "未検討", "購入済"]).notNull(),
-  
-  // Optional fields
-  incomeRange: varchar("incomeRange", { length: 64 }),
-  propertyRange: varchar("propertyRange", { length: 64 }),
-  workStyle: varchar("workStyle", { length: 64 }),
-  interests: text("interests"), // JSON array stored as text
-  oneOnOneInterest: boolean("oneOnOneInterest").default(false),
+  incomeRange: mysqlEnum("incomeRange", ["1000-1500", "1500-2000", "2000-3000", "3000以上"]).notNull(),
+  propertyRange: mysqlEnum("propertyRange", ["賃貸継続", "6000", "8000", "1億以上"]).notNull(),
+  goalMode: mysqlEnum("goalMode", ["守り", "ゆるExit", "フルFIRE視野"]).notNull(),
+  preferredTime: varchar("preferredTime", { length: 64 }),
+  notes: text("notes"),
   
   // UTM parameters
   utmSource: varchar("utmSource", { length: 255 }),
@@ -50,5 +48,5 @@ export const waitlist = mysqlTable("waitlist", {
   createdAt: timestamp("createdAt").defaultNow().notNull(),
 });
 
-export type Waitlist = typeof waitlist.$inferSelect;
-export type InsertWaitlist = typeof waitlist.$inferInsert;
+export type TestSession = typeof testSessions.$inferSelect;
+export type InsertTestSession = typeof testSessions.$inferInsert;
