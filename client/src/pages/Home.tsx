@@ -9,13 +9,13 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { trpc } from "@/lib/trpc";
 import { useState, useEffect, useRef } from "react";
 import { toast } from "sonner";
-import { Check, TrendingUp, Target, Layers } from "lucide-react";
+import { Check, TrendingUp, Target, Layers, Shield, LineChart, Wallet } from "lucide-react";
 
 export default function Home() {
   const heroRef = useRef<HTMLElement>(null);
   const problemRef = useRef<HTMLElement>(null);
-  const solutionRef = useRef<HTMLElement>(null);
-  const featuresRef = useRef<HTMLElement>(null);
+  const approachRef = useRef<HTMLElement>(null);
+  const metricsRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -29,7 +29,7 @@ export default function Home() {
       { threshold: 0.1 }
     );
 
-    [heroRef, problemRef, solutionRef, featuresRef].forEach((ref) => {
+    [heroRef, problemRef, approachRef, metricsRef].forEach((ref) => {
       if (ref.current) {
         observer.observe(ref.current);
       }
@@ -135,11 +135,9 @@ export default function Home() {
               「賃貸 vs 購入」の<br />
               世界線比較に変える。
             </h1>
-            <p className="text-base text-muted-foreground mb-4">
-              都内DINK/プレDINK・世帯年収1,500〜3,000万円・6,000〜8,000万円レンジで迷っている方へ
-            </p>
             <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
-              Rent と Buy を同じ前提で二本線として並べ、40〜50代のキャッシュフロー余裕、60歳資産、取り崩し開始年が一気に見えます。結論を押し付けず、「どの年代に余白が欲しいかで選べる」設計です。
+              賃貸を続けるか、都心でマンションを買うか。6,000万か、8,000万か。<br />
+              Exit Readiness OS は、年収1,000〜2,000万円クラスの共働き世帯向けに、賃貸継続と購入の二つの世界線を同じ前提で並べて比較するシミュレーターです。40〜50代のキャッシュフロー余裕、60歳時点の資産、資産取り崩し開始年まで一度に見えるようにし、「どこまで攻めてよいか」と「どこに余白を残すか」を数字で決められるようにします。
             </p>
             <div className="space-y-4">
               <Button
@@ -150,7 +148,7 @@ export default function Home() {
                 1on1テストセッションに応募する
               </Button>
               <p className="text-sm text-muted-foreground">
-                年収1,000〜2,000万円・パートナーあり（DINKs or 子ども1人）の方向け。先着10〜30名。
+                対象：年収1,000〜2,000万円・パートナーあり（DINKs または子ども1人）・都内在住の方を想定しています。
               </p>
             </div>
           </div>
@@ -159,7 +157,7 @@ export default function Home() {
           <div className="relative">
             <Card className="p-8 bg-card shadow-lg">
               <div className="space-y-6">
-                <h3 className="text-xl font-bold mb-4">比較例：年収1,500万円、金融資産3,000万円</h3>
+                <h3 className="text-lg font-bold mb-4">【前提例：年収1,500万円／金融資産3,000万円】</h3>
                 <div className="space-y-4">
                   <div className="flex items-center justify-between pb-2 border-b border-border">
                     <span className="text-sm font-medium text-muted-foreground">賃貸継続</span>
@@ -188,7 +186,8 @@ export default function Home() {
                   </div>
                 </div>
                 <p className="text-sm text-muted-foreground pt-4 border-t border-border">
-                  二本線と3指標で、「どちらがどの年代で楽か」を会話できるようにします。
+                  賃貸継続と「8,000万円の物件を35年ローンで購入」の2本線を、同じ前提で比較したイメージです。<br />
+                  実際のアプリでは、このグラフに 40〜50代のCF余裕・60歳資産・取り崩し開始年などの指標が重なります。
                 </p>
               </div>
             </Card>
@@ -203,49 +202,54 @@ export default function Home() {
             年収も貯蓄もあるのに、<br />「買っていい」と言い切れない。
           </h2>
           <p className="text-lg text-center text-muted-foreground mb-12 max-w-3xl mx-auto">
-            都内在住、世帯年収1,500〜3,000万円。金融資産も数千万円ある。それでも、6,000万にするか、8,000万にするか、あるいは1億まで攻めるかで数年単位で止まっている。計算しても変数が多すぎて決めきれない。
+            都内でそこそこの賃貸に住みながら、数年分の貯蓄と投資も積み上がってきた。<br />
+            6,000万なら行けそうな気もするし、8,000万でも大丈夫かもしれない。<br />
+            でも、40代・50代の余裕や、退職後の資産の減り方まで考え出すと、Excelだけでは判断が止まってしまう──そういう状態の人のためのツールです。
           </p>
           <div className="grid md:grid-cols-2 gap-6">
             {[
-              "6,000万 vs 8,000万で止まっている",
-              "手取りベースと体感がズレている",
-              "退職後のグラフを見るのが怖い",
-              "FIREではなく「レールから外れる自由」が欲しい",
-              "パートナーとの議論が感覚論で終わっている",
+              "6,000万と8,000万、\nどこまで攻めていいか分からない",
+              "頭金をどれくらい入れるべきか、\nもしくは入れない方がいいのか迷っている",
+              "40〜50代の「可処分キャッシュ」を\nどこまで確保しておくべきか決めきれない",
+              "退職後の資産が\n「いつ・どれくらいのペースで減るか」が怖くて判断できない",
             ].map((text, index) => (
               <Card key={index} className="p-6 bg-card flex items-start gap-3">
                 <div className="w-2 h-2 rounded-full bg-accent mt-2 flex-shrink-0" />
-                <p className="text-base">{text}</p>
+                <p className="text-base whitespace-pre-line">{text}</p>
               </Card>
             ))}
           </div>
         </div>
       </section>
 
-      {/* 解き方セクション（3ステップ） */}
-      <section ref={solutionRef} className="container py-16 md:py-24 opacity-0">
-        <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
-          現実のPLを揃え、世界線で比べ、<br />差分を余白に翻訳する。
+      {/* 新セクション：同じ前提で、未来を並べる */}
+      <section ref={approachRef} className="container py-16 md:py-24 opacity-0">
+        <h2 className="text-3xl md:text-4xl font-bold text-center mb-8">
+          同じ前提で、未来を並べる。
         </h2>
+        <p className="text-lg text-center text-muted-foreground mb-12 max-w-3xl mx-auto">
+          Exit Readiness OS は、「計算量を増やす」のではなく、「前提と比較軸を揃える」ことにフォーカスしています。<br />
+          手取りベースのPLに落とし、賃貸と購入の2つの世界線を同じスケールで並べることで、感覚論ではなく、どの年代に余白を置くかで選べる状態をつくります。
+        </p>
         <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
           {[
             {
               step: "1",
               icon: <Layers className="w-6 h-6" />,
-              title: "現実の前提を揃える",
-              description: "手取りベースの世帯サマリーを作成します。実効税率は自動推定されますが、固定値を入力することもできます。黒字は投資として反映され、資産推移に乗ります。",
+              title: "現実のPLを揃える",
+              description: "年収・ボーナス・貯蓄・投資額・生活費・ローン残高などを入力し、手取りベースの家計に落とし込みます。黒字は自動で投資に回り、退職金や企業DCなどのロック資産は別枠で扱います。",
             },
             {
               step: "2",
               icon: <TrendingUp className="w-6 h-6" />,
               title: "Rent vs Buy を世界線として比較する",
-              description: "賃貸継続と購入を、同じ前提で二本線として並べます。40〜50代のキャッシュフロー余裕、60歳時点の資産、取り崩し開始年の3指標で、「どの年代でどちらの方が楽か」を会話できるようにします。",
+              description: "「今の賃貸を続ける」「8,000万円の物件を35年ローンで買う」といったパターンを、二本線として並べます。40〜50代のキャッシュフロー余裕、60歳時点資産、資産取り崩し開始年などを、両方の世界線で同じ指標で比較します。",
             },
             {
               step: "3",
               icon: <Target className="w-6 h-6" />,
-              title: "差分を「人生の余白」に翻訳する",
-              description: "Rent vs Buy の差分（Δ）を、旅・投資・自由時間・セーフティマージンなどに翻訳します。働き方モードを設定し、同じ数字でも読み方がぶれないようにします。",
+              title: "差分を\"人生の余白\"に翻訳する",
+              description: "Rent と Buy の差分Δを、「旅に使える予算」「追加投資に回せる額」「残業を減らせる期間」などに翻訳します。どの年代の余白を厚くするかを、パートナーと具体的に話せる状態まで持っていきます。",
             },
           ].map((item) => (
             <Card key={item.step} className="p-8 bg-card">
@@ -262,38 +266,49 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 主要機能セクション（5カード） */}
-      <section ref={featuresRef} className="bg-secondary/30 py-16 md:py-24 opacity-0">
+      {/* 新セクション：見えるようになること */}
+      <section ref={metricsRef} className="bg-secondary/30 py-16 md:py-24 opacity-0">
         <div className="container">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
-            主要機能
+          <h2 className="text-3xl md:text-4xl font-bold text-center mb-8">
+            このツールで、具体的に見えるようになること。
           </h2>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+          <p className="text-lg text-center text-muted-foreground mb-12 max-w-3xl mx-auto">
+            ただ「総資産がいくらになるか」ではなく、「いつ・どのフェーズでどれくらい余裕があるか」を見るための指標を揃えています。
+          </p>
+          <div className="grid md:grid-cols-2 gap-6 max-w-5xl mx-auto">
             {[
               {
-                title: "Rent vs Buy レンズ",
-                description: "賃貸継続と購入を、同じ前提で二本線として並べます。金融資産レンズと総資産レンズを切り替えることで、「売却しない限り使えない資産」と「流動性のある資産」を分けて見ることができます。",
+                icon: <Shield className="w-6 h-6" />,
+                title: "安心ライン（守るべき下限）",
+                description: "資産が尽き始める年齢と、その後の取り崩しペースを、賃貸／購入それぞれで把握できます。",
               },
               {
-                title: "3指標＋drawdown",
-                description: "40〜50代のキャッシュフロー余裕、60歳時点の資産、資産取り崩し開始年の3つの指標を表示します。加えて、100歳まで資産が尽きない確率と、取り崩し後のおおよそのペースも確認できます。",
+                icon: <LineChart className="w-6 h-6" />,
+                title: "40〜50代のキャッシュフロー余裕",
+                description: "子どもの教育費やキャリアチェンジを踏まえて、どこまで「攻めた年収ダウン」を許容できるかを見ます。",
               },
               {
-                title: "Buy Now 条件入力",
-                description: "物件価格、頭金、購入諸費用、金利、ローン年数を変えながら比較できます。6,000万、8,000万、1億といった複数のシナリオを試すことで、「どこまで攻めてよいか」を判断できます。",
+                icon: <Wallet className="w-6 h-6" />,
+                title: "60歳時点の資産",
+                description: "退職のタイミングでどれくらいの資産を持っていたいか、Rent／Buy それぞれの世界線で比較します。",
               },
               {
-                title: "Goal Lens",
-                description: "働き方モード（守り／ゆるExit／フルFIRE視野）、残し方スタンス、ライフイベントタグを設定し、同じ数字でも読み方がぶれないようにします。FIREを目指していなくても使えます。",
+                icon: <TrendingUp className="w-6 h-6" />,
+                title: "頭金のインパクト",
+                description: "頭金を多く入れる／あえて温存する場合の差分が、老後ではなく「今〜10年」の生活にどう効くかを可視化します。",
               },
               {
-                title: "信頼性のためのエンジン",
-                description: "税・社会保険は実効税率の目安で推定されますが、手動調整も可能です。総資産は現金と同じではなく、売却しない限り使えない資産を含みます。前提を明示することで、数字を押し付けない設計にしています。",
+                icon: <Target className="w-6 h-6" />,
+                title: "Goal Lens による読み方の違い",
+                description: "「守り重視」「ゆるExit」「FIRE視野」のモードを選ぶことで、同じ数字でもどこに注目すべきかのガイドが変わります。",
               },
-            ].map((feature, index) => (
-              <Card key={index} className="p-8 bg-card">
-                <h3 className="text-xl font-bold mb-4">{feature.title}</h3>
-                <p className="text-muted-foreground leading-relaxed">{feature.description}</p>
+            ].map((item, index) => (
+              <Card key={index} className="p-6 bg-card flex items-start gap-4">
+                <div className="text-accent flex-shrink-0 mt-1">{item.icon}</div>
+                <div>
+                  <h3 className="font-bold mb-2">{item.title}</h3>
+                  <p className="text-muted-foreground text-sm">{item.description}</p>
+                </div>
               </Card>
             ))}
           </div>
@@ -308,20 +323,16 @@ export default function Home() {
         <div className="max-w-3xl mx-auto space-y-4">
           {[
             {
-              title: "税・社会保険",
-              content: "実効税率の目安で推定しています。手動調整も可能ですが、税務ソフトではありません。",
+              title: "税制は実効税率による概算",
+              content: "個別控除・特例までは完全には織り込んでいません。手取りの実感に近づけるための目安として使えます。",
             },
             {
-              title: "住宅価格",
-              content: "将来の価格変動や住み替えのシナリオは完全には再現していません。",
+              title: "住宅価格の上下、売却・住み替えイベント",
+              content: "現時点では簡易的な扱いです。将来の価格変動や住み替えのシナリオは完全には再現していません。",
             },
             {
-              title: "投資助言ではない",
-              content: "これは意思決定の整理ツールであり、特定の金融商品や不動産の販売を推奨するものではありません。",
-            },
-            {
-              title: "前提の明示",
-              content: "入力と挙動が不一致にならないように設計していますが、すべてのケースを網羅するものではありません。",
+              title: "投資助言・販売推奨ではない",
+              content: "このツール自体は特定の物件や金融商品の販売・推奨を目的としたものではありません。意思決定の整理ツールとしてご利用ください。",
             },
           ].map((item, index) => (
             <Card key={index} className="p-6 bg-card">
@@ -385,7 +396,9 @@ export default function Home() {
             1on1テストセッションに応募する
           </h2>
           <p className="text-center text-lg text-muted-foreground mb-12">
-            事前にいくつかの情報を入力していただき、条件が近い方から順にご案内します。セッションでは、あなたの前提を入力しながら、Rent vs Buy の世界線比較を一緒に見ていきます。所要時間は30〜60分を想定しています。
+            現在は少人数のクローズドテストとして、1on1でのオンラインセッションを行っています。<br />
+            事前にいくつかの情報を入力いただき、条件が近い方から順にご案内します。<br />
+            セッションでは、実際の画面を共有しながら、あなたのRent vs Buyの世界線をその場で一緒に見ていきます。
           </p>
 
           {showThankYou ? (
