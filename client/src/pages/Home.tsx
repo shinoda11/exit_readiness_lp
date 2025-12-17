@@ -1,18 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { Textarea } from "@/components/ui/textarea";
-import { trpc } from "@/lib/trpc";
-import { zodResolver } from "@hookform/resolvers/zod";
+
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import {
   ArrowRight,
@@ -30,22 +18,9 @@ import {
 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { trackEvent, AnalyticsEvents } from "@/lib/analytics";
-import { useForm } from "react-hook-form";
-import { toast } from "sonner";
-import { z } from "zod";
 
-const formSchema = z.object({
-  email: z.string().email("有効なメールアドレスを入力してください"),
-  name: z.string().optional(),
-  currentHousing: z.enum(["賃貸", "持ち家"]),
-  incomeRange: z.enum(["1000-1500", "1500-2000", "2000-3000", "3000以上"]),
-  propertyRange: z.enum(["賃貸継続", "6000", "8000", "1億以上"]),
-  goalMode: z.enum(["守り", "ゆるExit", "フルFIRE視野"]),
-  preferredTime: z.string().optional(),
-  notes: z.string().optional(),
-});
 
-type FormData = z.infer<typeof formSchema>;
+
 
 export default function Home() {
   const heroRef = useRef<HTMLElement>(null);
@@ -54,40 +29,12 @@ export default function Home() {
   const scenarioRef = useRef<HTMLElement>(null);
   const nowRef = useRef<HTMLElement>(null);
   const futureRef = useRef<HTMLElement>(null);
-  const sessionRef = useRef<HTMLElement>(null);
+
   const suitedRef = useRef<HTMLElement>(null);
   const constraintsRef = useRef<HTMLElement>(null);
-  const formRef = useRef<HTMLElement>(null);
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    setValue,
-    watch,
-  } = useForm<FormData>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      currentHousing: "賃貸",
-    },
-  });
 
-  const createTestSession = trpc.testSession.submit.useMutation({
-    onSuccess: () => {
-      toast.success("応募を受け付けました", {
-        description: "ご登録いただいたメールアドレスに詳細をお送りします。",
-      });
-    },
-    onError: (error: any) => {
-      toast.error("エラーが発生しました", {
-        description: error.message,
-      });
-    },
-  });
 
-  const onSubmit = (data: FormData) => {
-    createTestSession.mutate(data);
-  };
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -109,10 +56,10 @@ export default function Home() {
       scenarioRef,
       nowRef,
       futureRef,
-      sessionRef,
+
       suitedRef,
       constraintsRef,
-      formRef,
+
     ];
 
     refs.forEach((ref) => {
@@ -596,48 +543,7 @@ export default function Home() {
           </div>
         </section>
 
-        {/* S7: 1on1テストセッションについて（紹介制） */}
-        <section ref={sessionRef} className="container py-16 md:py-24 opacity-0">
-          <div className="max-w-4xl mx-auto text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-6">1on1テストセッションについて（紹介制）</h2>
-            <p className="text-lg text-muted-foreground leading-relaxed">
-              1on1テストセッションは、現在「紹介制」で提供しています。<br />
-              適合チェックで「Session解放」と判定された方、または招待トークンをお持ちの方のみが応募できます。
-            </p>
-          </div>
 
-          <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-            {[
-              {
-                step: "STEP 1",
-                title: "前提の整理",
-                description: "年収・資産・支出・ライフプラン前提を、1つのPLとキャッシュフローに落とし込みます。「いまの世界線」を可視化することで、比較の土台を作ります。",
-                outcome: "セッションが終わっても使い続けられるように、「自分たちの標準PL」として再利用できる形で前提を整理します。",
-              },
-              {
-                step: "STEP 2",
-                title: "世界線の比較",
-                description: "「賃貸継続」「都心で買う」「海外駐在を取る」「ゆるExitに切り替える」など、2〜3本の世界線を並べて、CF余裕・60歳資産・取り崩し開始年を比較します。",
-                outcome: "ここで見た2〜3本の世界線は、そのままスクリーンショットとして持ち帰り、後日パートナーと落ち着いて話す材料にできます。",
-              },
-              {
-                step: "STEP 3",
-                title: "Exit基準の言語化",
-                description: "「この条件になったら会社にNOと言える」「ここまでなら家を買ってもよい」という基準を、一緒に文字として残します。",
-                outcome: "最後に、「この条件になったら会社にNOと言える」「ここまでなら家を買ってもよい」という1〜2行の基準を、一緒に文字として残します。",
-              },
-            ].map((item, index) => (
-              <Card key={index} className="p-8 bg-card">
-                <div className="inline-block px-3 py-1 bg-accent/10 text-accent rounded-full text-xs font-medium mb-4">
-                  {item.step}
-                </div>
-                <h3 className="text-xl font-bold mb-3">{item.title}</h3>
-                <p className="text-sm text-muted-foreground leading-relaxed mb-4">{item.description}</p>
-                <p className="text-sm text-accent leading-relaxed">{item.outcome}</p>
-              </Card>
-            ))}
-          </div>
-        </section>
 
         {/* S8: 向いている人 / 向いていない人 */}
         <section ref={suitedRef} className="bg-secondary/30 py-16 md:py-24 opacity-0">

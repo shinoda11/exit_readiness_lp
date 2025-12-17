@@ -72,7 +72,7 @@ export const appRouter = router({
       )
       .mutation(async ({ input }) => {
         // Judgment logic
-        let judgmentResult: "prep" | "pass" | "session" = "prep";
+        let judgmentResult: "prep" | "ready" | "session" = "prep";
 
         // Check invitation token
         let hasValidToken = false;
@@ -96,7 +96,7 @@ export const appRouter = router({
         if (hasValidToken && incomeOk && assetOk && numberInputOk) {
           judgmentResult = "session";
         } else if (incomeOk && assetOk && numberInputOk && budgetOk) {
-          judgmentResult = "pass";
+          judgmentResult = "ready";
         } else {
           judgmentResult = "prep";
         }

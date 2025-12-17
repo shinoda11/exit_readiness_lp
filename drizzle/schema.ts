@@ -71,7 +71,7 @@ export const fitGateResponses = mysqlTable("fitGateResponses", {
   q11PrivacyConsent: boolean("q11PrivacyConsent").notNull(),
   q12BudgetSense: varchar("q12BudgetSense", { length: 64 }),
   invitationToken: varchar("invitationToken", { length: 64 }),
-  judgmentResult: mysqlEnum("judgmentResult", ["prep", "pass", "session"]),
+  judgmentResult: mysqlEnum("judgmentResult", ["prep", "ready", "session"]),
   sessionDone: boolean("sessionDone").default(false),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
 });

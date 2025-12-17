@@ -7,18 +7,18 @@ import { trackEvent, AnalyticsEvents } from "@/lib/analytics";
 
 export default function FitResult() {
   const [, setLocation] = useLocation();
-  const [result, setResult] = useState<"prep" | "pass" | "session" | null>(null);
+  const [result, setResult] = useState<"prep" | "ready" | "session" | null>(null);
 
   useEffect(() => {
     // Get result from URL query parameter
     const params = new URLSearchParams(window.location.search);
-    const resultParam = params.get("result") as "prep" | "pass" | "session" | null;
+    const resultParam = params.get("result") as "prep" | "ready" | "session" | null;
     setResult(resultParam);
 
     // Track result event
     if (resultParam === "prep") {
       trackEvent(AnalyticsEvents.FITGATE_RESULT_PREP);
-    } else if (resultParam === "pass") {
+    } else if (resultParam === "ready") {
       trackEvent(AnalyticsEvents.FITGATE_RESULT_NOTYET);
     } else if (resultParam === "session") {
       trackEvent(AnalyticsEvents.FITGATE_RESULT_SESSION);
@@ -46,7 +46,7 @@ export default function FitResult() {
         {/* Result Content */}
         <section className="container py-12 max-w-3xl">
           {result === "prep" && <PrepResult setLocation={setLocation} />}
-          {result === "pass" && <PassResult />}
+          {result === "ready" && <ReadyResult />}
           {result === "session" && <SessionResult />}
         </section>
       </main>
@@ -123,17 +123,17 @@ function PrepResult({ setLocation }: { setLocation: (path: string) => void }) {
   );
 }
 
-// Pass Result Component
-function PassResult() {
+// Ready Result Component (Pass推奨)
+function ReadyResult() {
   return (
     <Card className="p-8">
       <div className="text-center mb-6">
         <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/20 mb-4">
           <Check className="w-8 h-8 text-primary" />
         </div>
-        <h2 className="text-2xl font-bold mb-2">Pass（推奨）</h2>
+        <h2 className="text-2xl font-bold mb-2">Ready（Pass推奨）</h2>
         <p className="text-muted-foreground">
-          Exit Readiness OS の利用に適した状態です
+          Exit Readiness OS Pass の利用準備が整っています
         </p>
       </div>
 
@@ -141,7 +141,7 @@ function PassResult() {
         <div>
           <h3 className="font-semibold mb-3">次のステップ</h3>
           <p className="text-sm text-muted-foreground leading-relaxed mb-4">
-            現在、Exit Readiness OS はクローズドβ版として、招待制で1on1テストセッションを実施しています。
+            現在、Exit Readiness OS はクローズドβ版として、招待制で1on1 Decision Sessionを実施しています。
           </p>
           <p className="text-sm text-muted-foreground leading-relaxed">
             招待トークンをお持ちの方は、適合チェック時に入力することで、Session に進むことができます。
@@ -189,7 +189,7 @@ function SessionResult() {
         </div>
         <h2 className="text-2xl font-bold mb-2">Session 解放</h2>
         <p className="text-muted-foreground">
-          1on1テストセッションにご参加いただけます
+          1on1 Decision Sessionにご参加いただけます
         </p>
       </div>
 
@@ -197,7 +197,7 @@ function SessionResult() {
         <div>
           <h3 className="font-semibold mb-3">次のステップ</h3>
           <p className="text-sm text-muted-foreground leading-relaxed mb-4">
-            招待トークンが確認されました。1on1テストセッションの詳細を、ご登録いただいたメールアドレスにお送りします。
+            招待トークンが確認されました。1on1 Decision Sessionの詳細を、ご登録いただいたメールアドレスにお送りします。
           </p>
           <p className="text-sm text-muted-foreground leading-relaxed">
             メールが届かない場合は、迷惑メールフォルダをご確認ください。
@@ -205,7 +205,7 @@ function SessionResult() {
         </div>
 
         <div>
-          <h3 className="font-semibold mb-3">1on1テストセッションの内容</h3>
+          <h3 className="font-semibold mb-3">1on1 Decision Sessionの内容</h3>
           <ul className="space-y-2 text-sm text-muted-foreground">
             <li className="flex items-start gap-2">
               <Check className="w-4 h-4 text-accent mt-0.5 flex-shrink-0" />
