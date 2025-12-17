@@ -229,6 +229,23 @@ export const appRouter = router({
       }),
 
     /**
+     * Get Stripe Session details to extract email
+     */
+    getStripeSession: publicProcedure
+      .input(z.object({ sessionId: z.string() }))
+      .query(async ({ input }) => {
+        try {
+          const session = await stripe.checkout.sessions.retrieve(input.sessionId);
+          return {
+            email: session.customer_email || session.customer_details?.email || null,
+          };
+        } catch (error) {
+          console.error('[Pass] Failed to retrieve Stripe session:', error);
+          throw new Error('Stripe Sessionの取得に失敗しました');
+        }
+      }),
+
+    /**
      * Get Pass subscription details (including login credentials)
      */
     getSubscription: publicProcedure

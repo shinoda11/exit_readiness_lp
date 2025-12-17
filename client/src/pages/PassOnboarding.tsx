@@ -11,27 +11,28 @@ export default function PassOnboarding() {
   const [loginPassword, setLoginPassword] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
 
+  // Get session_id from URL to fetch Stripe session details
+  const params = new URLSearchParams(window.location.search);
+  const sessionId = params.get("session_id");
+
+  const getStripeSession = trpc.pass.getStripeSession.useQuery(
+    { sessionId: sessionId || "" },
+    { enabled: !!sessionId }
+  );
+
   const getPassSubscription = trpc.pass.getSubscription.useQuery(
     { email: email || "" },
     { enabled: !!email }
   );
 
   useEffect(() => {
-    // Get email from URL params (from Stripe redirect)
-    const params = new URLSearchParams(window.location.search);
-    const sessionId = params.get("session_id");
-    const emailParam = params.get("email");
-    
-    if (emailParam) {
-      setEmail(emailParam);
-    } else {
-      // Fallback: get from localStorage
-      const storedEmail = localStorage.getItem("user_email");
-      setEmail(storedEmail);
+    // Get email from Stripe session
+    if (getStripeSession.data?.email) {
+      setEmail(getStripeSession.data.email);
     }
     
     setLoading(false);
-  }, []);
+  }, [getStripeSession.data]);
 
   useEffect(() => {
     if (getPassSubscription.data) {

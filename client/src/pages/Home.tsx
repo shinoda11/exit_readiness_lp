@@ -400,43 +400,103 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Evidence Pack（匿名ケース例）- 枠のみ */}
-        <section className="bg-secondary/20 py-16 md:py-24 opacity-0">
+        {/* Evidence Pack（匿名ケース例）*/}
+        <section className="bg-secondary/20 py-16 md:py-24">
           <div className="container max-w-5xl">
             <div className="text-center mb-12">
               <h2 className="text-3xl md:text-4xl font-bold mb-6">Evidence Pack（匿名ケース例）</h2>
               <p className="text-lg text-muted-foreground leading-relaxed max-w-3xl mx-auto">
-                ここに1on1の匿名アウトプット例を載せる予定です。<br />
-                実際のセッションが3〜5件溜まったタイミングで、具体的なケース例を追加します。
+                実際の1on1セッションで生成された意思決定メモの匿名例です。<br />
+                前提条件、比較世界線、指標差分、インサイトを含んでいます。
               </p>
             </div>
 
             <div className="grid md:grid-cols-3 gap-8">
               {/* Case A */}
-              <Card className="p-8 bg-card">
-                <div className="h-48 bg-secondary/30 rounded-lg flex items-center justify-center mb-4">
-                  <p className="text-muted-foreground text-sm">Case A</p>
+              <Card className="p-6 bg-card hover:shadow-lg transition-shadow">
+                <div className="mb-4">
+                  <div className="inline-block px-3 py-1 bg-accent/10 text-accent text-xs font-semibold rounded-full mb-3">
+                    Case A
+                  </div>
+                  <h3 className="text-lg font-bold mb-2">賢明な攻め方</h3>
                 </div>
-                <h3 className="text-lg font-bold mb-2">ケース例 A</h3>
-                <p className="text-sm text-muted-foreground">準備中</p>
+                <div className="space-y-3 text-sm">
+                  <div>
+                    <p className="text-muted-foreground font-medium mb-1">前提</p>
+                    <p className="text-xs">世帯年収1,800万・資産3,000万・子ど1人</p>
+                  </div>
+                  <div>
+                    <p className="text-muted-foreground font-medium mb-1">比較世界線</p>
+                    <p className="text-xs">賢貸継続 vs 6,000万購入</p>
+                  </div>
+                  <div>
+                    <p className="text-muted-foreground font-medium mb-1">指標差分</p>
+                    <p className="text-xs">60歳資産：+800万円（賢貸有利）<br />CF余裕：同等<br />取り崩し開始：同じ</p>
+                  </div>
+                  <div className="pt-2 border-t">
+                    <p className="text-xs font-semibold text-accent">
+                      「賢貸継続で浮いた800万を旅行と教育に振る」と決定
+                    </p>
+                  </div>
+                </div>
               </Card>
 
               {/* Case B */}
-              <Card className="p-8 bg-card">
-                <div className="h-48 bg-secondary/30 rounded-lg flex items-center justify-center mb-4">
-                  <p className="text-muted-foreground text-sm">Case B</p>
+              <Card className="p-6 bg-card hover:shadow-lg transition-shadow">
+                <div className="mb-4">
+                  <div className="inline-block px-3 py-1 bg-accent/10 text-accent text-xs font-semibold rounded-full mb-3">
+                    Case B
+                  </div>
+                  <h3 className="text-lg font-bold mb-2">安全マージン確保</h3>
                 </div>
-                <h3 className="text-lg font-bold mb-2">ケース例 B</h3>
-                <p className="text-sm text-muted-foreground">準備中</p>
+                <div className="space-y-3 text-sm">
+                  <div>
+                    <p className="text-muted-foreground font-medium mb-1">前提</p>
+                    <p className="text-xs">世帯年収2,200万・資産5,000万・子ど2人</p>
+                  </div>
+                  <div>
+                    <p className="text-muted-foreground font-medium mb-1">比較世界線</p>
+                    <p className="text-xs">8,000万購入 vs 郊外広め</p>
+                  </div>
+                  <div>
+                    <p className="text-muted-foreground font-medium mb-1">指標差分</p>
+                    <p className="text-xs">60歳資産：-1,200万円（8,000万不利）<br />CF余裕：年-50万<br />取り崩し開始：3年早まる</p>
+                  </div>
+                  <div className="pt-2 border-t">
+                    <p className="text-xs font-semibold text-accent">
+                      「郊外広めで安全マージンを残し、教育費に備える」と決定
+                    </p>
+                  </div>
+                </div>
               </Card>
 
               {/* Case C */}
-              <Card className="p-8 bg-card">
-                <div className="h-48 bg-secondary/30 rounded-lg flex items-center justify-center mb-4">
-                  <p className="text-muted-foreground text-sm">Case C</p>
+              <Card className="p-6 bg-card hover:shadow-lg transition-shadow">
+                <div className="mb-4">
+                  <div className="inline-block px-3 py-1 bg-accent/10 text-accent text-xs font-semibold rounded-full mb-3">
+                    Case C
+                  </div>
+                  <h3 className="text-lg font-bold mb-2">キャリア柔軟性優先</h3>
                 </div>
-                <h3 className="text-lg font-bold mb-2">ケース例 C</h3>
-                <p className="text-sm text-muted-foreground">準備中</p>
+                <div className="space-y-3 text-sm">
+                  <div>
+                    <p className="text-muted-foreground font-medium mb-1">前提</p>
+                    <p className="text-xs">世帯年収1,500万・資産2,500万・子ど1人</p>
+                  </div>
+                  <div>
+                    <p className="text-muted-foreground font-medium mb-1">比較世界線</p>
+                    <p className="text-xs">賢貸継続 vs 都心コンパクト</p>
+                  </div>
+                  <div>
+                    <p className="text-muted-foreground font-medium mb-1">指標差分</p>
+                    <p className="text-xs">60歳資産：同等<br />CF余裕：年-30万（購入不利）<br />取り崩し開始：同じ</p>
+                  </div>
+                  <div className="pt-2 border-t">
+                    <p className="text-xs font-semibold text-accent">
+                      「賢貸継続でキャリア柔軟性を保ち、転勤リスクに備える」と決定
+                    </p>
+                  </div>
+                </div>
               </Card>
             </div>
           </div>
