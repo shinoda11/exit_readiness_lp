@@ -14,7 +14,7 @@ import { useState, useEffect } from "react";
 import { trackEvent, AnalyticsEvents } from "@/lib/analytics";
 
 const fitGateSchema = z.object({
-  email: z.string().email("有効なメールアドレスを入力してください").optional(),
+  email: z.string().min(1, "メールアドレスを入力してください").email("有効なメールアドレスを入力してください"),
   q1DecisionDeadline: z.string().min(1, "選択してください"),
   q2HousingStatus: z.string().min(1, "選択してください"),
   q3PriceRange: z.string().min(1, "選択してください"),
@@ -109,7 +109,7 @@ export default function FitGate() {
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
               {/* Email (Optional) */}
               <div className="space-y-2">
-                <Label htmlFor="email">メールアドレス（任意）</Label>
+                <Label htmlFor="email">メールアドレス（必須）</Label>
                 <Input
                   id="email"
                   type="email"
@@ -117,7 +117,7 @@ export default function FitGate() {
                   {...register("email")}
                 />
                 <p className="text-xs text-muted-foreground">
-                  結果をメールで受け取りたい場合はご入力ください
+                  判定結果と決済導線をお送りするため、メールアドレスが必要です
                 </p>
                 {errors.email && (
                   <p className="text-sm text-destructive">{errors.email.message}</p>

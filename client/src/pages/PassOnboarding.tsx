@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Check, ExternalLink, Copy, Loader2 } from "lucide-react";
+import { Check, ExternalLink, Copy, Loader2, CheckCircle2, Circle } from "lucide-react";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { trpc } from "@/lib/trpc";
@@ -25,6 +25,18 @@ export default function PassOnboarding() {
     { enabled: !!email }
   );
 
+  const getOnboarding = trpc.pass.getOnboarding.useQuery(
+    { email: email || "" },
+    { enabled: !!email }
+  );
+
+  const updateOnboarding = trpc.pass.updateOnboarding.useMutation({
+    onSuccess: () => {
+      getOnboarding.refetch();
+      toast.success("タスクを完了しました");
+    },
+  });
+
   useEffect(() => {
     // Get email from Stripe session
     if (getStripeSession.data?.email) {
@@ -45,6 +57,16 @@ export default function PassOnboarding() {
     navigator.clipboard.writeText(text);
     toast.success(`${label}をコピーしました`);
   };
+
+  const handleTaskComplete = (taskNumber: 1 | 2 | 3) => {
+    if (!email) return;
+    updateOnboarding.mutate({ email, taskNumber });
+  };
+
+  const task1Completed = getOnboarding.data?.task1AppOpened ?? false;
+  const task2Completed = getOnboarding.data?.task2CompareViewed ?? false;
+  const task3Completed = getOnboarding.data?.task3MemoGenerated ?? false;
+  const allTasksCompleted = task1Completed && task2Completed && task3Completed;
 
   if (loading || getPassSubscription.isLoading) {
     return (
@@ -72,7 +94,7 @@ export default function PassOnboarding() {
             </div>
             <h2 className="text-2xl font-bold mb-2">Pass購入ありがとうございます！</h2>
             <p className="text-muted-foreground">
-              Exit Readiness OS Pass（90日間）のご利用を開始できます
+              まずは3つのタスクを完了して、Exit Readiness OS Passの価値を体験してください
             </p>
           </div>
 
@@ -130,7 +152,12 @@ export default function PassOnboarding() {
             <div className="mt-6">
               <Button
                 className="w-full"
-                onClick={() => window.open("https://exit-readiness-os.vercel.app/", "_blank")}
+                onClick={() => {
+                  window.open("https://exit-readiness-os.vercel.app/", "_blank");
+                  if (!task1Completed) {
+                    handleTaskComplete(1);
+                  }
+                }}
               >
                 Exit Readiness OS アプリを開く
                 <ExternalLink className="w-4 h-4 ml-2" />
@@ -142,42 +169,120 @@ export default function PassOnboarding() {
             </p>
           </Card>
 
-          {/* What You Can Do */}
+          {/* Onboarding 3 Tasks */}
           <Card className="p-6 mb-8">
-            <h3 className="font-semibold mb-4">Passでできること</h3>
-            <ul className="space-y-3 text-sm">
-              <li className="flex items-start gap-2">
-                <Check className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
-                <span><strong>Asset Cockpit</strong> - 収入・支出・資産から「何歳まで働けば資産が尽きないか」を可視化</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <Check className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
-                <span><strong>Exit Readiness Score</strong> - Survival/Lifestyle/Risk/Liquidityの4指標で現在地を数値化</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <Check className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
-                <span><strong>資産推移シミュレーション</strong> - 35歳〜100歳までの資産推移を4つのビューで表示</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <Check className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
-                <span><strong>戦略アドバイス</strong> - NEXT ACTIONS（次の一手）と具体的な改善提案</span>
-              </li>
-            </ul>
+            <h3 className="font-semibold mb-4">Onboarding 3タスク</h3>
+            <p className="text-sm text-muted-foreground mb-6">
+              以下の3つのタスクを完了すると、Decision Sessionへのアップグレード申請が可能になります。
+            </p>
+            
+            <div className="space-y-4">
+              {/* Task 1 */}
+              <div className="flex items-start gap-3 p-4 border rounded-lg">
+                {task1Completed ? (
+                  <CheckCircle2 className="w-6 h-6 text-primary flex-shrink-0 mt-0.5" />
+                ) : (
+                  <Circle className="w-6 h-6 text-muted-foreground flex-shrink-0 mt-0.5" />
+                )}
+                <div className="flex-1">
+                  <h4 className="font-medium mb-1">タスク1：アプリを開いた</h4>
+                  <p className="text-sm text-muted-foreground mb-3">
+                    上の「Exit Readiness OS アプリを開く」ボタンをクリックしてアプリにアクセスしてください。
+                  </p>
+                  {!task1Completed && (
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      onClick={() => handleTaskComplete(1)}
+                    >
+                      完了済みにする
+                    </Button>
+                  )}
+                </div>
+              </div>
+
+              {/* Task 2 */}
+              <div className="flex items-start gap-3 p-4 border rounded-lg">
+                {task2Completed ? (
+                  <CheckCircle2 className="w-6 h-6 text-primary flex-shrink-0 mt-0.5" />
+                ) : (
+                  <Circle className="w-6 h-6 text-muted-foreground flex-shrink-0 mt-0.5" />
+                )}
+                <div className="flex-1">
+                  <h4 className="font-medium mb-1">タスク2：シナリオ比較を1回見た</h4>
+                  <p className="text-sm text-muted-foreground mb-3">
+                    Asset Cockpitでシナリオ比較（Rent/Buy/Buy+Shock）を確認してください。
+                  </p>
+                  {!task2Completed && (
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      onClick={() => handleTaskComplete(2)}
+                    >
+                      完了済みにする
+                    </Button>
+                  )}
+                </div>
+              </div>
+
+              {/* Task 3 */}
+              <div className="flex items-start gap-3 p-4 border rounded-lg">
+                {task3Completed ? (
+                  <CheckCircle2 className="w-6 h-6 text-primary flex-shrink-0 mt-0.5" />
+                ) : (
+                  <Circle className="w-6 h-6 text-muted-foreground flex-shrink-0 mt-0.5" />
+                )}
+                <div className="flex-1">
+                  <h4 className="font-medium mb-1">タスク3：意思決定メモを1回生成した</h4>
+                  <p className="text-sm text-muted-foreground mb-3">
+                    Decision Memoで意思決定メモを生成してください。
+                  </p>
+                  {!task3Completed && (
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      onClick={() => handleTaskComplete(3)}
+                    >
+                      完了済みにする
+                    </Button>
+                  )}
+                </div>
+              </div>
+            </div>
+
+            {allTasksCompleted && (
+              <div className="mt-6 p-4 bg-primary/10 rounded-lg">
+                <p className="text-sm font-medium text-primary">
+                  🎉 すべてのタスクが完了しました！Decision Sessionへのアップグレード申請が可能です。
+                </p>
+              </div>
+            )}
           </Card>
 
           {/* Upgrade to Session */}
-          <Card className="p-6 bg-accent/10">
-            <h3 className="font-semibold mb-2">Decision Sessionへのアップグレード</h3>
-            <p className="text-sm text-muted-foreground mb-4">
-              Passを使い込んだ後、より深い意思決定サポートが必要な場合は、Decision Session（1on1、90分）へのアップグレード申請が可能です。
-            </p>
-            <Button
-              variant="outline"
-              onClick={() => window.location.href = "/pass/upgrade"}
-            >
-              Upgrade申請フォームへ
-            </Button>
-          </Card>
+          {allTasksCompleted && (
+            <Card className="p-6 bg-accent/10">
+              <h3 className="font-semibold mb-2">Decision Sessionへのアップグレード</h3>
+              <p className="text-sm text-muted-foreground mb-4">
+                Passを使い込んだ後、より深い意思決定サポートが必要な場合は、Decision Session（1on1、90分）へのアップグレード申請が可能です。
+              </p>
+              <Button
+                variant="outline"
+                onClick={() => window.location.href = "/pass/upgrade"}
+              >
+                Upgrade申請フォームへ
+              </Button>
+            </Card>
+          )}
+
+          {!allTasksCompleted && (
+            <Card className="p-6 bg-muted/50">
+              <h3 className="font-semibold mb-2">Decision Sessionへのアップグレード</h3>
+              <p className="text-sm text-muted-foreground">
+                3つのタスクを完了すると、Decision Session（1on1、90分）へのアップグレード申請が可能になります。
+              </p>
+            </Card>
+          )}
         </section>
       </main>
 

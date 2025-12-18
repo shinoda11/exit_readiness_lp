@@ -305,9 +305,9 @@ export async function upsertPassOnboarding(entry: InsertPassOnboarding) {
 
   const result = await db.insert(passOnboarding).values(entry).onDuplicateKeyUpdate({
     set: {
-      compareViewed: entry.compareViewed ?? false,
-      leverChanged: entry.leverChanged ?? false,
-      memoGenerated: entry.memoGenerated ?? false,
+      task1AppOpened: entry.task1AppOpened ?? false,
+      task2CompareViewed: entry.task2CompareViewed ?? false,
+      task3MemoGenerated: entry.task3MemoGenerated ?? false,
       completedAt: entry.completedAt,
     },
   });
@@ -333,7 +333,7 @@ export async function getPassOnboardingByEmail(email: string) {
 export async function hasCompletedPassOnboarding(email: string): Promise<boolean> {
   const onboarding = await getPassOnboardingByEmail(email);
   if (!onboarding) return false;
-  return onboarding.compareViewed && onboarding.leverChanged && onboarding.memoGenerated;
+  return onboarding.task1AppOpened && onboarding.task2CompareViewed && onboarding.task3MemoGenerated;
 }
 
 /**

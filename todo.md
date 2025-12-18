@@ -64,3 +64,38 @@
 - [ ] fitGateResponsesテーブルにsessionIdが正しく記録されているか確認
 - [ ] スプレッドシート可視化テンプレート（Raw Data、判定結果サマリ、質問別集計、クロス集計、時系列推移）を作成
 - [ ] 20〜30件溜まるまでロジックに手を入れず、ログをきれいに積むことに集中
+
+## P0修正（優先度最高）
+
+### P0-1: Onboarding 3タスク必須化とUpgrade封印
+- [x] PassOnboardingページを「Onboarding 3タスク」画面に変更
+- [x] タスク1：アプリを開いた（自己申告チェックボックス）
+- [x] タスク2：シナリオ比較を1回見た（自己申告チェックボックス）
+- [x] タスク3：意思決定メモを1回生成した（自己申告チェックボックス）
+- [x] 3タスク完了までUpgrade申請ボタンを非表示
+- [x] サーバ側でUpgrade申請を3タスク完了までブロック
+- [x] passOnboardingテーブルを作成（email, task1AppOpened, task2CompareViewed, task3MemoGenerated, completedAt）
+- [x] getOnboarding / updateOnboarding APIエンドポイントを追加
+- [x] hasCompletedPassOnboardingヘルパー関数を実装
+- [x] 3タスク完了後に「すべてのタスクが完了しました！」メッセージとUpgrade申請ボタンを表示
+
+### P0-2: Evidence Packをヒーロー直下へ移動しFAQ 5問と比較ビジュアルを追加
+- [x] Evidence Packプレビューセクションを証拠パックセクション直後に追加
+- [x] FAQ 5問をEvidence Pack直後に追加（何をしてくれるか、物件紹介はあるか、税務代行か、個人情報の扱い、保証はあるか）
+- [x] 世界線比較のビジュアル例を追加（簡易版とフル版のテーブル）
+- [x] Heroに「Evidence Packを見る」スムーズスクロールリンクを追加
+
+### P0-3: Fit Gateメール実質必須化
+- [x] Fit Gateフォームでメールアドレスを必須入力に変更
+- [x] バリデーションエラーメッセージを追加
+
+## P1修正（次の優先度）
+
+### P1-1: Webhook冪等性とログイン情報再送
+- [ ] Webhook処理で同一checkout.session.idの二重発行を防止
+- [ ] ログイン情報再送の自己回復導線を追加（再発行リンクまたはメール再送）
+
+### P1-2: LPの価格レンジ表記の統一
+- [ ] ヒーローセクションの価格レンジを「6,000万〜1億」に統一
+- [ ] Evidence PackのCase例の価格レンジを統一
+- [ ] Fit Gateの質問選択肢の価格レンジを統一

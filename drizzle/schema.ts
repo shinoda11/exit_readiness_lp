@@ -129,14 +129,17 @@ export type InsertPassSubscription = typeof passSubscriptions.$inferInsert;
 
 /**
  * Pass Onboarding progress (3 tasks)
+ * Task 1: アプリを開いた
+ * Task 2: シナリオ比較を1回見た
+ * Task 3: 意思決定メモを1回生成した
  */
 export const passOnboarding = mysqlTable("passOnboarding", {
   id: int("id").autoincrement().primaryKey(),
   userId: int("userId"),
   email: varchar("email", { length: 320 }).notNull().unique(),
-  compareViewed: boolean("compareViewed").default(false).notNull(),
-  leverChanged: boolean("leverChanged").default(false).notNull(),
-  memoGenerated: boolean("memoGenerated").default(false).notNull(),
+  task1AppOpened: boolean("task1AppOpened").default(false).notNull(),
+  task2CompareViewed: boolean("task2CompareViewed").default(false).notNull(),
+  task3MemoGenerated: boolean("task3MemoGenerated").default(false).notNull(),
   completedAt: timestamp("completedAt"),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
 });

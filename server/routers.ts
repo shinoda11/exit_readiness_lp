@@ -11,6 +11,9 @@ import {
   markInvitationTokenAsUsed,
   hasActivePassSubscription,
   getPassSubscriptionByEmail,
+  getPassOnboardingByEmail,
+  upsertPassOnboarding,
+  hasCompletedPassOnboarding,
   insertUpgradeRequest,
   insertSessionCheckout,
 } from "./db";
@@ -265,6 +268,70 @@ export const appRouter = router({
       }),
 
     /**
+     * Get Pass Onboarding progress
+     */
+    getOnboarding: publicProcedure
+      .input(z.object({ email: z.string().email() }))
+      .query(async ({ input }) => {
+        const onboarding = await getPassOnboardingByEmail(input.email);
+        if (!onboarding) {
+          // Create initial onboarding record if not exists
+          await upsertPassOnboarding({
+            email: input.email,
+            task1AppOpened: false,
+            task2CompareViewed: false,
+            task3MemoGenerated: false,
+          });
+          return {
+            task1AppOpened: false,
+            task2CompareViewed: false,
+            task3MemoGenerated: false,
+            completedAt: null,
+          };
+        }
+        return {
+          task1AppOpened: onboarding.task1AppOpened,
+          task2CompareViewed: onboarding.task2CompareViewed,
+          task3MemoGenerated: onboarding.task3MemoGenerated,
+          completedAt: onboarding.completedAt,
+        };
+      }),
+
+    /**
+     * Update Pass Onboarding task completion
+     */
+    updateOnboarding: publicProcedure
+      .input(
+        z.object({
+          email: z.string().email(),
+          taskNumber: z.union([z.literal(1), z.literal(2), z.literal(3)]),
+        })
+      )
+      .mutation(async ({ input }) => {
+        const onboarding = await getPassOnboardingByEmail(input.email);
+        if (!onboarding) {
+          throw new Error('Onboarding record not found');
+        }
+
+        // Preserve existing values and update the specific task
+        const task1 = input.taskNumber === 1 ? true : onboarding.task1AppOpened;
+        const task2 = input.taskNumber === 2 ? true : onboarding.task2CompareViewed;
+        const task3 = input.taskNumber === 3 ? true : onboarding.task3MemoGenerated;
+        
+        const completedAt = (task1 && task2 && task3 && !onboarding.completedAt) ? new Date() : onboarding.completedAt;
+
+        await upsertPassOnboarding({
+          email: input.email,
+          task1AppOpened: task1,
+          task2CompareViewed: task2,
+          task3MemoGenerated: task3,
+          completedAt,
+        });
+
+        return { success: true };
+      }),
+
+    /**
      * Submit Upgrade request (Pass → Session)
      */
     submitUpgradeRequest: publicProcedure
@@ -281,6 +348,12 @@ export const appRouter = router({
         const hasActive = await hasActivePassSubscription(input.email);
         if (!hasActive) {
           throw new Error('Pass subscription not found or expired');
+        }
+
+        // Check if user has completed Onboarding 3 tasks
+        const hasCompleted = await hasCompletedPassOnboarding(input.email);
+        if (!hasCompleted) {
+          throw new Error('Onboarding 3タスクを完了してからUpgrade申請を行ってください');
         }
 
         // Insert Upgrade request

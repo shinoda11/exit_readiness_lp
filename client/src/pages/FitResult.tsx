@@ -15,7 +15,8 @@ export default function FitResult() {
     // Get result from URL query parameter
     const params = new URLSearchParams(window.location.search);
     const resultParam = params.get("result") as "prep" | "ready" | "session" | null;
-    setResult(resultParam);
+    // Default to "ready" for testing if no parameter is provided
+    setResult(resultParam || "ready");
 
     // Track result event
     if (resultParam === "prep") {
@@ -27,13 +28,7 @@ export default function FitResult() {
     }
   }, []);
 
-  if (!result) {
-    return (
-      <div className="min-h-screen bg-background flex items-center justify-center">
-        <p className="text-muted-foreground">読み込み中...</p>
-      </div>
-    );
-  }
+  // Removed loading state since we now have a default value
 
   return (
     <div className="min-h-screen bg-background">

@@ -112,16 +112,6 @@ export default function Home() {
                 <p className="text-sm text-muted-foreground">
                   いきなり1on1を申し込むのではなく、「いまOSを使うフェーズか」「まずPrep Modeで基礎を整えるべきか」を簡単な適合チェックで確認してから進んでもらいます。12問の質問に答えて、あなたに最適なステップを確認してください。
                 </p>
-                <a
-                  href="#evidence-pack-full"
-                  className="text-sm text-accent hover:underline flex items-center gap-2"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    document.getElementById("evidence-pack-full")?.scrollIntoView({ behavior: "smooth" });
-                  }}
-                >
-                  ↓ Evidence Pack（匿名ケース例）を見る
-                </a>
               </div>
               <p className="text-xs text-muted-foreground">
                 対象：年収1,000〜2,000万円・パートナーあり（DINKsまたは子ども1人）・東京都などで都市部在住の方を想定しています。<br />
@@ -217,154 +207,6 @@ export default function Home() {
                   </div>
                 </div>
               </Card>
-            </div>
-          </div>
-        </section>
-
-        {/* Evidence Packプレビュー */}
-        <section className="py-16 md:py-24 bg-secondary/10">
-          <div className="container max-w-5xl">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl md:text-4xl font-bold mb-6">Evidence Pack（匿名ケース例）</h2>
-              <p className="text-lg text-muted-foreground leading-relaxed max-w-3xl mx-auto">
-                実際の1on1セッションで生成された意思決定メモの匿名例です。
-              </p>
-            </div>
-
-            <div className="grid md:grid-cols-3 gap-6">
-              {/* Case A Preview */}
-              <Card className="p-5 bg-card hover:shadow-lg transition-shadow">
-                <div className="mb-3">
-                  <div className="inline-block px-3 py-1 bg-accent/10 text-accent text-xs font-semibold rounded-full mb-2">
-                    Case A
-                  </div>
-                  <h3 className="text-base font-bold mb-1">賢明な攻め方</h3>
-                  <p className="text-xs text-muted-foreground">世帯年収1,800万・資産3,000万・子ども1人</p>
-                </div>
-                <div className="mt-3 pt-3 border-t">
-                  <p className="text-xs font-semibold mb-2">世界線比較（簡易版）</p>
-                  <div className="overflow-x-auto">
-                    <table className="w-full text-xs">
-                      <thead>
-                        <tr className="border-b">
-                          <th className="text-left py-1 pr-1 text-[10px]">指標</th>
-                          <th className="text-left py-1 px-1 text-[10px]">Rent</th>
-                          <th className="text-left py-1 px-1 text-[10px]">Buy</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr className="border-b">
-                          <td className="py-1 pr-1 text-muted-foreground text-[10px]">下振れ耐性</td>
-                          <td className="py-1 px-1 text-[10px]">中</td>
-                          <td className="py-1 px-1 text-[10px]">低</td>
-                        </tr>
-                        <tr>
-                          <td className="py-1 pr-1 text-muted-foreground text-[10px]">自由度</td>
-                          <td className="py-1 px-1 text-[10px]">高</td>
-                          <td className="py-1 px-1 text-[10px]">中</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-                <div className="mt-3">
-                  <a href="#evidence-pack-full" className="text-xs text-accent hover:underline">↓ 下の全文を見る</a>
-                </div>
-              </Card>
-
-              {/* Case B Preview */}
-              <Card className="p-5 bg-card hover:shadow-lg transition-shadow">
-                <div className="mb-3">
-                  <div className="inline-block px-3 py-1 bg-accent/10 text-accent text-xs font-semibold rounded-full mb-2">
-                    Case B
-                  </div>
-                  <h3 className="text-base font-bold mb-1">安全マージン確保</h3>
-                  <p className="text-xs text-muted-foreground">世帯年収2,200万・資産5,000万・子ども2人</p>
-                </div>
-                <div className="mt-3 pt-3 border-t">
-                  <p className="text-xs font-semibold mb-2">世界線比較（簡易版）</p>
-                  <div className="overflow-x-auto">
-                    <table className="w-full text-xs">
-                      <thead>
-                        <tr className="border-b">
-                          <th className="text-left py-1 pr-1 text-[10px]">指標</th>
-                          <th className="text-left py-1 px-1 text-[10px]">Buy郊外</th>
-                          <th className="text-left py-1 px-1 text-[10px]">Buy都心</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr className="border-b">
-                          <td className="py-1 pr-1 text-muted-foreground text-[10px]">下振れ耐性</td>
-                          <td className="py-1 px-1 text-[10px]">中</td>
-                          <td className="py-1 px-1 text-[10px]">低</td>
-                        </tr>
-                        <tr>
-                          <td className="py-1 pr-1 text-muted-foreground text-[10px]">自由度</td>
-                          <td className="py-1 px-1 text-[10px]">中</td>
-                          <td className="py-1 px-1 text-[10px]">低</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-                <div className="mt-3">
-                  <a href="#evidence-pack-full" className="text-xs text-accent hover:underline">↓ 下の全文を見る</a>
-                </div>
-              </Card>
-
-              {/* Case C Preview */}
-              <Card className="p-5 bg-card hover:shadow-lg transition-shadow">
-                <div className="mb-3">
-                  <div className="inline-block px-3 py-1 bg-accent/10 text-accent text-xs font-semibold rounded-full mb-2">
-                    Case C
-                  </div>
-                  <h3 className="text-base font-bold mb-1">キャリア柔軟性優先</h3>
-                  <p className="text-xs text-muted-foreground">世帯年収1,500万・資産2,500万・子ども1人</p>
-                </div>
-                <div className="mt-3 pt-3 border-t">
-                  <p className="text-xs font-semibold mb-2">世界線比較（簡易版）</p>
-                  <div className="overflow-x-auto">
-                    <table className="w-full text-xs">
-                      <thead>
-                        <tr className="border-b">
-                          <th className="text-left py-1 pr-1 text-[10px]">指標</th>
-                          <th className="text-left py-1 px-1 text-[10px]">Rent</th>
-                          <th className="text-left py-1 px-1 text-[10px]">Buy</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr className="border-b">
-                          <td className="py-1 pr-1 text-muted-foreground text-[10px]">下振れ耐性</td>
-                          <td className="py-1 px-1 text-[10px]">中</td>
-                          <td className="py-1 px-1 text-[10px]">低</td>
-                        </tr>
-                        <tr>
-                          <td className="py-1 pr-1 text-muted-foreground text-[10px]">自由度</td>
-                          <td className="py-1 px-1 text-[10px]">高</td>
-                          <td className="py-1 px-1 text-[10px]">中</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-                <div className="mt-3">
-                  <a href="#evidence-pack-full" className="text-xs text-accent hover:underline">↓ 下の全文を見る</a>
-                </div>
-              </Card>
-            </div>
-
-            {/* CTA */}
-            <div className="text-center mt-12">
-              <Button
-                size="lg"
-                onClick={() => {
-                  trackEvent(AnalyticsEvents.LP_HERO_CTA_CLICKED);
-                  window.location.href = "/fit-gate";
-                }}
-              >
-                適合チェックを受ける
-                <ArrowRight className="ml-2 w-5 h-5" />
-              </Button>
             </div>
           </div>
         </section>
@@ -559,7 +401,7 @@ export default function Home() {
         </section>
 
         {/* Evidence Pack（匿名ケース例）*/}
-        <section id="evidence-pack-full" className="bg-secondary/20 py-16 md:py-24">
+        <section className="bg-secondary/20 py-16 md:py-24">
           <div className="container max-w-5xl">
             <div className="text-center mb-12">
               <h2 className="text-3xl md:text-4xl font-bold mb-6">Evidence Pack（匿名ケース例）</h2>
@@ -596,47 +438,6 @@ export default function Home() {
                       「賢貸継続で浮いた800万を旅行と教育に振る」と決定
                     </p>
                   </div>
-                  <div className="mt-4 pt-4 border-t">
-                    <p className="text-xs font-semibold mb-2">世界線比較（フル版）</p>
-                    <div className="overflow-x-auto">
-                      <table className="w-full text-xs">
-                        <thead>
-                          <tr className="border-b">
-                            <th className="text-left py-1 pr-2">指標</th>
-                            <th className="text-left py-1 px-2">Rent</th>
-                            <th className="text-left py-1 px-2">Buy</th>
-                            <th className="text-left py-1 px-2">Buy + Shock</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr className="border-b">
-                            <td className="py-1 pr-2 text-muted-foreground">下振れ耐性</td>
-                            <td className="py-1 px-2">中</td>
-                            <td className="py-1 px-2">低</td>
-                            <td className="py-1 px-2">低</td>
-                          </tr>
-                          <tr className="border-b">
-                            <td className="py-1 pr-2 text-muted-foreground">意思決定の自由度</td>
-                            <td className="py-1 px-2">高</td>
-                            <td className="py-1 px-2">中</td>
-                            <td className="py-1 px-2">低</td>
-                          </tr>
-                          <tr className="border-b">
-                            <td className="py-1 pr-2 text-muted-foreground">主要リスク</td>
-                            <td className="py-1 px-2">賢料上昇</td>
-                            <td className="py-1 px-2">流動性低下</td>
-                            <td className="py-1 px-2">返済負担</td>
-                          </tr>
-                          <tr>
-                            <td className="py-1 pr-2 text-muted-foreground">次の30日</td>
-                            <td className="py-1 px-2">現状維持</td>
-                            <td className="py-1 px-2">物件検索</td>
-                            <td className="py-1 px-2">資金計画見直し</td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
                 </div>
               </Card>
 
@@ -665,47 +466,6 @@ export default function Home() {
                     <p className="text-xs font-semibold text-accent">
                       「郊外広めで安全マージンを残し、教育費に備える」と決定
                     </p>
-                  </div>
-                  <div className="mt-4 pt-4 border-t">
-                    <p className="text-xs font-semibold mb-2">世界線比較（フル版）</p>
-                    <div className="overflow-x-auto">
-                      <table className="w-full text-xs">
-                        <thead>
-                          <tr className="border-b">
-                            <th className="text-left py-1 pr-2">指標</th>
-                            <th className="text-left py-1 px-2">Buy郊外</th>
-                            <th className="text-left py-1 px-2">Buy都心</th>
-                            <th className="text-left py-1 px-2">Buy + Shock</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr className="border-b">
-                            <td className="py-1 pr-2 text-muted-foreground">下振れ耐性</td>
-                            <td className="py-1 px-2">中</td>
-                            <td className="py-1 px-2">低</td>
-                            <td className="py-1 px-2">低</td>
-                          </tr>
-                          <tr className="border-b">
-                            <td className="py-1 pr-2 text-muted-foreground">意思決定の自由度</td>
-                            <td className="py-1 px-2">中</td>
-                            <td className="py-1 px-2">低</td>
-                            <td className="py-1 px-2">低</td>
-                          </tr>
-                          <tr className="border-b">
-                            <td className="py-1 pr-2 text-muted-foreground">主要リスク</td>
-                            <td className="py-1 px-2">通勤負担</td>
-                            <td className="py-1 px-2">流動性低下</td>
-                            <td className="py-1 px-2">返済負担</td>
-                          </tr>
-                          <tr>
-                            <td className="py-1 pr-2 text-muted-foreground">次の30日</td>
-                            <td className="py-1 px-2">物件検索</td>
-                            <td className="py-1 px-2">資金計画確定</td>
-                            <td className="py-1 px-2">資金計画見直し</td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
                   </div>
                 </div>
               </Card>
@@ -736,103 +496,9 @@ export default function Home() {
                       「賢貸継続でキャリア柔軟性を保ち、転勤リスクに備える」と決定
                     </p>
                   </div>
-                  <div className="mt-4 pt-4 border-t">
-                    <p className="text-xs font-semibold mb-2">世界線比較（フル版）</p>
-                    <div className="overflow-x-auto">
-                      <table className="w-full text-xs">
-                        <thead>
-                          <tr className="border-b">
-                            <th className="text-left py-1 pr-2">指標</th>
-                            <th className="text-left py-1 px-2">Rent</th>
-                            <th className="text-left py-1 px-2">Buy</th>
-                            <th className="text-left py-1 px-2">Buy + Shock</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr className="border-b">
-                            <td className="py-1 pr-2 text-muted-foreground">下振れ耐性</td>
-                            <td className="py-1 px-2">中</td>
-                            <td className="py-1 px-2">低</td>
-                            <td className="py-1 px-2">低</td>
-                          </tr>
-                          <tr className="border-b">
-                            <td className="py-1 pr-2 text-muted-foreground">意思決定の自由度</td>
-                            <td className="py-1 px-2">高</td>
-                            <td className="py-1 px-2">中</td>
-                            <td className="py-1 px-2">低</td>
-                          </tr>
-                          <tr className="border-b">
-                            <td className="py-1 pr-2 text-muted-foreground">主要リスク</td>
-                            <td className="py-1 px-2">賢料上昇</td>
-                            <td className="py-1 px-2">流動性低下</td>
-                            <td className="py-1 px-2">返済負担</td>
-                          </tr>
-                          <tr>
-                            <td className="py-1 pr-2 text-muted-foreground">次の30日</td>
-                            <td className="py-1 px-2">現状維持</td>
-                            <td className="py-1 px-2">物件検索</td>
-                            <td className="py-1 px-2">資金計画見直し</td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
                 </div>
               </Card>
             </div>
-          </div>
-        </section>
-
-        {/* Pass購入前の納得形成用FAQ 5問 */}
-        <section className="py-16 md:py-24 bg-card border-y">
-          <div className="container max-w-4xl">
-            <h3 className="text-2xl md:text-3xl font-bold text-center mb-12">よくある質問（購入前）</h3>
-            <Accordion type="single" collapsible className="space-y-4">
-              <AccordionItem value="faq-1" className="border rounded-lg px-6">
-                <AccordionTrigger className="text-left font-semibold hover:no-underline">
-                  Q1. 何をしてくれるサービスですか
-                </AccordionTrigger>
-                <AccordionContent className="text-muted-foreground leading-relaxed">
-                  「今の自分の数字」を入力すると、複数の世界線（Rent vs Buyなど）を比較したグラフ、指標差分、リスク評価、次の30日のアクションを含む「意思決定メモ」を生成します。Passでは90日間、何度でも世界線を変えて比較できます。
-                </AccordionContent>
-              </AccordionItem>
-
-              <AccordionItem value="faq-2" className="border rounded-lg px-6">
-                <AccordionTrigger className="text-left font-semibold hover:no-underline">
-                  Q2. 物件紹介や保険・投資商品の販売はありますか
-                </AccordionTrigger>
-                <AccordionContent className="text-muted-foreground leading-relaxed">
-                  ありません。物件紹介、保険や投資商品の販売はしません。あなたの意思決定をフラットなポジションで支援することが目的です。
-                </AccordionContent>
-              </AccordionItem>
-
-              <AccordionItem value="faq-3" className="border rounded-lg px-6">
-                <AccordionTrigger className="text-left font-semibold hover:no-underline">
-                  Q3. 税務や法務の代行ですか
-                </AccordionTrigger>
-                <AccordionContent className="text-muted-foreground leading-relaxed">
-                  違います。税務申告の代行、個別の税務判断の確定は行いません。意思決定に必要な試算と比較を提供しますが、最終的な税務・法務判断は専門家にご相談ください。
-                </AccordionContent>
-              </AccordionItem>
-
-              <AccordionItem value="faq-4" className="border rounded-lg px-6">
-                <AccordionTrigger className="text-left font-semibold hover:no-underline">
-                  Q4. 個人情報はどう扱いますか
-                </AccordionTrigger>
-                <AccordionContent className="text-muted-foreground leading-relaxed">
-                  適合チェック時は最小限に留めます。決済URLは公開せず、適合した方のみにご案内します。入力情報は目的外に利用しません。
-                </AccordionContent>
-              </AccordionItem>
-
-              <AccordionItem value="faq-5" className="border rounded-lg px-6">
-                <AccordionTrigger className="text-left font-semibold hover:no-underline">
-                  Q5. 保証はありますか
-                </AccordionTrigger>
-                <AccordionContent className="text-muted-foreground leading-relaxed">
-                  提供範囲と成果物はSOWサマリーで明示します。システム不備などで体験が成立しない場合はリカバリー対応します。
-                </AccordionContent>
-              </AccordionItem>
-            </Accordion>
           </div>
         </section>
 
