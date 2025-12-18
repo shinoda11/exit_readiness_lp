@@ -172,3 +172,21 @@
 - [x] charge.dispute.createdイベントでPass無効化
 - [x] server/db.tsにgetPassSubscriptionByPaymentIntentIdとupdatePassSubscriptionStatus関数を追加
 - [x] 無効化時のログイン拒否処理（hasActivePassSubscriptionでstatusをチェック）
+
+---
+
+## Acceptance Criteria 11/11項目完全PASS（最終タスク）
+
+### タスクC: 30日後再診断メール（NotYet向け）の実装
+- [x] notyet_followupテーブルを作成（email, sentAt, fitGateResponseId）
+- [x] server/db.tsにnotyetFollowup関連の関数を追加
+- [x] メールテンプレートを作成（server/email-templates/notyet-followup.ts）
+- [x] 30日後バッチ処理のスケジューラーを実装（server/schedulers/notyet-followup-scheduler.ts）
+- [x] 送信ログをnotyet_followupテーブルに記録
+- [ ] 実際のメール送信サービスと統合（SendGrid / SES / Manus側メール）
+- [ ] 実際のcronスケジューラーと統合（node-cron / Manus scheduler）
+
+### タスクB: Webhook冪等性の実Stripe CLI実証テスト（追加）
+- [ ] Stripe CLIで実際の二重送信を再現
+- [ ] DBログを確認して二重登録が防止されていることを確認
+- [ ] docs/webhook-idempotency-test-results.mdに実証テスト結果を追記

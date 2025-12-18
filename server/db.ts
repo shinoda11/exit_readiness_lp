@@ -19,6 +19,8 @@ import {
   InsertUpgradeRequest,
   sessionCheckouts,
   InsertSessionCheckout,
+  notyetFollowup,
+  InsertNotyetFollowup,
 } from "../drizzle/schema";
 import { ENV } from './_core/env';
 
@@ -423,4 +425,64 @@ export async function getSessionCheckoutByToken(token: string) {
 
   const result = await db.select().from(sessionCheckouts).where(eq(sessionCheckouts.checkoutToken, token)).limit(1);
   return result.length > 0 ? result[0] : undefined;
+}
+
+/**
+ * Insert a new NotYet followup email record
+ */
+export async function insertNotyetFollowup(entry: InsertNotyetFollowup) {
+  const db = await getDb();
+  if (!db) {
+    throw new Error("Database not available");
+  }
+
+  const result = await db.insert(notyetFollowup).values(entry);
+  return result;
+}
+
+/**
+ * Get NotYet followup emails by fitGateResponseId
+ */
+export async function getNotyetFollowupByFitGateResponseId(fitGateResponseId: number) {
+  const db = await getDb();
+  if (!db) {
+    throw new Error("Database not available");
+  }
+
+  const result = await db.select().from(notyetFollowup).where(eq(notyetFollowup.fitGateResponseId, fitGateResponseId));
+  return result;
+}
+
+/**
+ * Get all NotYet Fit Gate responses that need 30-day followup email
+ * (created 30 days ago, prepBucket=notyet, no followup email sent yet)
+ */
+export async function getNotyetResponsesNeedingFollowup() {
+  const db = await getDb();
+  if (!db) {
+    throw new Error("Database not available");
+  }
+
+  // Get all notyet responses from 30 days ago
+  const thirtyDaysAgo = new Date();
+  thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+
+  const responses = await db.select().from(fitGateResponses)
+    .where(eq(fitGateResponses.prepBucket, "notyet"));
+
+  // Filter responses that are 30 days old and have no followup email sent
+  const needFollowup = [];
+  for (const response of responses) {
+    const createdAt = new Date(response.createdAt);
+    const daysSinceCreation = Math.floor((Date.now() - createdAt.getTime()) / (1000 * 60 * 60 * 24));
+
+    if (daysSinceCreation >= 30) {
+      const existingFollowup = await getNotyetFollowupByFitGateResponseId(response.id);
+      if (existingFollowup.length === 0) {
+        needFollowup.push(response);
+      }
+    }
+  }
+
+  return needFollowup;
 }

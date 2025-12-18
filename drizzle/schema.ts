@@ -186,3 +186,16 @@ export const sessionCheckouts = mysqlTable("sessionCheckouts", {
 
 export type SessionCheckout = typeof sessionCheckouts.$inferSelect;
 export type InsertSessionCheckout = typeof sessionCheckouts.$inferInsert;
+
+/**
+ * NotYet followup emails (30-day reminder for re-diagnosis)
+ */
+export const notyetFollowup = mysqlTable("notyetFollowup", {
+  id: int("id").autoincrement().primaryKey(),
+  email: varchar("email", { length: 320 }).notNull(),
+  fitGateResponseId: int("fitGateResponseId").notNull(),
+  sentAt: timestamp("sentAt").defaultNow().notNull(),
+});
+
+export type NotyetFollowup = typeof notyetFollowup.$inferSelect;
+export type InsertNotyetFollowup = typeof notyetFollowup.$inferInsert;
