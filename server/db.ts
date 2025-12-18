@@ -276,6 +276,19 @@ export async function getPassSubscriptionByEmail(email: string) {
 }
 
 /**
+ * Get Pass subscription by Stripe Session ID (for idempotency check)
+ */
+export async function getPassSubscriptionByStripeSessionId(stripeSessionId: string) {
+  const db = await getDb();
+  if (!db) {
+    throw new Error("Database not available");
+  }
+
+  const result = await db.select().from(passSubscriptions).where(eq(passSubscriptions.stripeSessionId, stripeSessionId)).limit(1);
+  return result.length > 0 ? result[0] : undefined;
+}
+
+/**
  * Check if user has active Pass subscription
  */
 export async function hasActivePassSubscription(email: string): Promise<boolean> {

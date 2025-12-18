@@ -10,17 +10,26 @@ import { toast } from "sonner";
 export default function FitResult() {
   const [, setLocation] = useLocation();
   const [result, setResult] = useState<"prep" | "ready" | "session" | null>(null);
+  const [prepBucket, setPrepBucket] = useState<"near" | "notyet" | null>(null);
 
   useEffect(() => {
     // Get result from URL query parameter
     const params = new URLSearchParams(window.location.search);
     const resultParam = params.get("result") as "prep" | "ready" | "session" | null;
+    const prepBucketParam = params.get("prepBucket") as "near" | "notyet" | null;
     // Default to "ready" for testing if no parameter is provided
     setResult(resultParam || "ready");
+    setPrepBucket(prepBucketParam);
 
     // Track result event
     if (resultParam === "prep") {
       trackEvent(AnalyticsEvents.FITGATE_RESULT_PREP);
+      // Track prep_bucket sub-classification
+      if (prepBucketParam === "near") {
+        trackEvent(AnalyticsEvents.FITGATE_RESULT_PREP_NEAR);
+      } else if (prepBucketParam === "notyet") {
+        trackEvent(AnalyticsEvents.FITGATE_RESULT_PREP_NOTYET);
+      }
     } else if (resultParam === "ready") {
       trackEvent(AnalyticsEvents.FITGATE_RESULT_NOTYET);
     } else if (resultParam === "session") {
@@ -42,7 +51,7 @@ export default function FitResult() {
 
         {/* Result Content */}
         <section className="container py-12 max-w-3xl">
-          {result === "prep" && <PrepResult setLocation={setLocation} />}
+          {result === "prep" && <PrepResult setLocation={setLocation} prepBucket={prepBucket} />}
           {result === "ready" && <ReadyResult />}
           {result === "session" && <SessionResult />}
         </section>
@@ -59,16 +68,22 @@ export default function FitResult() {
 }
 
 // Prep Mode Result Component
-function PrepResult({ setLocation }: { setLocation: (path: string) => void }) {
+function PrepResult({ setLocation, prepBucket }: { setLocation: (path: string) => void; prepBucket: "near" | "notyet" | null }) {
+  const isNotYet = prepBucket === "notyet";
+  
   return (
     <Card className="p-8">
       <div className="text-center mb-6">
         <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-accent/20 mb-4">
           <Mail className="w-8 h-8 text-accent" />
         </div>
-        <h2 className="text-2xl font-bold mb-2">Prep Mode をおすすめします</h2>
+        <h2 className="text-2xl font-bold mb-2">
+          {isNotYet ? "いまは検討フェーズの手前です" : "準備が整えば、Passで比較と更新が回せます"}
+        </h2>
         <p className="text-muted-foreground">
-          まずは準備を整えてから、再度適合チェックにお越しください
+          {isNotYet 
+            ? "必要になったタイミングで再診断できます" 
+            : "まずは準備を整えてから、再度適合チェックにお越しください"}
         </p>
       </div>
 
@@ -109,48 +124,69 @@ function PrepResult({ setLocation }: { setLocation: (path: string) => void }) {
           </Button>
         </div>
 
-        <div className="pt-6 border-t space-y-4">
-          <div>
-            <h3 className="font-semibold mb-3 text-sm">準備チェックリスト</h3>
-            <ul className="space-y-2 text-xs text-muted-foreground">
-              <li className="flex items-start gap-2">
-                <span className="text-accent mt-0.5">□</span>
-                <span><strong>意思決定期限</strong>：3か月以内に具体化</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-accent mt-0.5">□</span>
-                <span><strong>価格帯レンジ</strong>：「7,000万〜9,999万」以上に絞り込む</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-accent mt-0.5">□</span>
-                <span><strong>数字入力許容</strong>：年収/資産/支出/物件価格を入力できる状態にする</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-accent mt-0.5">□</span>
-                <span><strong>予算感</strong>：「3万〜4.9万なら検討」以上に引き上げる</span>
-              </li>
-            </ul>
-          </div>
+        {!isNotYet && (
+          <div className="pt-6 border-t space-y-4">
+            <div>
+              <h3 className="font-semibold mb-3 text-sm">準備チェックリスト</h3>
+              <ul className="space-y-2 text-xs text-muted-foreground">
+                <li className="flex items-start gap-2">
+                  <span className="text-accent mt-0.5">□</span>
+                  <span><strong>意思決定期限</strong>：3か月以内に具体化</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-accent mt-0.5">□</span>
+                  <span><strong>価格帯レンジ</strong>：「7,000万～9,999万」以上に絞り込む</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-accent mt-0.5">□</span>
+                  <span><strong>数字入力許容</strong>：年収/資産/支出/物件価格を入力できる状態にする</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-accent mt-0.5">□</span>
+                  <span><strong>予算感</strong>：「3万～4.9万なら検討」以上に引き上げる</span>
+                </li>
+              </ul>
+            </div>
           
-          <div className="bg-accent/5 p-4 rounded-lg">
-            <p className="text-xs text-muted-foreground mb-3">
-              準備が整ったら、再度適合チェックを受けてください。
+            <div className="bg-accent/5 p-4 rounded-lg">
+              <p className="text-xs text-muted-foreground mb-3">
+                準備が整ったら、再度適合チェックを受けてください。
+              </p>
+              <Button
+                variant="outline"
+                size="sm"
+                className="w-full"
+                onClick={() => setLocation("/fit-gate")}
+              >
+                <ArrowRight className="w-4 h-4 mr-2" />
+                再診断を受ける
+              </Button>
+            </div>
+            
+            <p className="text-xs text-muted-foreground text-center pt-2">
+              招待トークンをお持ちの方は、適合チェック時に入力してください。
             </p>
-            <Button
-              variant="outline"
-              size="sm"
-              className="w-full"
-              onClick={() => setLocation("/fit-gate")}
-            >
-              <ArrowRight className="w-4 h-4 mr-2" />
-              再診断を受ける
-            </Button>
           </div>
-          
-          <p className="text-xs text-muted-foreground text-center pt-2">
-            招待トークンをお持ちの方は、適合チェック時に入力してください。
-          </p>
-        </div>
+        )}
+        
+        {isNotYet && (
+          <div className="pt-6 border-t">
+            <div className="bg-accent/5 p-4 rounded-lg">
+              <p className="text-xs text-muted-foreground mb-3">
+                必要になったタイミングで、再度適合チェックを受けてください。
+              </p>
+              <Button
+                variant="outline"
+                size="sm"
+                className="w-full"
+                onClick={() => setLocation("/fit-gate")}
+              >
+                <ArrowRight className="w-4 h-4 mr-2" />
+                再診断を受ける
+              </Button>
+            </div>
+          </div>
+        )}
       </div>
     </Card>
   );
@@ -247,6 +283,7 @@ function ReadyResult() {
 
         <div className="pt-4 border-t">
           <p className="text-xs text-muted-foreground text-center">
+            決済後すぐにログイン情報が発行され、90日間利用できます。<br />
             決済完了後、Onboarding 3タスクから始めていただけます。
           </p>
         </div>

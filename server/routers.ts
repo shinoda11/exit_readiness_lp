@@ -97,17 +97,34 @@ export const appRouter = router({
         }
 
         // Judgment criteria
-        const incomeOk = ["1,500万〜2,499万", "2,500万以上"].includes(input.q4IncomeRange);
-        const assetOk = ["2,000万〜4,999万", "5,000万以上"].includes(input.q5AssetRange);
+        const incomeOk = ["世帯年収1,500万～2,499万", "世帯年収2,500万以上"].includes(input.q4IncomeRange);
+        const assetOk = ["金融資産・流動性資産を2,000万～4,999万", "金融資産・流動性資産を5,000万以上"].includes(input.q5AssetRange);
         const numberInputOk = input.q6NumberInputTolerance === "年収/資産/支出/物件価格を入力できる";
-        const budgetOk = ["3万〜4.9万なら検討", "5万円以上でも意思決定が進むなら払う"].includes(input.q12BudgetSense);
+        const budgetOk = ["3万～4.9万なら検討", "5万円以上でも意思決定が進むなら払う"].includes(input.q12BudgetSense);
 
+        // Prep bucket classification (near vs notyet)
+        let prepBucket: "near" | "notyet" | undefined = undefined;
+        
         if (hasValidToken && incomeOk && assetOk && numberInputOk) {
           judgmentResult = "session";
         } else if (incomeOk && assetOk && numberInputOk && budgetOk) {
           judgmentResult = "ready";
         } else {
           judgmentResult = "prep";
+          
+          // Classify prep into near or notyet
+          const decisionUrgent = ["決断期限3か月以内", "決断期限3～6か月"].includes(input.q1DecisionDeadline || "");
+          const housingActive = ["物件を見ている", "資金計画を立てている"].includes(input.q2HousingStatus || "");
+          const numberInputWilling = input.q6NumberInputTolerance !== "入力したくない";
+          
+          // notyet: 意思決定期限が「未定」または「6か月以内ではない」
+          //         かつ 住宅の検討状況が「まだ漠然」
+          //         かつ 数字入力の許容度が「入力したくない」
+          if (!decisionUrgent && !housingActive && !numberInputWilling) {
+            prepBucket = "notyet";
+          } else {
+            prepBucket = "near";
+          }
         }
 
         // Generate session ID (UUID)
@@ -118,11 +135,13 @@ export const appRouter = router({
           sessionId,
           ...input,
           judgmentResult,
+          prepBucket,
         });
 
         return {
           success: true,
           judgmentResult,
+          prepBucket,
           id: result[0].insertId,
         };
       }),
@@ -140,6 +159,7 @@ export const appRouter = router({
       .input(
         z.object({
           email: z.string().email(),
+          prepBucket: z.enum(["near", "notyet"]).optional(),
         })
       )
       .mutation(async ({ input }) => {
@@ -264,6 +284,25 @@ export const appRouter = router({
           loginPassword: subscription.loginPassword,
           expiryDate: subscription.expiryDate,
           status: subscription.status,
+        };
+      }),
+
+    /**
+     * Resend login information (for users who lost their credentials)
+     */
+    resendLoginInfo: publicProcedure
+      .input(z.object({ email: z.string().email() }))
+      .mutation(async ({ input }) => {
+        const subscription = await getPassSubscriptionByEmail(input.email);
+        if (!subscription) {
+          throw new Error('このメールアドレスでPass購入の記録が見つかりませんでした。購入時のメールをご確認いただくか、サポートまでお問い合わせください。');
+        }
+        if (!subscription.loginId || !subscription.loginPassword) {
+          throw new Error('ログイン情報が発行されていません。サポートまでお問い合わせください。');
+        }
+        return {
+          loginId: subscription.loginId,
+          loginPassword: subscription.loginPassword,
         };
       }),
 

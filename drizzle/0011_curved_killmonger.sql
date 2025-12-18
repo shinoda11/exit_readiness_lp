@@ -1,0 +1,2 @@
+ALTER TABLE `passSubscriptions` ADD `stripeSessionId` varchar(255) NOT NULL;--> statement-breakpoint
+ALTER TABLE `passSubscriptions` ADD CONSTRAINT `passSubscriptions_stripeSessionId_unique` UNIQUE(`stripeSessionId`);

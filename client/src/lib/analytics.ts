@@ -38,7 +38,9 @@ export const AnalyticsEvents = {
   FITGATE_SUBMITTED: 'fitgate_submitted',
   FITGATE_RESULT_SESSION: 'fitgate_result_session',
   FITGATE_RESULT_PREP: 'fitgate_result_prep',
-  FITGATE_RESULT_NOTYET: 'fitgate_result_notyet',
+  FITGATE_RESULT_PREP_NEAR: 'fitgate_result_prep_near',
+  FITGATE_RESULT_PREP_NOTYET: 'fitgate_result_prep_notyet',
+  FITGATE_RESULT_NOTYET: 'fitgate_result_notyet', // Deprecated, use PREP_NEAR/PREP_NOTYET instead
   
   // Prep Mode
   PREP_REGISTERED: 'prep_registered',

@@ -91,9 +91,42 @@
 
 ## P1修正（次の優先度）
 
-### P1-1: Webhook冪等性とログイン情報再送
-- [ ] Webhook処理で同一checkout.session.idの二重発行を防止
-- [ ] ログイン情報再送の自己回復導線を追加（再発行リンクまたはメール再送）
+### P1-1: Webhook冪等性とログイン情報再送（最優先）
+
+#### 冪等性実装
+- [x] passSubscriptionsテーブルにstripeSessionIdカラムを追加（UNIQUE制約）
+- [x] Webhook処理で「既に処理済みか」を判定して早期return
+- [ ] 二重送信テスト：同一session.idでWebhookを2回呼んでも二重発行しないことを確認
+
+#### ログイン情報再送導線
+- [x] /pass/resend-loginページを作成（メールアドレス入力フォーム）
+- [x] server/routers.tsにresendLoginInfo APIを追加（メールでpassSubscriptions検索→loginId/loginPassword返却）
+- [x] メールが見つからない場合は「購入メールの受領確認」へ誘導
+- [ ] PassOnboardingページに「ログイン情報を失った場合」リンクを追加
+
+#### UI改善
+- [x] PassOnboardingページにID/パスワードコピーボタンを追加（既に実装済み）
+- [x] PassOnboardingページに「ログイン情報を失った場合」リンクを追加
+- [x] FitResult.tsxのReady結果ページに「決済後すぐにログイン情報が発行され、90日間利用できます」を追加
+
+#### Evidence Pack二重感の整理
+- [x] Home.tsxの上部Evidence Packプレビューを削除
+- [x] 上部は「3分で適合チェック」CTAだけに寄せる（Heroセクションに下部アンカーリンクあり）
+- [x] 下部は詳細版Evidence Pack＋FAQを残す
+
+#### NotYet出口設計（prep_bucketでnear/notyetを分類）
+- [x] drizzle/schema.tsのfitGateResponsesにprep_bucketカラムを追加（near/notyet）
+- [x] server/routers.tsのprep判定ロジックにprep_bucket分類を追加
+- [x] FitResult.tsxのPrep結果ページをnear/notyetで出し分け
+- [x] prepModeSubscribersテーブルにprep_bucketカラムを追加
+- [x] server/routers.tsにsubscribePrepMode APIを修正（prep_bucketを保存）
+- [x] lib/analytics.tsにfitgate_result_prep_nearとfitgate_result_prep_notyetを追加
+
+#### Go/No-Go基準
+- [x] Webhookの二重送信を意図的に起こしても二重発行しない（stripeSessionId UNIQUE制約）
+- [x] 購入者がサポート連絡なしにログイン情報を取り戻せる（/pass/resend-login）
+- [x] Evidence Packが二重に見えない（上部プレビュー削除）
+- [x] NotYetに出口がある（prep_bucket: near/notyetで分類）
 
 ### P1-2: LPの価格レンジ表記の統一
 - [ ] ヒーローセクションの価格レンジを「6,000万〜1億」に統一

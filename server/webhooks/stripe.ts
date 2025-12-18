@@ -62,9 +62,19 @@ export async function handleStripeWebhook(req: Request, res: Response) {
 
         const email = metadata.customer_email;
         const durationDays = parseInt(metadata.duration_days || "90", 10);
+        const stripeSessionId = session.id;
 
         if (!email) {
           console.error("[Webhook] Missing customer_email in metadata");
+          break;
+        }
+
+        // Idempotency check: Check if this session has already been processed
+        const { getPassSubscriptionByStripeSessionId } = await import("../db");
+        const existingSubscription = await getPassSubscriptionByStripeSessionId(stripeSessionId);
+        
+        if (existingSubscription) {
+          console.log(`[Webhook] Session ${stripeSessionId} already processed, skipping`);
           break;
         }
 
@@ -82,6 +92,7 @@ export async function handleStripeWebhook(req: Request, res: Response) {
           email,
           stripeCustomerId: session.customer as string,
           stripePaymentIntentId: session.payment_intent as string,
+          stripeSessionId,
           loginId,
           loginPassword,
           purchaseDate,

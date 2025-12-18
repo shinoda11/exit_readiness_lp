@@ -9,7 +9,7 @@ import FitGate from "./pages/FitGate";
 import FitResult from "./pages/FitResult";
 import PrepMode from "./pages/PrepMode";
 import PassOnboarding from "./pages/PassOnboarding";
-
+import PassResendLogin from "./pages/PassResendLogin";
 import PassUpgrade from "./pages/PassUpgrade";
 
 function Router() {
@@ -21,7 +21,7 @@ function Router() {
       <Route path={"/fit-result"} component={FitResult} />
       <Route path={"/prep-mode"} component={PrepMode} />
       <Route path={"/pass/onboarding"} component={PassOnboarding} />
-
+      <Route path={"/pass/resend-login"} component={PassResendLogin} />
       <Route path={"/pass/upgrade"} component={PassUpgrade} />
       <Route path={"/404"} component={NotFound} />
       {/* Final fallback route */}

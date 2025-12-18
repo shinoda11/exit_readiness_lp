@@ -165,7 +165,8 @@ export default function PassOnboarding() {
             </div>
 
             <p className="text-xs text-muted-foreground mt-4">
-              ※ ログイン情報は大切に保管してください。90日間有効です。
+              ※ ログイン情報は大切に保管してください。90日間有効です。<br />
+              ログイン情報を失った場合は、<a href="/pass/resend-login" className="text-primary underline">こちら</a>から再表示できます。
             </p>
           </Card>
 

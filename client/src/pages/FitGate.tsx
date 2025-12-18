@@ -61,7 +61,8 @@ export default function FitGate() {
     onSuccess: (data) => {
       // Navigate to result page with judgment result and email
       const email = watch("email") || "";
-      setLocation(`/fit-result?result=${data.judgmentResult}&id=${data.id}&email=${encodeURIComponent(email)}`);
+      const prepBucketParam = data.prepBucket ? `&prepBucket=${data.prepBucket}` : "";
+      setLocation(`/fit-result?result=${data.judgmentResult}&id=${data.id}&email=${encodeURIComponent(email)}${prepBucketParam}`);
     },
     onError: (error: any) => {
       toast.error("エラーが発生しました", {

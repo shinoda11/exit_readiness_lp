@@ -72,6 +72,7 @@ export const fitGateResponses = mysqlTable("fitGateResponses", {
   q12BudgetSense: varchar("q12BudgetSense", { length: 64 }),
   invitationToken: varchar("invitationToken", { length: 64 }),
   judgmentResult: mysqlEnum("judgmentResult", ["prep", "ready", "session"]),
+  prepBucket: mysqlEnum("prepBucket", ["near", "notyet"]),
   sessionDone: boolean("sessionDone").default(false),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
 });
@@ -85,6 +86,7 @@ export type InsertFitGateResponse = typeof fitGateResponses.$inferInsert;
 export const prepModeSubscribers = mysqlTable("prepModeSubscribers", {
   id: int("id").autoincrement().primaryKey(),
   email: varchar("email", { length: 320 }).notNull().unique(),
+  prepBucket: mysqlEnum("prepBucket", ["near", "notyet"]),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
 });
 
@@ -115,6 +117,7 @@ export const passSubscriptions = mysqlTable("passSubscriptions", {
   email: varchar("email", { length: 320 }).notNull(),
   stripeCustomerId: varchar("stripeCustomerId", { length: 255 }),
   stripePaymentIntentId: varchar("stripePaymentIntentId", { length: 255 }),
+  stripeSessionId: varchar("stripeSessionId", { length: 255 }).notNull().unique(),
   loginId: varchar("loginId", { length: 320 }),
   loginPassword: varchar("loginPassword", { length: 64 }),
   purchaseDate: timestamp("purchaseDate").defaultNow().notNull(),
