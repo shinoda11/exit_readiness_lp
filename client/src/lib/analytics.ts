@@ -29,23 +29,27 @@ export function trackEvent(eventName: string, eventData?: Record<string, any>) {
 }
 
 // Predefined event names for type safety
+// 京都モデル v0.3.1 仕様に準拠
 export const AnalyticsEvents = {
-  // Hero section
+  // Landing Page
+  LP_VIEW: 'lp_view',
   LP_HERO_CTA_CLICKED: 'lp_hero_cta_clicked',
   
   // Fit Gate
   FITGATE_STARTED: 'fitgate_started',
   FITGATE_SUBMITTED: 'fitgate_submitted',
-  FITGATE_RESULT_SESSION: 'fitgate_result_session',
-  FITGATE_RESULT_PREP: 'fitgate_result_prep',
+  FITGATE_RESULT_READY: 'fitgate_result_ready',
   FITGATE_RESULT_PREP_NEAR: 'fitgate_result_prep_near',
   FITGATE_RESULT_PREP_NOTYET: 'fitgate_result_prep_notyet',
-  FITGATE_RESULT_NOTYET: 'fitgate_result_notyet', // Deprecated, use PREP_NEAR/PREP_NOTYET instead
+  FITGATE_RESULT_SESSION_UNLOCKED: 'fitgate_result_session_unlocked',
   
-  // Prep Mode
-  PREP_REGISTERED: 'prep_registered',
+  // Pass
+  PASS_CHECKOUT_OPENED: 'pass_checkout_opened',
+  PASS_PAYMENT_SUCCESS: 'pass_payment_success',
   
-  // Session
-  SESSION_CTA_CLICKED: 'session_cta_clicked',
-  SESSION_FORM_SUBMITTED: 'session_form_submitted',
+  // Onboarding
+  ONBOARDING_COMPLETED: 'onboarding_completed',
+  
+  // Upgrade
+  UPGRADE_REQUEST_SUBMITTED: 'upgrade_request_submitted',
 } as const;

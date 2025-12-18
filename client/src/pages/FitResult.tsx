@@ -23,7 +23,6 @@ export default function FitResult() {
 
     // Track result event
     if (resultParam === "prep") {
-      trackEvent(AnalyticsEvents.FITGATE_RESULT_PREP);
       // Track prep_bucket sub-classification
       if (prepBucketParam === "near") {
         trackEvent(AnalyticsEvents.FITGATE_RESULT_PREP_NEAR);
@@ -31,9 +30,9 @@ export default function FitResult() {
         trackEvent(AnalyticsEvents.FITGATE_RESULT_PREP_NOTYET);
       }
     } else if (resultParam === "ready") {
-      trackEvent(AnalyticsEvents.FITGATE_RESULT_NOTYET);
+      trackEvent(AnalyticsEvents.FITGATE_RESULT_READY);
     } else if (resultParam === "session") {
-      trackEvent(AnalyticsEvents.FITGATE_RESULT_SESSION);
+      trackEvent(AnalyticsEvents.FITGATE_RESULT_SESSION_UNLOCKED);
     }
   }, []);
 

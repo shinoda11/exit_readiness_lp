@@ -105,6 +105,59 @@ export async function handleStripeWebhook(req: Request, res: Response) {
         break;
       }
 
+      case "charge.refunded": {
+        const charge = event.data.object;
+        const paymentIntentId = charge.payment_intent as string;
+
+        if (!paymentIntentId) {
+          console.error("[Webhook] Missing payment_intent in charge.refunded event");
+          break;
+        }
+
+        // Find Pass subscription by payment intent ID and mark as cancelled
+        const { getPassSubscriptionByPaymentIntentId, updatePassSubscriptionStatus } = await import("../db");
+        const subscription = await getPassSubscriptionByPaymentIntentId(paymentIntentId);
+
+        if (subscription) {
+          await updatePassSubscriptionStatus(subscription.id, "cancelled");
+          console.log(`[Webhook] Pass subscription ${subscription.id} cancelled due to refund`);
+        } else {
+          console.log(`[Webhook] No Pass subscription found for payment intent ${paymentIntentId}`);
+        }
+        break;
+      }
+
+      case "charge.dispute.created": {
+        const dispute = event.data.object;
+        const chargeId = dispute.charge as string;
+
+        if (!chargeId) {
+          console.error("[Webhook] Missing charge in charge.dispute.created event");
+          break;
+        }
+
+        // Retrieve charge to get payment intent
+        const charge = await stripe.charges.retrieve(chargeId);
+        const paymentIntentId = charge.payment_intent as string;
+
+        if (!paymentIntentId) {
+          console.error("[Webhook] Missing payment_intent in charge");
+          break;
+        }
+
+        // Find Pass subscription by payment intent ID and mark as cancelled
+        const { getPassSubscriptionByPaymentIntentId, updatePassSubscriptionStatus } = await import("../db");
+        const subscription = await getPassSubscriptionByPaymentIntentId(paymentIntentId);
+
+        if (subscription) {
+          await updatePassSubscriptionStatus(subscription.id, "cancelled");
+          console.log(`[Webhook] Pass subscription ${subscription.id} cancelled due to chargeback dispute`);
+        } else {
+          console.log(`[Webhook] No Pass subscription found for payment intent ${paymentIntentId}`);
+        }
+        break;
+      }
+
       default:
         console.log(`[Webhook] Unhandled event type: ${event.type}`);
     }

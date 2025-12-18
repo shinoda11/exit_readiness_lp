@@ -43,7 +43,7 @@ export default function PrepMode() {
   });
 
   const onSubmit = (data: PrepModeFormData) => {
-    trackEvent(AnalyticsEvents.PREP_REGISTERED);
+    // Prep Mode登録は京都モデル v0.3.1 仕様では計測対象外
     subscribePrepMode.mutate(data);
   };
 

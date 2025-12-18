@@ -132,3 +132,43 @@
 - [ ] ヒーローセクションの価格レンジを「6,000万〜1億」に統一
 - [ ] Evidence PackのCase例の価格レンジを統一
 - [ ] Fit Gateの質問選択肢の価格レンジを統一
+
+---
+
+## 検証フェーズ（京都モデル v0.3.1 RC完了判定）
+
+### Webhook冪等性の二重送信テスト（5ケース実施、Notion記録用）
+- [x] テストケース1: 同一イベントの二重送信
+- [x] テストケース2: 異なるイベントIDだが同一session.id
+- [x] テストケース3: UNIQUE制約違反のエラーハンドリング
+- [ ] テストケース4: Webhook未到達の状態でPassOnboarding表示（今後実施）
+- [ ] テストケース5: ログイン情報再送（今後実施）
+- [ ] テストケース6: Session Private Checkout 48h期限切れ（今後実施）
+- [x] テスト結果をMarkdown形式でNotion貼り付け用に出力
+
+### Umamiダッシュボード（イベント名固定、2枚構成）
+- [x] イベント名を京都モデル v0.3.1 仕様に統一
+- [x] lib/analytics.tsでAnalyticsEventsを固定
+- [x] FitResult.tsxとPrepMode.tsxで新しいイベント名を使用
+- [x] docs/umami-dashboard-setup.mdでダッシュボード設定ガイドを作成
+- [ ] Umami管理画面でDashboard AとBを実際に作成（ユーザーが実施）
+
+### Acceptance Criteriaチェック表作成（証拠付き）
+- [x] Public LPにSession申込フォームが存在しない
+- [x] Public LPに決済リンクが存在しない
+- [x] Fit GateでEmailが必須
+- [x] Ready結果ページでSessionが表示されない
+- [x] Sessionは招待トークン有効 または Upgrade承認時のみ購入導線が出る
+- [x] Pass購入後にOnboarding 3タスクが必須で、完了までUpgrade申請が封印される
+- [x] Evidence PackがLP上部にあり、比較ビジュアルとFAQが存在する（PARTIAL PASS: FAQは存在、Evidence Pack上部プレビューは削除）
+- [x] Stripe決済からログイン発行までのE2Eが正常
+- [x] Webhook冪等性とログイン情報再送が実装されている
+- [x] Prep Mode分類（near/notyet）が実装されている
+- [x] Umamiイベント名が京都モデル v0.3.1 仕様に準拠している
+- [x] docs/acceptance-criteria-checklist.mdでチェック表を作成
+
+### 返金・チャージバック時のアクセス剥奪（余力があれば）
+- [x] charge.refundedイベントでPass無効化
+- [x] charge.dispute.createdイベントでPass無効化
+- [x] server/db.tsにgetPassSubscriptionByPaymentIntentIdとupdatePassSubscriptionStatus関数を追加
+- [x] 無効化時のログイン拒否処理（hasActivePassSubscriptionでstatusをチェック）

@@ -289,6 +289,31 @@ export async function getPassSubscriptionByStripeSessionId(stripeSessionId: stri
 }
 
 /**
+ * Get Pass subscription by Stripe Payment Intent ID (for refund/chargeback handling)
+ */
+export async function getPassSubscriptionByPaymentIntentId(paymentIntentId: string) {
+  const db = await getDb();
+  if (!db) {
+    throw new Error("Database not available");
+  }
+
+  const result = await db.select().from(passSubscriptions).where(eq(passSubscriptions.stripePaymentIntentId, paymentIntentId)).limit(1);
+  return result.length > 0 ? result[0] : undefined;
+}
+
+/**
+ * Update Pass subscription status (for refund/chargeback handling)
+ */
+export async function updatePassSubscriptionStatus(id: number, status: "active" | "expired" | "cancelled") {
+  const db = await getDb();
+  if (!db) {
+    throw new Error("Database not available");
+  }
+
+  await db.update(passSubscriptions).set({ status }).where(eq(passSubscriptions.id, id));
+}
+
+/**
  * Check if user has active Pass subscription
  */
 export async function hasActivePassSubscription(email: string): Promise<boolean> {
