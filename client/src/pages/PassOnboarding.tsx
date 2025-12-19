@@ -4,7 +4,6 @@ import { Check, ExternalLink, Copy, Loader2, CheckCircle2, Circle } from "lucide
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { trpc } from "@/lib/trpc";
-import { TEST_MODE, isTestSessionId } from "@shared/const";
 
 export default function PassOnboarding() {
   const [email, setEmail] = useState<string | null>(null);
@@ -15,7 +14,6 @@ export default function PassOnboarding() {
   // Get session_id from URL to fetch Stripe session details
   const params = new URLSearchParams(window.location.search);
   const sessionId = params.get("session_id");
-  const isTestMode = TEST_MODE && sessionId && isTestSessionId(sessionId);
 
   const getStripeSession = trpc.pass.getStripeSession.useQuery(
     { sessionId: sessionId || "" },
@@ -40,22 +38,13 @@ export default function PassOnboarding() {
   });
 
   useEffect(() => {
-    // Test mode: Use dummy email and login info
-    if (isTestMode) {
-      setEmail("test@example.com");
-      setLoginId("test@example.com");
-      setLoginPassword("test1234567890ab");
-      setLoading(false);
-      return;
-    }
-
     // Get email from Stripe session
     if (getStripeSession.data?.email) {
       setEmail(getStripeSession.data.email);
     }
     
     setLoading(false);
-  }, [getStripeSession.data, isTestMode]);
+  }, [getStripeSession.data]);
 
   useEffect(() => {
     if (getPassSubscription.data) {
