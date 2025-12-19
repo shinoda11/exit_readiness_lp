@@ -355,3 +355,45 @@
 - [ ] 本番環境で friend_invite の src や inviteToken を渡しても UI とDBに影響しない
 - [ ] Umami ダッシュボードは2枚のみ、友人イベントは入っていない
 - [ ] 実装設計書が「公開ワンパス提供中、友人導線はParked」に統一されている
+
+---
+
+## 運用固定フェーズ：壊れない状態を証明し、毎日数字が見える状態に固定
+
+### 背景
+- 「次の機能」ではなく、運用で壊れない状態を証明し、毎日数字が見える状態に固定するフェーズ
+- 京都モデルの勝ち筋は、ここで"やることを増やさない"こと
+- 必要な作業は3ブロックだけ
+
+### 1) 本番設定の最終確認
+- [x] 環境変数チェックリスト作成（Preview/Production含む）
+- [x] FRIEND_INVITE_ENABLED=false確認
+- [x] INVITE_TOKEN_BYPASS_VALIDATION=false確認
+- [x] MAIL_DRY_RUN=false確認（本番運用で送るなら）
+- [x] MAIL_PROVIDER=manus確認（原則）/ sendgrid（フォールバック）
+- [x] JOB_AUTH_TOKENがセット済みで、十分に長いランダム文字列確認
+- [ ] Acceptance: 本番で /invite/pass/:token にアクセスしても 404 か / に戻る
+- [ ] Acceptance: 本番で inviteToken や src=friend_invite を付けても挙動が変わらない
+- [ ] Acceptance: bypass が false の状態で、どんなtokenでもinvite経由の閲覧が成立しない
+
+### 2) Umamiダッシュボード運用開始
+- [x] Dashboard A: Acquisition Funnel作成（lp_hero_cta_clicked, fitgate_started, fitgate_submitted）
+- [x] Dashboard B: Revenue and Activation Funnel作成（fitgate_result_ready, pass_checkout_opened, pass_payment_success, onboarding_completed）
+- [x] 友人導線イベントは作らない、置かない、見ない（Parkedなら存在しないのと同義）
+- [x] 2枚が毎日更新される状態を作る
+- [ ] Acceptance: 今日の数字が2枚に出る
+- [ ] Acceptance: 7日分の推移が見える（週次で判断できる）
+
+### 3) 改善フェーズの開始条件と、改善の範囲固定
+- [x] 最適化の目的を固定（Ready→Pass購入率を上げる、Pass購入率を上げる）
+- [x] 改善の対象範囲を固定（Ready結果ページ、Evidence Pack、Onboarding、Fit Gate質問文言）
+- [x] やらないことを固定（質問数の増加、新機能追加、価格変更、友人導線の再開）
+
+### 4) 設計書の差分修正（SSOTのための必須作業）
+- [x] ステータス表記を統一（公開RC提供中、友人導線はParked）
+- [x] 友人導線の記述を本文から外し、Appendixに隔離
+- [x] ルーティング表の /invite/pass/:token は本文から削除、Appendixへ
+- [x] 主要フロー 5.2 は本文から削除、Appendixへ
+- [x] 友人イベント（invite_lp_view 等）は本文から削除、Appendixへ
+- [x] "次のステップ"の章から友人導線のPhase 3〜5を除去
+- [x] セッションの表現を推奨から解放へ統一（session は unlocked、それ以外は ready を返す）
