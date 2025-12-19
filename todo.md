@@ -195,31 +195,43 @@
 
 ## Manusメール + Manus scheduler統合（京都モデル v0.3.1 完全運用化）
 
-### Task A: メール送信サービス統合
+### Task A: mailer adapter実装（Manus mail + SendGrid、DRY_RUNモード）
 - [x] notyetFollowupテーブルにstatusカラムを追加（pending/sending/sent/failed）
 - [x] notyetFollowupテーブルにlast_errorカラムを追加
 - [x] notyetFollowupテーブルにprovider_message_idカラムを追加
 - [x] notyetFollowupテーブルにcreatedAtカラムを追加
 - [x] fitGateResponseId + followup_typeのユニーク制約を追加（二重送信防止）
 - [x] unsubscribeテーブルを作成（email, opt_out, unsubscribedAt）
-- [ ] mailer adapterを作成（server/lib/mailer/index.ts）
-- [ ] sendNotYetFollowup関数を実装（Manus mail / SendGridの分岐）
-- [ ] DRY_RUNモードを追加（ログだけ出して送信しない）
-- [ ] 送信ログを記録（provider_message_id, sent_at, last_error）
+- [x] server/lib/mailer/index.tsを作成（sendMail関数、sendNotYetFollowupEmail関数）
+- [x] MAIL_PROVIDER環境変数（manus / sendgrid）
+- [x] MAIL_DRY_RUN環境変数（true / false）
+- [x] Manus mail provider実装（server/lib/mailer/providers/manus.ts）
+- [x] SendGrid provider実装（server/lib/mailer/providers/sendgrid.ts）
+- [x] DRY_RUN時はプロバイダへの送信を行わず、成功相当の戻り値を返す
+- [ ] 送信ログを記録（provider_message_id, sent_at, last_error）→ エンドポイント側で実装
 
-### Task B: cron実行
-- [ ] /api/jobs/notyet-followupエンドポイントを作成
-- [ ] Authorizationトークン必須にする
-- [ ] 同時実行されたら即returnするロックを入れる
-- [ ] Manus schedulerで毎日10:00 JSTに実行設定
+### Task B: /api/jobs/notyet-followupエンドポイント実装
+- [x] server/routers.tsに/api/jobs/notyet-followupエンドポイントを作成（POST）
+- [x] Authorization: Bearer <JOB_AUTH_TOKEN>必須
+- [x] JOB_AUTH_TOKEN環境変数を追加
+- [x] jobLocksテーブルで同時実行ロックを実装
+- [x] dueなfollowupをpendingかつopt_outではない条件でバッチ取得し、sendingへ遷移
+- [x] DRY_RUN時は確保したレコードをpendingへ戻して終了
+- [x] 実送信時は送信成功でsentへ更新、送信失敗でfailedへ更新
+- [ ] Manus schedulerで毎日10:00 JSTに実行設定（ユーザーが実施）
 
-### Task C: Umamiダッシュボード作成
-- [ ] Dashboard 1: Acquisition Funnel（lp_view, lp_hero_cta_clicked, fitgate_started, fitgate_submitted）
-- [ ] Dashboard 2: Revenue and Activation Funnel（fitgate_result_ready, pass_checkout_opened, pass_payment_success, onboarding_completed）
-- [ ] ダッシュボードURLをdocs/とNotionに貼り付け
+### Task C: unsubscribe登録時にpending followupを終端化
+- [ ] server/routers.tsにunsubscribe APIを追加
+- [ ] unsubscribe登録時にそのメールに紐づくpendingのfollowupをfailed（last_error=opt_out）に更新
+- [ ] client/src/pages/Unsubscribe.tsxを作成（配信停止ページ）
 
-### 二重送信テスト（3ケース）
+### Task D: 二重送信テスト3ケースを実施しNotionに証跡を記録
 - [ ] ケース1: 同一ユーザーをdueにしてschedulerを2回連続実行
 - [ ] ケース2: schedulerを並列実行（2プロセス想定）
 - [ ] ケース3: opt_outのユーザーをdueにして実行
 - [ ] 結果をNotionに貼り付け（実行日時、対象ユーザー、DBのstatus遷移、実際の受信有無、provider_message_id）
+
+### Task E: Umamiダッシュボード作成（ユーザーが実施）
+- [ ] Dashboard 1: Acquisition Funnel（lp_view, lp_hero_cta_clicked, fitgate_started, fitgate_submitted）
+- [ ] Dashboard 2: Revenue and Activation Funnel（fitgate_result_ready, pass_checkout_opened, pass_payment_success, onboarding_completed）
+- [ ] ダッシュボードURLをdocs/とNotionに貼り付け

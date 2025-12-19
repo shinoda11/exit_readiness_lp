@@ -473,6 +473,210 @@ export const appRouter = router({
         }
       }),
   }),
+
+  // Jobs router (for scheduled tasks)
+  jobs: router({
+    notyetFollowup: publicProcedure
+      .input(
+        z.object({
+          dryRun: z.boolean().optional(),
+        })
+      )
+      .mutation(async ({ input, ctx }) => {
+        // Authorization check
+        const authHeader = ctx.req.headers.authorization;
+        const expectedToken = process.env.JOB_AUTH_TOKEN;
+
+        if (!expectedToken) {
+          throw new Error("JOB_AUTH_TOKEN is not configured");
+        }
+
+        if (!authHeader || !authHeader.startsWith("Bearer ")) {
+          throw new Error("Unauthorized: Missing or invalid Authorization header");
+        }
+
+        const token = authHeader.substring(7);
+        if (token !== expectedToken) {
+          throw new Error("Unauthorized: Invalid token");
+        }
+
+        // Import dependencies
+        const { getDb } = await import("./db");
+        const { sendNotYetFollowupEmail } = await import("./lib/mailer/index");
+        const { jobLocks, notyetFollowup, fitGateResponses, unsubscribe } = await import(
+          "../drizzle/schema"
+        );
+        const { eq, and, lt, isNull, notInArray, inArray } = await import("drizzle-orm");
+
+        const db = await getDb();
+        if (!db) {
+          throw new Error("Database not available");
+        }
+
+        const jobName = "notyet-followup";
+        const dryRun = input.dryRun || process.env.MAIL_DRY_RUN === "true";
+
+        try {
+          // 1. Acquire lock
+          const existingLock = await db
+            .select()
+            .from(jobLocks)
+            .where(eq(jobLocks.jobName, jobName))
+            .limit(1);
+
+          if (existingLock.length > 0) {
+            return {
+              success: true,
+              message: "Job already running",
+              processed: 0,
+              dryRun,
+            };
+          }
+
+          await db.insert(jobLocks).values({
+            jobName,
+            lockedBy: `${ctx.req.ip || "unknown"}-${Date.now()}`,
+          });
+
+          // 2. Get opt-out emails
+          const optOutEmails = await db
+            .select({ email: unsubscribe.email })
+            .from(unsubscribe)
+            .where(eq(unsubscribe.optOut, true));
+
+          const optOutEmailList = optOutEmails.map((row) => row.email);
+
+          // 3. Get due followups (30 days ago, pending, not opt-out)
+          const thirtyDaysAgo = new Date();
+          thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+
+          const dueFollowups = await db
+            .select({
+              id: notyetFollowup.id,
+              email: notyetFollowup.email,
+              fitGateResponseId: notyetFollowup.fitGateResponseId,
+            })
+            .from(notyetFollowup)
+            .where(
+              and(
+                eq(notyetFollowup.status, "pending"),
+                lt(notyetFollowup.createdAt, thirtyDaysAgo),
+                optOutEmailList.length > 0
+                  ? notInArray(notyetFollowup.email, optOutEmailList)
+                  : undefined
+              )
+            )
+            .limit(100); // Batch size
+
+          // 4. Mark as sending
+          if (dueFollowups.length > 0) {
+            const ids = dueFollowups.map((f) => f.id);
+            await db
+              .update(notyetFollowup)
+              .set({ status: "sending" })
+              .where(
+                and(
+                  eq(notyetFollowup.status, "pending"),
+                  inArray(notyetFollowup.id, ids)
+                )
+              );
+          }
+
+          // 5. DRY_RUN: Revert to pending and return
+          if (dryRun) {
+            if (dueFollowups.length > 0) {
+              const ids = dueFollowups.map((f) => f.id);
+              await db
+                .update(notyetFollowup)
+                .set({ status: "pending", lastError: "dry_run" })
+                .where(
+                  and(
+                    eq(notyetFollowup.status, "sending"),
+                      inArray(notyetFollowup.id, ids)
+                  )
+                );
+            }
+
+            await db.delete(jobLocks).where(eq(jobLocks.jobName, jobName));
+
+            return {
+              success: true,
+              message: "DRY_RUN: No emails sent",
+              processed: dueFollowups.length,
+              dryRun: true,
+            };
+          }
+
+          // 6. Send emails
+          let sentCount = 0;
+          let failedCount = 0;
+
+          for (const followup of dueFollowups) {
+            try {
+              const fitGateUrl = `${process.env.VITE_FRONTEND_URL || "https://exit-readiness.manus.space"}/fit-gate`;
+              const result = await sendNotYetFollowupEmail(followup.email, fitGateUrl);
+
+              if (result.success) {
+                await db
+                  .update(notyetFollowup)
+                  .set({
+                    status: "sent",
+                    sentAt: new Date(),
+                    providerMessageId: result.messageId,
+                  })
+                  .where(eq(notyetFollowup.id, followup.id));
+                sentCount++;
+              } else {
+                await db
+                  .update(notyetFollowup)
+                  .set({
+                    status: "failed",
+                    lastError: result.error || "Unknown error",
+                  })
+                  .where(eq(notyetFollowup.id, followup.id));
+                failedCount++;
+              }
+            } catch (error) {
+              await db
+                .update(notyetFollowup)
+                .set({
+                  status: "failed",
+                  lastError: error instanceof Error ? error.message : String(error),
+                })
+                .where(eq(notyetFollowup.id, followup.id));
+              failedCount++;
+            }
+          }
+
+          // 7. Release lock
+          await db.delete(jobLocks).where(eq(jobLocks.jobName, jobName));
+
+          return {
+            success: true,
+            message: `Processed ${dueFollowups.length} followups`,
+            processed: dueFollowups.length,
+            sent: sentCount,
+            failed: failedCount,
+            dryRun: false,
+          };
+        } catch (error) {
+          // Release lock on error
+          try {
+            const dbInstance = await getDb();
+            if (dbInstance) {
+              await dbInstance.delete(jobLocks).where(eq(jobLocks.jobName, jobName));
+            }
+          } catch (lockError) {
+            console.error("[Jobs] Failed to release lock:", lockError);
+          }
+
+          console.error("[Jobs] notyet-followup error:", error);
+          throw new Error(
+            `Job execution failed: ${error instanceof Error ? error.message : String(error)}`
+          );
+        }
+      }),
+  }),
 });
 
 export type AppRouter = typeof appRouter;

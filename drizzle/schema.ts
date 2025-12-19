@@ -217,3 +217,16 @@ export const unsubscribe = mysqlTable("unsubscribe", {
 
 export type Unsubscribe = typeof unsubscribe.$inferSelect;
 export type InsertUnsubscribe = typeof unsubscribe.$inferInsert;
+
+/**
+ * Job locks table (for preventing concurrent job execution)
+ */
+export const jobLocks = mysqlTable("jobLocks", {
+  id: int("id").autoincrement().primaryKey(),
+  jobName: varchar("jobName", { length: 64 }).notNull().unique(),
+  lockedAt: timestamp("lockedAt").defaultNow().notNull(),
+  lockedBy: varchar("lockedBy", { length: 255 }),
+});
+
+export type JobLock = typeof jobLocks.$inferSelect;
+export type InsertJobLock = typeof jobLocks.$inferInsert;
