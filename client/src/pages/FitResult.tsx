@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { trackEvent, AnalyticsEvents } from "@/lib/analytics";
 import { trpc } from "@/lib/trpc";
 import { toast } from "sonner";
+import { TEST_MODE, TEST_SESSION_IDS, isTestSessionId } from "@shared/const";
 
 export default function FitResult() {
   const [, setLocation] = useLocation();
@@ -15,11 +16,28 @@ export default function FitResult() {
   useEffect(() => {
     // Get result from URL query parameter
     const params = new URLSearchParams(window.location.search);
+    const sessionIdParam = params.get("sessionId");
     const resultParam = params.get("result") as "prep" | "ready" | "session" | null;
     const prepBucketParam = params.get("prepBucket") as "near" | "notyet" | null;
-    // Default to "ready" for testing if no parameter is provided
-    setResult(resultParam || "ready");
-    setPrepBucket(prepBucketParam);
+
+    // Test mode: Use test session ID to determine result
+    if (TEST_MODE && sessionIdParam && isTestSessionId(sessionIdParam)) {
+      if (sessionIdParam === TEST_SESSION_IDS.READY) {
+        setResult("ready");
+        setPrepBucket(null);
+      } else if (sessionIdParam === TEST_SESSION_IDS.PREP_NEAR) {
+        setResult("prep");
+        setPrepBucket("near");
+      } else if (sessionIdParam === TEST_SESSION_IDS.PREP_NOTYET) {
+        setResult("prep");
+        setPrepBucket("notyet");
+      }
+    } else {
+      // Normal mode: Use result and prepBucket parameters
+      // Default to "ready" for testing if no parameter is provided
+      setResult(resultParam || "ready");
+      setPrepBucket(prepBucketParam);
+    }
 
     // Track result event
     if (resultParam === "prep") {

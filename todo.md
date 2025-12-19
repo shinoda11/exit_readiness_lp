@@ -397,3 +397,26 @@
 - [x] 友人イベント（invite_lp_view 等）は本文から削除、Appendixへ
 - [x] "次のステップ"の章から友人導線のPhase 3〜5を除去
 - [x] セッションの表現を推奨から解放へ統一（session は unlocked、それ以外は ready を返す）
+
+---
+
+## テストモード実装：開発・レビュー時にFit Gateをスキップ
+
+### 背景
+- 開発・レビュー時にユーザー体験を確認したいだけなのに、毎回Fit Gateアンケートに答えるのはストレス
+- 本番環境稼働前にテストモードフラグを追加し、スムーズに行き来できるようにする
+
+### 実装方針
+- 環境変数`TEST_MODE=true`の場合、特定のテストセッションIDを使ってFit Gateをスキップ
+- テストセッションIDは`test_ready`、`test_prep_near`、`test_prep_notyet`の3種類
+- 本番環境では`TEST_MODE=false`に固定し、テストモードを無効化
+
+### タスク
+- [x] 環境変数`TEST_MODE`を追加（開発環境: true、本番環境: false）
+- [x] `shared/const.ts`に`TEST_MODE`定数を追加
+- [x] テストセッションID生成機能を実装（`test_ready`、`test_prep_near`、`test_prep_notyet`）
+- [x] FitResult.tsxでテストモード判定を追加（URLパラメータ`?sessionId=test_ready`等でテスト結果を表示）
+- [x] PassOnboarding.tsxでテストモード判定を追加（テストセッションIDの場合、ダミーログイン情報を表示）
+- [ ] PassUpgrade.tsxでテストモード判定を追加（テストセッションIDの場合、Upgrade申請をスキップ）（今回はスキップ）
+- [x] 本番環境で`TEST_MODE=false`を確認（production-settings-checklist.mdに追記予定）
+- [x] テストモードのドキュメント作成（使い方、注意事項）

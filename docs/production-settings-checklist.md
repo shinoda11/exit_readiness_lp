@@ -16,8 +16,11 @@
 |-------|--------|---------|----------|
 | `FRIEND_INVITE_ENABLED` | `false` | Settings → Secretsで確認 | ⏳ 未確認 |
 | `INVITE_TOKEN_BYPASS_VALIDATION` | `false` | Settings → Secretsで確認 | ⏳ 未確認 |
+| `TEST_MODE` | `false` | Settings → Secretsで確認 | ⏳ 未確認 |
 
 **重要**: 本番環境では必ず`false`に設定してください。これを`true`にすると、友人紹介LP導線が有効化され、計測の純度が損なわれます。
+
+**重要**: `TEST_MODE`は開発環境でのみtrueに設定し、本番環境では必ずfalseに設定してください。これを`true`にすると、テストセッションIDでFit Gateをスキップできてしまいます。
 
 ### 1.2 メール送信設定
 
@@ -174,6 +177,8 @@ Preview環境では、本番環境と同じ環境変数を設定してくださ�
 - [ ] `FRIEND_INVITE_ENABLED=false`（Preview）
 - [ ] `INVITE_TOKEN_BYPASS_VALIDATION=false`（本番）
 - [ ] `INVITE_TOKEN_BYPASS_VALIDATION=false`（Preview）
+- [ ] `TEST_MODE=false`（本番）
+- [ ] `TEST_MODE=true`（Preview/開発環境）
 - [ ] `MAIL_DRY_RUN=false`（本番）
 - [ ] `MAIL_PROVIDER=manus`（本番）
 - [ ] `JOB_AUTH_TOKEN`がセット済み（本番）

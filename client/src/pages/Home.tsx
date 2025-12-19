@@ -18,6 +18,7 @@ import {
 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { trackEvent, AnalyticsEvents } from "@/lib/analytics";
+import { TEST_MODE, TEST_SESSION_IDS } from "@shared/const";
 
 
 
@@ -912,6 +913,42 @@ export default function Home() {
             </Button>
           </div>
         </section>
+
+        {/* テストモード用クイックリンク */}
+        {TEST_MODE && (
+          <div className="fixed bottom-4 right-4 bg-card border-2 border-yellow-500 rounded-lg p-4 shadow-lg max-w-xs z-50">
+            <div className="text-xs font-bold text-yellow-600 mb-2">⚠️ TEST MODE</div>
+            <div className="text-xs text-muted-foreground mb-3">
+              Fit Gateをスキップして結果ページを確認:
+            </div>
+            <div className="flex flex-col gap-2">
+              <Button
+                size="sm"
+                variant="outline"
+                className="text-xs h-8"
+                onClick={() => window.location.href = `/fit-result?sessionId=${TEST_SESSION_IDS.READY}`}
+              >
+                Ready結果を見る
+              </Button>
+              <Button
+                size="sm"
+                variant="outline"
+                className="text-xs h-8"
+                onClick={() => window.location.href = `/fit-result?sessionId=${TEST_SESSION_IDS.PREP_NEAR}`}
+              >
+                Prep Near結果を見る
+              </Button>
+              <Button
+                size="sm"
+                variant="outline"
+                className="text-xs h-8"
+                onClick={() => window.location.href = `/fit-result?sessionId=${TEST_SESSION_IDS.PREP_NOTYET}`}
+              >
+                Prep NotYet結果を見る
+              </Button>
+            </div>
+          </div>
+        )}
 
         {/* フッター */}
         <footer className="bg-card border-t py-8">
