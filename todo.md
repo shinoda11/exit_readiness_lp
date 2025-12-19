@@ -308,3 +308,11 @@
 - [x] server/db.tsのisInviteTokenValid関数にバイパスロジックを追加
 - [x] バイパス時はtoken検証をスキップし、常に有効として扱う
 - [x] 本番環境では必ずfalseにして、実際のtoken検証を行う
+
+---
+
+## react-helmet-asyncエラー修正
+
+### 実装内容
+- [x] App.tsxにHelmetProviderを追加
+- [x] InvitePass.tsxでHelmetが正常に動作することを確認
