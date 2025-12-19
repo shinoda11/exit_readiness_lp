@@ -194,8 +194,26 @@ export const notyetFollowup = mysqlTable("notyetFollowup", {
   id: int("id").autoincrement().primaryKey(),
   email: varchar("email", { length: 320 }).notNull(),
   fitGateResponseId: int("fitGateResponseId").notNull(),
-  sentAt: timestamp("sentAt").defaultNow().notNull(),
+  followupType: varchar("followupType", { length: 32 }).notNull().default("30d"), // "30d" for 30-day followup
+  status: mysqlEnum("status", ["pending", "sending", "sent", "failed"]).default("pending").notNull(),
+  sentAt: timestamp("sentAt"),
+  lastError: text("lastError"),
+  providerMessageId: varchar("providerMessageId", { length: 255 }),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
 });
 
 export type NotyetFollowup = typeof notyetFollowup.$inferSelect;
 export type InsertNotyetFollowup = typeof notyetFollowup.$inferInsert;
+
+/**
+ * Unsubscribe table (opt-out from email notifications)
+ */
+export const unsubscribe = mysqlTable("unsubscribe", {
+  id: int("id").autoincrement().primaryKey(),
+  email: varchar("email", { length: 320 }).notNull().unique(),
+  optOut: boolean("optOut").default(true).notNull(),
+  unsubscribedAt: timestamp("unsubscribedAt").defaultNow().notNull(),
+});
+
+export type Unsubscribe = typeof unsubscribe.$inferSelect;
+export type InsertUnsubscribe = typeof unsubscribe.$inferInsert;

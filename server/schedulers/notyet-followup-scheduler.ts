@@ -3,7 +3,7 @@
  */
 
 import { getNotyetResponsesNeedingFollowup, insertNotyetFollowup } from "../db";
-import { getNotyetFollowupEmailSubject, getNotyetFollowupEmailBody, getNotyetFollowupEmailHtml } from "../email-templates/notyet-followup";
+import { sendNotYetFollowupEmail } from "../lib/email/sendNotYetFollowupEmail";
 
 /**
  * Send NotYet followup emails to users who received "notyet" result 30 days ago
@@ -32,25 +32,15 @@ export async function sendNotyetFollowupEmails() {
       }
 
       try {
-        // TODO: Integrate with actual email service (SendGrid, SES, or Manus email)
-        // For now, just log the email that would be sent
-        const fitGateUrl = `${process.env.VITE_APP_URL || "https://exit-readiness-os.manus.space"}/fit-gate`;
-        const subject = getNotyetFollowupEmailSubject();
-        const body = getNotyetFollowupEmailBody(fitGateUrl);
-        const html = getNotyetFollowupEmailHtml(fitGateUrl);
-
         console.log(`[NotYet Followup Scheduler] Sending followup email to ${response.email}`);
-        console.log(`  Subject: ${subject}`);
-        console.log(`  Fit Gate URL: ${fitGateUrl}`);
 
-        // TODO: Replace with actual email sending logic
-        // Example:
-        // await sendEmail({
-        //   to: response.email,
-        //   subject,
-        //   text: body,
-        //   html,
-        // });
+        // Send email via SendGrid
+        await sendNotYetFollowupEmail({
+          email: response.email,
+          firstName: null, // TODO: Extract firstName from fitGateResponses if available
+          fitGateCreatedAt: response.createdAt,
+          fitGateResultId: response.id.toString(),
+        });
 
         // Record that we sent the followup email
         await insertNotyetFollowup({

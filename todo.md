@@ -190,3 +190,36 @@
 - [ ] Stripe CLIで実際の二重送信を再現
 - [ ] DBログを確認して二重登録が防止されていることを確認
 - [ ] docs/webhook-idempotency-test-results.mdに実証テスト結果を追記
+
+---
+
+## Manusメール + Manus scheduler統合（京都モデル v0.3.1 完全運用化）
+
+### Task A: メール送信サービス統合
+- [x] notyetFollowupテーブルにstatusカラムを追加（pending/sending/sent/failed）
+- [x] notyetFollowupテーブルにlast_errorカラムを追加
+- [x] notyetFollowupテーブルにprovider_message_idカラムを追加
+- [x] notyetFollowupテーブルにcreatedAtカラムを追加
+- [x] fitGateResponseId + followup_typeのユニーク制約を追加（二重送信防止）
+- [x] unsubscribeテーブルを作成（email, opt_out, unsubscribedAt）
+- [ ] mailer adapterを作成（server/lib/mailer/index.ts）
+- [ ] sendNotYetFollowup関数を実装（Manus mail / SendGridの分岐）
+- [ ] DRY_RUNモードを追加（ログだけ出して送信しない）
+- [ ] 送信ログを記録（provider_message_id, sent_at, last_error）
+
+### Task B: cron実行
+- [ ] /api/jobs/notyet-followupエンドポイントを作成
+- [ ] Authorizationトークン必須にする
+- [ ] 同時実行されたら即returnするロックを入れる
+- [ ] Manus schedulerで毎日10:00 JSTに実行設定
+
+### Task C: Umamiダッシュボード作成
+- [ ] Dashboard 1: Acquisition Funnel（lp_view, lp_hero_cta_clicked, fitgate_started, fitgate_submitted）
+- [ ] Dashboard 2: Revenue and Activation Funnel（fitgate_result_ready, pass_checkout_opened, pass_payment_success, onboarding_completed）
+- [ ] ダッシュボードURLをdocs/とNotionに貼り付け
+
+### 二重送信テスト（3ケース）
+- [ ] ケース1: 同一ユーザーをdueにしてschedulerを2回連続実行
+- [ ] ケース2: schedulerを並列実行（2プロセス想定）
+- [ ] ケース3: opt_outのユーザーをdueにして実行
+- [ ] 結果をNotionに貼り付け（実行日時、対象ユーザー、DBのstatus遷移、実際の受信有無、provider_message_id）
