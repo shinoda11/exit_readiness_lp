@@ -514,6 +514,13 @@ export async function markInviteTokenAsUsed(token: string) {
 }
 
 export async function isInviteTokenValid(token: string): Promise<boolean> {
+  // Bypass validation in development/review mode
+  const bypassValidation = process.env.INVITE_TOKEN_BYPASS_VALIDATION === 'true';
+  if (bypassValidation) {
+    console.log('[InviteToken] Bypass validation enabled, token:', token);
+    return true;
+  }
+
   const inviteToken = await getInviteTokenByToken(token);
   if (!inviteToken) return false;
   if (inviteToken.isUsed) return false;
