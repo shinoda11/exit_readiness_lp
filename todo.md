@@ -235,3 +235,66 @@
 - [ ] Dashboard 1: Acquisition Funnel（lp_view, lp_hero_cta_clicked, fitgate_started, fitgate_submitted）
 - [ ] Dashboard 2: Revenue and Activation Funnel（fitgate_result_ready, pass_checkout_opened, pass_payment_success, onboarding_completed）
 - [ ] ダッシュボードURLをdocs/とNotionに貼り付け
+
+---
+
+## 友人紹介LP実装（京都モデル v0.3.1 + 友人経由の例外購入）
+
+### Phase 1: inviteTokensテーブル作成（PASS専用、14日期限1回使用）
+- [x] drizzle/schema.tsにinviteTokensテーブルを作成（token, type=PASS, expiresAt, isUsed, usedAt, revokedAt）
+- [x] server/db.tsにgetInviteTokenByToken関数を追加
+- [x] server/db.tsにmarkInviteTokenAsUsed関数を追加
+- [x] server/db.tsにisInviteTokenValid関数を追加
+- [x] inviteTokensテーブルを手動で作成
+
+### Phase 2: /invite/pass/:tokenページ作成（デザインとコピー）
+- [x] client/src/pages/InvitePass.tsxを作成
+- [x] Hero: 「友人紹介枚: 家の意思決定を世界線比較で整理するPass」
+- [x] 信用付与ブロック: 「紹介として一言」
+- [x] 90日で手に入る成果物: 上限レンジ、3世界線の結論、次の30日アクション
+- [x] 60秒プレビュー: シナリオ比較、レバー操作、意思決定メモ（スクショト3枚）
+- [x] 向いている人 / 向いていない人（友人版）
+- [x] Passの範囲（含む / 含まない）
+- [x] FAQ 友人向け（5問固定）
+- [x] 最終CTA: 「まず適合チェックから始めてください」
+- [x] meta robots: noindex, nofollow
+- [x] token無効時: 「この招待リンクは期限切れ、または無効になりました」
+- [x] App.tsxに/invite/pass/:tokenルーティングを追加
+- [x] server/routers.tsにinviteToken.validateエンドポイントを追加
+- [x] lib/analytics.tsにINVITE_LP_VIEW、INVITE_LP_CTA_FITGATE_CLICKEDを追加
+- [x] react-helmet-asyncをインストール
+
+### Phase 3: Fit Gateに友人経由パラメータを追加
+- [ ] FitGate.tsxでURLパラメータsrc=friend_invite、inviteTokenを取得
+- [ ] フォーム上部に「招待トークン適用中」を表示
+- [ ] submit時にsrcとinviteTokenをfitGateResponsesに保存
+- [ ] drizzle/schema.tsのfitGateResponsesにsrc、inviteTokenカラムを追加
+
+### Phase 4: FitResult.tsxにprep_near例外購入ボタンを追加
+- [ ] FitResult.tsxのPrep Near結果ページに「紹介経由でPassを購入する」ボタンを追加
+- [ ] 条件: src=friend_invite、inviteTokenが有効、result=prep_near
+- [ ] 確認モーダルを実装（2つのチェックボックス必須）
+- [ ] モーダル文言: 「確認: いまは準備不足の可能性があります」
+- [ ] チェックボックス1: 「いまの状態では価値体験に到達しない可能性があることを理解しました」
+- [ ] チェックボックス2: 「物件価格帯と意思決定期限を、購入後に入力して整える前提で開始します」
+- [ ] ボタン: 「Passを開始する（29,800円 / 90日）」「いまは準備を整える」
+- [ ] prep_notyetでは例外ボタンを表示しない
+
+### Phase 5: 友人経由の計測イベントを追加
+- [ ] lib/analytics.tsにinvite_lp_view、invite_lp_cta_fitgate_clickedを追加
+- [ ] InvitePass.tsxでinvite_lp_viewを送信
+- [ ] InvitePass.tsxのCTAでinvite_lp_cta_fitgate_clickedを送信
+- [ ] FitGate.tsxでsrc付きfitgate_started、fitgate_submittedを送信
+- [ ] FitResult.tsxでsrc付きfitgate_result_*を送信
+- [ ] Pass決済成功時にsrc付きpass_payment_successを送信
+
+### 受け入れ基準
+- [ ] LPに決済リンクが存在しない
+- [ ] LPにSession申込導線が存在しない
+- [ ] LPのPrimary CTAがFit Gateへ遷移する
+- [ ] noindexが設定されている
+- [ ] token無効時はFit Gateへ進めない
+- [ ] prep_nearのみ例外購入が出る
+- [ ] prep_notyetは例外購入が出ない
+- [ ] 例外購入には2つの確認チェックが必須
+- [ ] src=friend_inviteが計測に残る

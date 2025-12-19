@@ -11,6 +11,8 @@ import {
   InsertPrepModeSubscriber,
   invitationTokens,
   InsertInvitationToken,
+  inviteTokens,
+  InsertInviteToken,
   passSubscriptions,
   InsertPassSubscription,
   passOnboarding,
@@ -485,4 +487,37 @@ export async function getNotyetResponsesNeedingFollowup() {
   }
 
   return needFollowup;
+}
+
+// ========================================
+// Invite Tokens (PASS friend referral)
+// ========================================
+
+export async function getInviteTokenByToken(token: string) {
+  const db = await getDb();
+  if (!db) return null;
+
+  const { eq } = await import("drizzle-orm");
+  const result = await db.select().from(inviteTokens).where(eq(inviteTokens.token, token));
+  return result.length > 0 ? result[0] : null;
+}
+
+export async function markInviteTokenAsUsed(token: string) {
+  const db = await getDb();
+  if (!db) return;
+
+  const { eq } = await import("drizzle-orm");
+  await db
+    .update(inviteTokens)
+    .set({ isUsed: true, usedAt: new Date() })
+    .where(eq(inviteTokens.token, token));
+}
+
+export async function isInviteTokenValid(token: string): Promise<boolean> {
+  const inviteToken = await getInviteTokenByToken(token);
+  if (!inviteToken) return false;
+  if (inviteToken.isUsed) return false;
+  if (inviteToken.revokedAt) return false;
+  if (new Date() > new Date(inviteToken.expiresAt)) return false;
+  return true;
 }

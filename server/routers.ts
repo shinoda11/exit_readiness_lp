@@ -474,6 +474,17 @@ export const appRouter = router({
       }),
   }),
 
+  // Invite Token router (friend referral)
+  inviteToken: router({
+    validate: publicProcedure
+      .input(z.object({ token: z.string() }))
+      .query(async ({ input }) => {
+        const { isInviteTokenValid } = await import('./db');
+        const isValid = await isInviteTokenValid(input.token);
+        return { isValid };
+      }),
+  }),
+
   // Jobs router (for scheduled tasks)
   jobs: router({
     notyetFollowup: publicProcedure

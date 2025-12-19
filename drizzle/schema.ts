@@ -109,6 +109,23 @@ export type InvitationToken = typeof invitationTokens.$inferSelect;
 export type InsertInvitationToken = typeof invitationTokens.$inferInsert;
 
 /**
+ * Invite tokens for PASS friend referral (14 days, 1 time use)
+ */
+export const inviteTokens = mysqlTable("inviteTokens", {
+  id: int("id").autoincrement().primaryKey(),
+  token: varchar("token", { length: 64 }).notNull().unique(),
+  type: mysqlEnum("type", ["PASS"]).default("PASS").notNull(),
+  expiresAt: timestamp("expiresAt").notNull(),
+  isUsed: boolean("isUsed").default(false).notNull(),
+  usedAt: timestamp("usedAt"),
+  revokedAt: timestamp("revokedAt"),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type InviteToken = typeof inviteTokens.$inferSelect;
+export type InsertInviteToken = typeof inviteTokens.$inferInsert;
+
+/**
  * Pass subscriptions table (29,800円, 90日間)
  */
 export const passSubscriptions = mysqlTable("passSubscriptions", {

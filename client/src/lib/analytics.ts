@@ -52,4 +52,8 @@ export const AnalyticsEvents = {
   
   // Upgrade
   UPGRADE_REQUEST_SUBMITTED: 'upgrade_request_submitted',
+  
+  // Friend Invite
+  INVITE_LP_VIEW: 'invite_lp_view',
+  INVITE_LP_CTA_FITGATE_CLICKED: 'invite_lp_cta_fitgate_clicked',
 } as const;
