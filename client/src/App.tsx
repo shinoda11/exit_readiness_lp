@@ -5,6 +5,8 @@ import { Route, Switch } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import { HelmetProvider } from "react-helmet-async";
+import { FRIEND_INVITE_ENABLED } from "@shared/const";
+import { Redirect } from "wouter";
 import Home from "./pages/Home";
 import FitGate from "./pages/FitGate";
 import FitResult from "./pages/FitResult";
@@ -25,7 +27,10 @@ function Router() {
       <Route path={"/pass/onboarding"} component={PassOnboarding} />
       <Route path={"/pass/resend-login"} component={PassResendLogin} />
       <Route path={"/pass/upgrade"} component={PassUpgrade} />
-      <Route path={"/invite/pass/:token"} component={InvitePass} />
+      {/* 友人紹介LP導線は本番で無効化（FRIEND_INVITE_ENABLED=falseの場合は/へリダイレクト） */}
+      <Route path={"/invite/pass/:token"}>
+        {FRIEND_INVITE_ENABLED ? <InvitePass /> : <Redirect to="/" />}
+      </Route>
       <Route path={"/404"} component={NotFound} />
       {/* Final fallback route */}
       <Route component={NotFound} />

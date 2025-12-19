@@ -316,3 +316,42 @@
 ### 実装内容
 - [x] App.tsxにHelmetProviderを追加
 - [x] InvitePass.tsxでHelmetが正常に動作することを確認
+
+---
+
+## マーケティングチーム方針：友人導線を本番で無効化（公開ワンパス優先）
+
+### 背景
+- 計測の純度と運用品質を守るため、友人紹介LP導線は当面ローンチしない
+- 公開LP→Fit Gate→Ready→Pass→Onboarding→Appの一本線を安定させることを最優先
+- 友人導線は「実装は残してよいが、提供はしない」を明確化
+
+### P0: 友人導線を本番で完全に無効化
+- [x] Feature Flag導入（FRIEND_INVITE_ENABLED=false を本番固定）
+- [x] /invite/pass/:tokenルーティングを本番で404または/へリダイレクト（token正しくても通さない）
+- [x] INVITE_TOKEN_BYPASS_VALIDATIONを本番でfalse固定（可能なら本番環境ではenv自体を参照しない実装）
+- [x] Fit Gateのfriend_inviteパラメータを本番では受け取っても無視（保存しない、UI表示しない）
+
+### P0: 例外購入UIの露出ゼロ
+- [x] FitResultのPrep Near例外購入ボタンを本番で表示されないことを保証（未実装のため、実装時にガード追加）
+
+### P0: Umamiダッシュボードを2枚だけ固定
+- [x] Dashboard A: Acquisition Funnel（lp_hero_cta_clicked, fitgate_started, fitgate_submitted）
+- [x] Dashboard B: Revenue and Activation Funnel（fitgate_result_ready, pass_checkout_opened, pass_payment_success, onboarding_completed）
+- [x] 友人導線イベントをダッシュボードから除外（フィルタで隠すのではなく、そもそもダッシュボードに置かない）
+
+### P1: 漏れ検知のための安全イベント
+- [ ] invite_route_accessedイベントを追加（/invite系にアクセスしたが404/redirectになったとき）
+- [ ] 目的: 意図しないリンク流通の早期検知
+
+### P0: 設計書の修正
+- [x] 冒頭のステータスを「RC完了（公開ワンパス提供中）、友人紹介LP: 実装一部あり、ただし未提供（Parked）」に変更
+- [x] 友人導線の章をAppendixに移動し、見出しにParkedと明記（/invite/pass/:token、友人紹介LPフロー、Friend Referral Funnelイベント、Phase 3〜5実装計画）
+- [x] 次のステップから友人導線関連を外し、公開ワンパスの安定化だけに寄せる
+- [x] Acceptance Criteriaに追加（12/12）: 友人導線が本番で無効化されている、INVITE_TOKEN_BYPASS_VALIDATIONが本番でfalse固定
+
+### Done の定義
+- [ ] 本番環境で /invite/pass/:token にアクセスしても 404 または / に遷移する
+- [ ] 本番環境で friend_invite の src や inviteToken を渡しても UI とDBに影響しない
+- [ ] Umami ダッシュボードは2枚のみ、友人イベントは入っていない
+- [ ] 実装設計書が「公開ワンパス提供中、友人導線はParked」に統一されている

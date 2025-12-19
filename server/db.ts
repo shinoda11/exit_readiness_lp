@@ -514,6 +514,13 @@ export async function markInviteTokenAsUsed(token: string) {
 }
 
 export async function isInviteTokenValid(token: string): Promise<boolean> {
+  // 本番環境では友人紹介LP導線を無効化
+  const friendInviteEnabled = process.env.FRIEND_INVITE_ENABLED === 'true';
+  if (!friendInviteEnabled) {
+    console.log('[InviteToken] Friend invite feature is disabled');
+    return false;
+  }
+
   // Bypass validation in development/review mode
   const bypassValidation = process.env.INVITE_TOKEN_BYPASS_VALIDATION === 'true';
   if (bypassValidation) {
