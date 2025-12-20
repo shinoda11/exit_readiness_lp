@@ -98,8 +98,7 @@ export default function Home() {
                 家・仕事・家族イベントが同時に揺れる前提で、複数の未来を同じ前提で並べます。<br />
                 結論は押し付けず、納得できる判断の根拠と“次の一手”まで返します。
               </p>
-              <p className="text-sm text-muted-foreground italic">
-                ※Exit＝働き方を緩めたり、连めても詰まないための「選択肢」のこと（企業売却ではありません）
+              <p className="text-sm text-muted-foreground italic">                ※Exit＝働き方を緩めたり、辞めても詰まないための「選択肢」のこと（企業売却ではありません）
               </p>
               <div className="flex flex-col gap-4">
                 <Button size="lg" className="w-full md:w-auto" onClick={() => {
