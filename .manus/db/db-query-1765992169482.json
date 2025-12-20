@@ -1,9 +1,0 @@
-{
-  "query": "INSERT INTO passSubscriptions (email, stripeCustomerId, stripePaymentIntentId, loginId, loginPassword, purchaseDate, expiryDate, price, status) VALUES ('stripe.test@example.com', 'cus_test_123', 'pi_test_123', 'stripe.test@example.com', 'TestPass2024', NOW(), DATE_ADD(NOW(), INTERVAL 90 DAY), 29800, 'active');",
-  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user MHFMtastaHzGfLP.6cdcbc9bad1e --database H52KkKEEAVnpGKGv4nGFA9 --execute INSERT INTO passSubscriptions (email, stripeCustomerId, stripePaymentIntentId, loginId, loginPassword, purchaseDate, expiryDate, price, status) VALUES ('stripe.test@example.com', 'cus_test_123', 'pi_test_123', 'stripe.test@example.com', 'TestPass2024', NOW(), DATE_ADD(NOW(), INTERVAL 90 DAY), 29800, 'active');",
-  "rows": [],
-  "messages": [],
-  "stdout": "",
-  "stderr": "",
-  "execution_time_ms": 2177
-}

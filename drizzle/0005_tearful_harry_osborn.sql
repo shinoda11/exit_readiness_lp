@@ -1,1 +1,0 @@
-ALTER TABLE `fitGateResponses` ADD `sessionDone` boolean DEFAULT false;
