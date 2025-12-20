@@ -88,9 +88,11 @@ export default function Home() {
               <div className="inline-block px-4 py-2 bg-accent/10 text-foreground rounded-full text-sm font-medium mb-4">
                 高収入DINKs向け Exit OS β版
               </div>
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
-                人生の大きな選択を、<br />
-                <span className="text-accent">「詰まない安心」と「やりたいことの余白」</span>で判断する意思決定OS。
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-balance">
+                人生の大きな選択を、<br className="hidden md:block" />
+                <span className="text-accent inline-block">「詰まない安心」</span>と<br className="hidden md:block" />
+                <span className="text-accent inline-block">「やりたいことの余白」</span>で<br className="hidden md:block" />
+                判断する<span className="inline-block">意思決定OS</span>。
               </h1>
               <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
                 家・仕事・家族イベントが同時に揺れる前提で、複数の未来を同じ前提で並べます。<br />
@@ -153,9 +155,12 @@ export default function Home() {
                   </p>
                 </div>
 
-                <div className="pt-4 border-t">
+                <div className="pt-4 border-t space-y-2">
                   <p className="text-xs text-muted-foreground text-center">
                     いまこのOSを使う段階か、Prepが先かを判定します。申込みではなく、次のステップを決めるためのチェックです。
+                  </p>
+                  <p className="text-xs text-muted-foreground text-center italic">
+                    ※表示は一部（例）です
                   </p>
                 </div>
               </div>
@@ -220,7 +225,7 @@ export default function Home() {
         {/* S2: 家だけじゃない。仕事も、子どもも、場所も、一緒に揺れている。 */}
         <section ref={problemRef} className="bg-secondary/30 py-16 md:py-24 opacity-0">
           <div className="container max-w-4xl">
-            <h2 className="text-3xl md:text-4xl font-bold text-center mb-4">
+            <h2 className="text-3xl md:text-4xl font-bold text-center mb-4 text-balance">
               家だけじゃない。<br />
               仕事も、子どもも、場所も、一緒に揺れている。
             </h2>
@@ -262,7 +267,7 @@ export default function Home() {
         {/* S3: Exit Readiness OS とは何か */}
         <section ref={osRef} className="container py-16 md:py-24 opacity-0">
           <div className="max-w-4xl mx-auto text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-6">Exit Readiness OS とは何か</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-6 text-balance">Exit Readiness OS とは何か</h2>
             <p className="text-lg text-muted-foreground leading-relaxed">
               縦割りの選択肢を、横串で比較する。<br />
               「どの人生を歩むか」を、安心ラインと人生の余白という2つの軸で見えるようにします。
@@ -326,7 +331,7 @@ export default function Home() {
         {/* S4: 実際の世界線は、例えばこんな組み合わせです。 */}
         <section ref={scenarioRef} className="bg-secondary/30 py-16 md:py-24 opacity-0">
           <div className="container max-w-5xl">
-            <h2 className="text-3xl md:text-4xl font-bold text-center mb-4">
+            <h2 className="text-3xl md:text-4xl font-bold text-center mb-4 text-balance">
               実際の世界線は、例えばこんな組み合わせです。
             </h2>
             <p className="text-center text-muted-foreground mb-12 max-w-3xl mx-auto">
@@ -411,7 +416,7 @@ export default function Home() {
         <section id="evidence-pack-full" className="bg-secondary/20 py-16 md:py-24">
           <div className="container max-w-5xl">
             <div className="text-center mb-12">
-              <h2 className="text-3xl md:text-4xl font-bold mb-6">Evidence Pack（匿名ケース例）</h2>
+              <h2 className="text-3xl md:text-4xl font-bold mb-6 text-balance">Evidence Pack（匿名ケース例）</h2>
               <p className="text-lg text-muted-foreground leading-relaxed max-w-3xl mx-auto">
                 実際の1on1セッションで生成された意思決定メモの匿名例です。<br />
                 前提条件、比較世界線、指標差分、インサイトを含んでいます。
@@ -689,7 +694,7 @@ export default function Home() {
         {/* S5: いま実際にできること（AS-IS：住宅モジュール中心） */}
         <section ref={nowRef} className="container py-16 md:py-24 opacity-0">
           <div className="max-w-4xl mx-auto text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-6">いま実際にできること（AS-IS：住宅モジュール中心）</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-6 text-balance">いま実際にできること（AS-IS：住宅モジュール中心）</h2>
             <p className="text-lg text-muted-foreground leading-relaxed">
               いまは住宅（Rent vs Buy）を入口に、世界線比較の作法を体験できます。<br />
               住宅が主役ではなく、「安心ライン×余白×次の一手」で判断できる状態を作るのが本体です。
@@ -752,13 +757,14 @@ export default function Home() {
         {/* S6: これから増えていく横串（To-Be：海外駐在・イベント横断） */}
         <section ref={futureRef} className="bg-secondary/30 py-16 md:py-24 opacity-0">
           <div className="container max-w-4xl">
-            <h2 className="text-3xl md:text-4xl font-bold text-center mb-4">
-              これから増えていく横串（To-Be：海外駐在・イベント横断）
+            <h2 className="text-3xl md:text-4xl font-bold text-center mb-4 text-balance">
+              これから増える横串（ロードマップ）
             </h2>
             <p className="text-center text-muted-foreground mb-2 max-w-2xl mx-auto">
-              ※ここから先はロードマップです（順次追加）。
+              <span className="inline-block">海外駐在</span>／<span className="inline-block">働き方</span>／<span className="inline-block">ライフイベント</span>
             </p>
             <p className="text-center text-muted-foreground mb-12 max-w-2xl mx-auto">
+              ※ここから先はロードマップです（順次追加）。<br />
               住宅モジュールは入口に過ぎません。<br />
               これから、「海外駐在」「ゆるExit」「子ども・イベント」などの世界線を横串で比較できるようにしていきます。
             </p>
@@ -795,7 +801,7 @@ export default function Home() {
         {/* S8: 向いている人 / 向いていない人 */}
         <section ref={suitedRef} className="bg-secondary/30 py-16 md:py-24 opacity-0">
           <div className="container max-w-5xl">
-            <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">向いている人 / 向いていない人</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-balance">向いている人 / 向いていない人</h2>
             <div className="grid md:grid-cols-2 gap-8">
               {/* 向いている人 */}
               <Card className="p-8 bg-card">
@@ -863,7 +869,7 @@ export default function Home() {
         {/* S9: モデルの前提と制約 */}
         <section ref={constraintsRef} className="container py-16 md:py-24 opacity-0">
           <div className="max-w-4xl mx-auto">
-            <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">モデルの前提と制約</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-balance">モデルの前提と制約</h2>
             <Card className="p-8 bg-card">
               <ul className="space-y-4 text-sm text-muted-foreground">
                 <li className="flex items-start gap-3">
@@ -894,7 +900,7 @@ export default function Home() {
         {/* CTA Section */}
         <section className="bg-secondary/30 py-16 md:py-24">
           <div className="container max-w-2xl text-center">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">次のステップ</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-balance">次のステップ</h2>
             <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
               Exit Readiness OS の利用には、適合チェックが必要です。<br />
               12問の質問に答えて、あなたに最適なステップを確認してください。
