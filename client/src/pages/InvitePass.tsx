@@ -367,10 +367,10 @@ export default function InvitePass() {
       {/* 最終CTA */}
       <section className="container mx-auto px-4 py-16 bg-gradient-to-br from-primary/5 to-primary/10">
         <div className="max-w-3xl mx-auto text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">まず適合チェックから始めてください</h2>
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">まずは適合チェックで、いまの段階を確認してください</h2>
           <p className="text-lg text-muted-foreground mb-8">
-            適合チェックは、あなたに合う進め方を分けるためのものです。
-            通過した場合のみ、決済導線を案内します。
+            申込みではなく、準備状態のチェックです。<br />
+            Readyなら世界線比較へ、Prepなら準備ステップへ案内します。
           </p>
           <Button
             asChild

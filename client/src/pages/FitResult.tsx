@@ -77,12 +77,12 @@ function PrepResult({ setLocation, prepBucket }: { setLocation: (path: string) =
           <Mail className="w-8 h-8 text-accent" />
         </div>
         <h2 className="text-2xl font-bold mb-2">
-          {isNotYet ? "Prep NotYet：いまは検討フェーズの手前です" : "Prep Near：準備が整えば、Passで比較と更新が回せます"}
+          {isNotYet ? "Prep（まだ早い）：状況が動いたら再チェックを" : "Prep（近い）：あと少しで比較が“効く”状態です"}
         </h2>
         <p className="text-muted-foreground">
           {isNotYet 
-            ? "必要になったタイミングで再診断できます" 
-            : "まずはPrep Modeで準備を整えてから、再度適合チェックにお越しください"}
+            ? "物件価格帯や期限、収入・資産の状況が動いたタイミングで再チェックしましょう。30日後に再診断の案内を送ります。" 
+            : "いまは前提が固まり切っていないため、先に準備を整える方が早いです。30日後に再チェックできるようにします。"}
         </p>
       </div>
 

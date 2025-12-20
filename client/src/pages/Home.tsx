@@ -89,19 +89,15 @@ export default function Home() {
                 高収入DINKs向け Exit OS β版
               </div>
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
-                "Exit"を、安心して選べる選択肢に
+                人生の大きな選択を、<br />
+                <span className="text-accent">「詰まない安心」と「やりたいことの余白」</span>で判断する意思決定OS。
               </h1>
               <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
-                Rent vs Buyの意思決定を、数字で比較して、根拠を残せる
+                家・仕事・家族イベントが同時に揺れる前提で、複数の未来を同じ前提で並べます。<br />
+                結論は押し付けず、納得できる判断の根拠と“次の一手”まで返します。
               </p>
               <p className="text-sm text-muted-foreground italic">
-                ※"Exit"とは：賃貸を出て持ち家を買う決断
-              </p>
-              <p className="text-base text-muted-foreground leading-relaxed">
-                最初の入口として「いまの賃貸を続ける」「都心でマンションを買う」といった住宅シナリオからスタートしますが、少しずつ「海外駐在を取り/取らない」「数年後にゆるい働き方に切り替える」「子どもの教育プランを変える」など、横串の選択肢を扱えるように していきます。
-              </p>
-              <p className="text-base text-muted-foreground leading-relaxed">
-                「この商品が正解です」「この物件が一番お得です」とゴールを決めてから逆算するのではなく、まずはすべての世界線を同じスケールで並べるところから始めます。一般的なFPツールや住宅サイトのように、「売りたい商品」や「売りたい物件」が決まっているわけではなく、どの世界線を選んでもよい前提で数字だけを並べる、フラットなOSです。
+                ※Exit＝働き方を緩めたり、辞めても詰まないための自由度のこと。
               </p>
               <div className="flex flex-col gap-4">
                 <Button size="lg" className="w-full md:w-auto" onClick={() => {
@@ -111,9 +107,7 @@ export default function Home() {
                   適合チェックに進む
                   <ArrowRight className="ml-2 w-5 h-5" />
                 </Button>
-                <p className="text-sm text-muted-foreground">
-                  いきなり1on1を申し込むのではなく、「いまOSを使うフェーズか」「まずPrep Modeで基礎を整えるべきか」を簡単な適合チェックで確認してから進んでもらいます。12問の質問に答えて、あなたに最適なステップを確認してください。
-                </p>
+
                 <a
                   href="#evidence-pack-full"
                   className="text-sm text-accent hover:underline flex items-center gap-2"
@@ -181,9 +175,9 @@ export default function Home() {
                     <Check className="w-5 h-5 text-accent" />
                   </div>
                   <div>
-                    <h4 className="font-semibold mb-2">「同じ前提」で世界線を並べる</h4>
+                    <h4 className="font-semibold mb-2">同じ前提で並べる（世界線比較）</h4>
                     <p className="text-sm text-muted-foreground leading-relaxed">
-                      「購入」と「賃貸続行」を同じ前提（年収・賃料・物件価格・ローン金利）で並べることが、最初のハードルです。このツールは、二本の世界線を比較するためのロジックが実装済みです。
+                      未来を1本に決め打ちせず、賃貸/購入などを同じ前提で横並びにします。
                     </p>
                   </div>
                 </div>
@@ -196,9 +190,9 @@ export default function Home() {
                     <Check className="w-5 h-5 text-accent" />
                   </div>
                   <div>
-                    <h4 className="font-semibold mb-2">「安心ライン」と「余白」を数字で見る</h4>
+                    <h4 className="font-semibold mb-2">安心ラインを見える化</h4>
                     <p className="text-sm text-muted-foreground leading-relaxed">
-                      CF余裕、60歳資産、取り崩し開始年。この3つの指標を見ることで、「詰まないか」と「やりたいことができるか」を判断できます。
+                      「ここを割ると厳しい」の境界が見えると、決断の基準が揃います。
                     </p>
                   </div>
                 </div>
@@ -211,9 +205,9 @@ export default function Home() {
                     <Check className="w-5 h-5 text-accent" />
                   </div>
                   <div>
-                    <h4 className="font-semibold mb-2">「結論」ではなく「根拠」を返す</h4>
+                    <h4 className="font-semibold mb-2">余白を“次の一手”に翻訳</h4>
                     <p className="text-sm text-muted-foreground leading-relaxed">
-                      「これが正解」と押し付けるのではなく、「この数字で判断してください」と根拠を返します。どの世界線を選んでも、このツールの側の利益は変わりません。
+                      余白が足りないなら、何をどれだけ変えると届くかを整理します。
                     </p>
                   </div>
                 </div>
@@ -231,8 +225,9 @@ export default function Home() {
               仕事も、子どもも、場所も、一緒に揺れている。
             </h2>
             <p className="text-center text-muted-foreground mb-12 max-w-2xl mx-auto">
-              住宅だけを最適化しても意味がない。海外・子ども・キャリアを含めて考えようとすると、Excelでは破綻する。<br />
-              いくつもの選択肢を同時に頭の中で動かしているうちに、「どこから計算すればいいのか」が分からなくなる。この状態で「とりあえず決める」と、後から「あの時ちゃんと考えておけばよかった」と後悔する。
+              止まっている理由は「損得が分からない」ではなく、<br />
+              安心ライン・余白・打ち手が同時に見えないから。<br />
+              だから“結論”ではなく、“比較できる状態”を先に作ります。
             </p>
             <div className="grid md:grid-cols-2 gap-6">
               {[
@@ -281,22 +276,22 @@ export default function Home() {
                 icon: <Layers className="w-6 h-6" />,
                 title: "世界線（Worldline）",
                 subtitle: "「どの人生を歩くか」を並べて見る",
-                description: "「賃貸を続ける」「都心で買う」「海外駐在を取る」「数年後にゆるい働き方に切り替える」──これらは別々の意思決定ではなく、同じPLとキャッシュフローの上で並べて比較できる「世界線」です。今できるのは住宅が中心ですが、世界線の概念自体はすでにOSに組み込まれています。",
-                example: "例：都内に住み続ける世界線と、海外駐在を5年挟む世界線で、60歳時点の資産やキャッシュフローの山の形がどう変わるかを並べて見られます。",
+                description: "「どの人生を歩くか」を、同じ前提で並べて比較します。賃貸/購入、今買う/後で買う、働き方の変化も、1つの枠で扱います。",
+                example: "",
               },
               {
                 icon: <Shield className="w-6 h-6" />,
                 title: "安心ライン（Safety Line）",
                 subtitle: "「守るべき下限」を見える化する",
-                description: "資産が尽き始める年齢、取り崩しペース、最低限必要なキャッシュフロー──どの世界線を選んでも、「ここを割ったらアウト」というラインを明確にします。安心ラインが見えることで、どこまで攻めていいかの判断基準が持てるようになります。",
-                example: "例：いまの前提だと「68歳から取り崩し開始」「毎年300万円ペース」など、攻めすぎないための目安がRent / Buy両方で分かります。",
+                description: "守るべき下限を見える化します。“ここを割ると厳しい”が分かると、判断の軸が定まります。",
+                example: "",
               },
               {
                 icon: <Sparkles className="w-6 h-6" />,
-                title: "人生の余白（Slack）",
+                title: "余白（Slack）",
                 subtitle: "「どこに余白を置くか」で選ぶ",
-                description: "世界線AとBの差分Δを、「旅に使える予算」「追加投資に回せる額」「残業を減らせる期間」などに翻訳します。どの年代の余白を厚くするかを、パートナーと具体的に話せる状態まで持っていくことが、このOSのゴールです。",
-                example: "例：6,000万購入なら40代に毎年100万円分の余白が残せるが、8,000万購入だとその余白がほぼ消える、といった差が見えます。",
+                description: "余白は「どの年代に、どれだけ残るか」。余白が足りないなら、収入/支出/タイミングのどれを動かすかに翻訳します。",
+                example: "",
               },
             ].map((item, index) => (
               <Card key={index} className="p-8 bg-card">
@@ -647,7 +642,8 @@ export default function Home() {
                   Q1. 何をしてくれるサービスですか
                 </AccordionTrigger>
                 <AccordionContent className="text-muted-foreground leading-relaxed">
-                  「今の自分の数字」を入力すると、複数の世界線（Rent vs Buyなど）を比較したグラフ、指標差分、リスク評価、次の30日のアクションを含む「意思決定メモ」を生成します。Passでは90日間、何度でも世界線を変えて比較できます。
+                  複数の世界線を同じ前提で並べ、安心ラインと余白を見える化します。<br />
+                  さらに、余白が足りない場合に「次の一手（収入/支出/タイミング）」へ翻訳します。
                 </AccordionContent>
               </AccordionItem>
 
@@ -656,7 +652,7 @@ export default function Home() {
                   Q2. 物件紹介や保険・投資商品の販売はありますか
                 </AccordionTrigger>
                 <AccordionContent className="text-muted-foreground leading-relaxed">
-                  ありません。物件紹介、保険や投資商品の販売はしません。あなたの意思決定をフラットなポジションで支援することが目的です。
+                  ありません。特定の商品や物件に誘導せず、比較と意思決定の土台を作ることに徹します。
                 </AccordionContent>
               </AccordionItem>
 
@@ -665,7 +661,7 @@ export default function Home() {
                   Q3. 税務や法務の代行ですか
                 </AccordionTrigger>
                 <AccordionContent className="text-muted-foreground leading-relaxed">
-                  違います。税務申告の代行、個別の税務判断の確定は行いません。意思決定に必要な試算と比較を提供しますが、最終的な税務・法務判断は専門家にご相談ください。
+                  いいえ。精密な税額計算や申告代行ではありません。判断の材料整理が中心です。
                 </AccordionContent>
               </AccordionItem>
 
@@ -674,7 +670,7 @@ export default function Home() {
                   Q4. 個人情報はどう扱いますか
                 </AccordionTrigger>
                 <AccordionContent className="text-muted-foreground leading-relaxed">
-                  適合チェック時は最小限に留めます。決済URLは公開せず、適合した方のみにご案内します。入力情報は目的外に利用しません。
+                  適合チェックはメールが必須です。目的は判定とフォローアップです。
                 </AccordionContent>
               </AccordionItem>
 
@@ -683,7 +679,7 @@ export default function Home() {
                   Q5. 保証はありますか
                 </AccordionTrigger>
                 <AccordionContent className="text-muted-foreground leading-relaxed">
-                  提供範囲と成果物はSOWサマリーで明示します。システム不備などで体験が成立しない場合はリカバリー対応します。
+                  未来を断定しません。正解を保証するサービスではなく、比較できる状態を作るためのOSです。
                 </AccordionContent>
               </AccordionItem>
             </Accordion>
@@ -695,8 +691,8 @@ export default function Home() {
           <div className="max-w-4xl mx-auto text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold mb-6">いま実際にできること（AS-IS：住宅モジュール中心）</h2>
             <p className="text-lg text-muted-foreground leading-relaxed">
-              現在は「住宅」を軸にした世界線比較が中心です。<br />
-              賃貸継続 vs 購入の二本線を、CF余裕・60歳資産・取り崩し開始年という3つの指標で比較できます。
+              いまは住宅（Rent vs Buy）を入口に、世界線比較の作法を体験できます。<br />
+              住宅が主役ではなく、「安心ライン×余白×次の一手」で判断できる状態を作るのが本体です。
             </p>
           </div>
 
@@ -759,6 +755,9 @@ export default function Home() {
             <h2 className="text-3xl md:text-4xl font-bold text-center mb-4">
               これから増えていく横串（To-Be：海外駐在・イベント横断）
             </h2>
+            <p className="text-center text-muted-foreground mb-2 max-w-2xl mx-auto">
+              ※ここから先はロードマップです（順次追加）。
+            </p>
             <p className="text-center text-muted-foreground mb-12 max-w-2xl mx-auto">
               住宅モジュールは入口に過ぎません。<br />
               これから、「海外駐在」「ゆるExit」「子ども・イベント」などの世界線を横串で比較できるようにしていきます。
