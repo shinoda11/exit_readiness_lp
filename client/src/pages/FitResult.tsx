@@ -77,12 +77,12 @@ function PrepResult({ setLocation, prepBucket }: { setLocation: (path: string) =
           <Mail className="w-8 h-8 text-accent" />
         </div>
         <h2 className="text-2xl font-bold mb-2">
-          {isNotYet ? "いまは検討フェーズの手前です" : "準備が整えば、Passで比較と更新が回せます"}
+          {isNotYet ? "Prep NotYet：いまは検討フェーズの手前です" : "Prep Near：準備が整えば、Passで比較と更新が回せます"}
         </h2>
         <p className="text-muted-foreground">
           {isNotYet 
             ? "必要になったタイミングで再診断できます" 
-            : "まずは準備を整えてから、再度適合チェックにお越しください"}
+            : "まずはPrep Modeで準備を整えてから、再度適合チェックにお越しください"}
         </p>
       </div>
 
@@ -90,7 +90,7 @@ function PrepResult({ setLocation, prepBucket }: { setLocation: (path: string) =
         <div>
           <h3 className="font-semibold mb-3">Prep Mode とは</h3>
           <p className="text-sm text-muted-foreground leading-relaxed">
-            Exit Readiness OS を使いこなすための準備ガイドです。年収・資産・支出の整理方法、数字の扱い方、よくある質問への回答などを、メールレターでお届けします。
+            Exit Readiness OS を使いこなすための準備ガイドです。年収・資産・支出の整理方法、数字の扱い方、よくある質問への回答などを、メールレターでお届けします。無料です。
           </p>
         </div>
 
@@ -226,9 +226,9 @@ function ReadyResult() {
         <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/20 mb-4">
           <Check className="w-8 h-8 text-primary" />
         </div>
-        <h2 className="text-2xl font-bold mb-2">Ready（Pass推奨）</h2>
+        <h2 className="text-2xl font-bold mb-2">Ready：Passで比較と更新を回し始められます</h2>
         <p className="text-muted-foreground">
-          Exit Readiness OS Pass の利用準備が整っています
+          いますぐExit Readiness OS Passを使い始められる状態です
         </p>
       </div>
 

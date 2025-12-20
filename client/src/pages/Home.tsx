@@ -89,11 +89,13 @@ export default function Home() {
                 高収入DINKs向け Exit OS β版
               </div>
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
-                家と、仕事と、暮らす場所。<br />
-                大きな選択ぜんぶを、6,000万〜8,000万クラスの"人生の決断"ごと、世界線で比べるOS。
+                "Exit"を、安心して選べる選択肢に
               </h1>
               <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
-                Exit Readiness OS は、都内の高収入DINKが「家」「仕事」「暮らす場所」「人生で大事にしたいイベント」を、1つのPLとキャッシュフローの上で世界線として比較するためのOSです。
+                Rent vs Buyの意思決定を、数字で比較して、根拠を残せる
+              </p>
+              <p className="text-sm text-muted-foreground italic">
+                ※"Exit"とは：賃貸を出て持ち家を買う決断
               </p>
               <p className="text-base text-muted-foreground leading-relaxed">
                 最初の入口として「いまの賃貸を続ける」「都心でマンションを買う」といった住宅シナリオからスタートしますが、少しずつ「海外駐在を取り/取らない」「数年後にゆるい働き方に切り替える」「子どもの教育プランを変える」など、横串の選択肢を扱えるように していきます。
@@ -131,7 +133,7 @@ export default function Home() {
 
             {/* 右側：準備チェック3問 */}
             <div className="bg-card border rounded-xl p-8 shadow-lg">
-              <h3 className="text-xl font-bold mb-6">準備チェック（3問）</h3>
+              <h3 className="text-xl font-bold mb-6">適合チェック（12問）</h3>
               <div className="space-y-6">
                 {/* Question 1 */}
                 <div className="p-4 bg-secondary/10 rounded-lg">
@@ -159,8 +161,7 @@ export default function Home() {
 
                 <div className="pt-4 border-t">
                   <p className="text-xs text-muted-foreground text-center">
-                    これらの質問を含む12問の適合チェックで、<br />
-                    あなたに最適なステップを判定します。
+                    いまこのOSを使う段階か、Prepが先かを判定します。申込みではなく、次のステップを決めるためのチェックです。
                   </p>
                 </div>
               </div>
@@ -171,7 +172,7 @@ export default function Home() {
         {/* 証拠パックセクション */}
         <section className="py-12 md:py-16 bg-card border-y">
           <div className="container max-w-4xl">
-            <h3 className="text-2xl font-bold text-center mb-8">証拠パック：このツールが実際に機能する理由</h3>
+            <h3 className="text-2xl font-bold text-center mb-8">迷いが“論点”に変わる理由</h3>
             <div className="grid md:grid-cols-3 gap-6">
               {/* Evidence 1 */}
               <Card className="p-6">
@@ -180,9 +181,9 @@ export default function Home() {
                     <Check className="w-5 h-5 text-accent" />
                   </div>
                   <div>
-                    <h4 className="font-semibold mb-2">二本線比較の実装</h4>
+                    <h4 className="font-semibold mb-2">「同じ前提」で世界線を並べる</h4>
                     <p className="text-sm text-muted-foreground leading-relaxed">
-                      Rent vs Buyを「同じ前提」で並べることが、最初のハードルです。このツールは、二本の世界線を比較するためのロジックが実装済みです。
+                      「購入」と「賃貸続行」を同じ前提（年収・賃料・物件価格・ローン金利）で並べることが、最初のハードルです。このツールは、二本の世界線を比較するためのロジックが実装済みです。
                     </p>
                   </div>
                 </div>
@@ -195,9 +196,9 @@ export default function Home() {
                     <Check className="w-5 h-5 text-accent" />
                   </div>
                   <div>
-                    <h4 className="font-semibold mb-2">3指標の可視化</h4>
+                    <h4 className="font-semibold mb-2">「安心ライン」と「余白」を数字で見る</h4>
                     <p className="text-sm text-muted-foreground leading-relaxed">
-                      CF余裕、60歳資産、取り崩し開始年。この3つの指標を見ることで、「安心ライン」と「余白」を判断できます。
+                      CF余裕、60歳資産、取り崩し開始年。この3つの指標を見ることで、「詰まないか」と「やりたいことができるか」を判断できます。
                     </p>
                   </div>
                 </div>
@@ -210,9 +211,9 @@ export default function Home() {
                     <Check className="w-5 h-5 text-accent" />
                   </div>
                   <div>
-                    <h4 className="font-semibold mb-2">フラットなポジション</h4>
+                    <h4 className="font-semibold mb-2">「結論」ではなく「根拠」を返す</h4>
                     <p className="text-sm text-muted-foreground leading-relaxed">
-                      特定の商品や物件を売ることが出口ではありません。どの世界線を選んでも、このツールの側の利益は変わりません。
+                      「これが正解」と押し付けるのではなく、「この数字で判断してください」と根拠を返します。どの世界線を選んでも、このツールの側の利益は変わりません。
                     </p>
                   </div>
                 </div>
@@ -231,7 +232,7 @@ export default function Home() {
             </h2>
             <p className="text-center text-muted-foreground mb-12 max-w-2xl mx-auto">
               住宅だけを最適化しても意味がない。海外・子ども・キャリアを含めて考えようとすると、Excelでは破綻する。<br />
-              いくつもの選択肢を同時に頭の中で動かしているうちに、「どこから計算すればいいのか」が分からなくなる。
+              いくつもの選択肢を同時に頭の中で動かしているうちに、「どこから計算すればいいのか」が分からなくなる。この状態で「とりあえず決める」と、後から「あの時ちゃんと考えておけばよかった」と後悔する。
             </p>
             <div className="grid md:grid-cols-2 gap-6">
               {[

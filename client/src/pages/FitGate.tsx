@@ -84,7 +84,7 @@ export default function FitGate() {
         {/* Header */}
         <header className="border-b bg-card">
           <div className="container py-4">
-            <h1 className="text-xl font-bold">Exit Readiness OS - 適合チェック</h1>
+            <h1 className="text-xl font-bold">Exit Readiness OS - 適合チェック（12問）</h1>
           </div>
         </header>
 
@@ -118,7 +118,7 @@ export default function FitGate() {
                   {...register("email")}
                 />
                 <p className="text-xs text-muted-foreground">
-                  判定結果と決済導線をお送りするため、メールアドレスが必要です
+                  判定結果と次のステップをお送りするため、メールアドレスが必要です
                 </p>
                 {errors.email && (
                   <p className="text-sm text-destructive">{errors.email.message}</p>
