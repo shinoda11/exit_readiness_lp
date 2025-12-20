@@ -289,21 +289,24 @@ export default function Home() {
             {[
               {
                 icon: <Layers className="w-6 h-6" />,
-                title: "世界線（Worldline）",
+                title: "世界線",
+                titleEn: "Worldline",
                 subtitle: "「どの人生を歩くか」を並べて見る",
                 description: "「どの人生を歩くか」を、同じ前提で並べて比較します。賃貸/購入、今買う/後で買う、働き方の変化も、1つの枠で扱います。",
                 example: "",
               },
               {
                 icon: <Shield className="w-6 h-6" />,
-                title: "安心ライン（Safety Line）",
+                title: "安心ライン",
+                titleEn: "Safety Line",
                 subtitle: "「守るべき下限」を見える化する",
                 description: "守るべき下限を見える化します。“ここを割ると厳しい”が分かると、判断の軸が定まります。",
                 example: "",
               },
               {
                 icon: <Sparkles className="w-6 h-6" />,
-                title: "余白（Slack）",
+                title: "余白",
+                titleEn: "Slack",
                 subtitle: "「どこに余白を置くか」で選ぶ",
                 description: "余白は「どの年代に、どれだけ残るか」。余白が足りないなら、収入/支出/タイミングのどれを動かすかに翻訳します。",
                 example: "",
@@ -311,7 +314,10 @@ export default function Home() {
             ].map((item, index) => (
               <Card key={index} className="p-8 bg-card">
                 <div className="text-accent mb-4">{item.icon}</div>
-                <h3 className="text-xl font-bold mb-2">{item.title}</h3>
+                <div className="mb-3">
+                  <h3 className="text-xl font-bold">{item.title}</h3>
+                  <p className="text-xs text-muted-foreground">{item.titleEn}</p>
+                </div>
                 <p className="text-sm text-muted-foreground mb-3">{item.subtitle}</p>
                 <p className="text-muted-foreground leading-relaxed mb-4">{item.description}</p>
                 <p className="text-sm text-accent leading-relaxed">{item.example}</p>
