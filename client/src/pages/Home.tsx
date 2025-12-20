@@ -88,11 +88,12 @@ export default function Home() {
               <div className="inline-block px-4 py-2 bg-accent/10 text-foreground rounded-full text-sm font-medium mb-4">
                 高収入DINKs向け 意思決定OS β版
               </div>
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
-                人生の大きな選択を、<br />
-                <span className="text-accent inline-block">「詰まない安心」</span>と<br />
-                <span className="text-accent inline-block">「やりたいことの余白」で</span><br />
-                判断できる<span className="inline-block">意思決定OS</span>
+              <h1 className="text-2xl md:text-5xl lg:text-6xl font-bold leading-tight">
+                <span className="inline-block">人生の大きな</span><span className="inline-block">選択を、</span><br />
+                <span className="text-accent inline-block">「詰まない安心」と</span><br />
+                <span className="text-accent inline-block">「やりたいこと</span><br className="md:hidden" />
+                <span className="text-accent inline-block">の余白」で</span><br />
+                <span className="inline-block">判断できる</span><span className="inline-block">意思決定OS</span>
               </h1>
               <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
                 家・仕事・家族イベントが同時に揺れる前提で、複数の未来を同じ前提で並べます。<br />
