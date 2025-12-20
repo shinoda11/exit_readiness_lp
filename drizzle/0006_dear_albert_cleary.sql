@@ -1,0 +1,1 @@
+ALTER TABLE `fitGateResponses` MODIFY COLUMN `judgmentResult` enum('prep','ready','session');

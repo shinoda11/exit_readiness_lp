@@ -1,0 +1,22 @@
+{
+  "query": "SELECT id, email, stripeSessionId, stripePaymentIntentId FROM passSubscriptions;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user MHFMtastaHzGfLP.6cdcbc9bad1e --database H52KkKEEAVnpGKGv4nGFA9 --execute SELECT id, email, stripeSessionId, stripePaymentIntentId FROM passSubscriptions;",
+  "rows": [
+    {
+      "id": "1",
+      "email": "stripe.test@example.com",
+      "stripeSessionId": "",
+      "stripePaymentIntentId": "pi_3SfOPHLfCI3Dz13H3ExG9ftC"
+    },
+    {
+      "id": "2",
+      "email": "stripe.test@example.com",
+      "stripeSessionId": "",
+      "stripePaymentIntentId": "pi_test_123"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\temail\tstripeSessionId\tstripePaymentIntentId\n1\tstripe.test@example.com\t\tpi_3SfOPHLfCI3Dz13H3ExG9ftC\n2\tstripe.test@example.com\t\tpi_test_123\n",
+  "stderr": "",
+  "execution_time_ms": 1598
+}

@@ -1,0 +1,40 @@
+{
+  "query": "SELECT * FROM passSubscriptions;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user MHFMtastaHzGfLP.6cdcbc9bad1e --database H52KkKEEAVnpGKGv4nGFA9 --execute SELECT * FROM passSubscriptions;",
+  "rows": [
+    {
+      "id": "1",
+      "userId": "NULL",
+      "email": "stripe.test@example.com",
+      "purchaseDate": "2025-12-17 17:21:01",
+      "expiryDate": "2026-03-17 16:21:01",
+      "price": "29800",
+      "status": "active",
+      "createdAt": "2025-12-17 17:21:01",
+      "stripeCustomerId": "NULL",
+      "stripePaymentIntentId": "pi_3SfOPHLfCI3Dz13H3ExG9ftC",
+      "loginId": "stripe.test@example.com",
+      "loginPassword": "x52xwN7rAZ3U",
+      "stripeSessionId": ""
+    },
+    {
+      "id": "2",
+      "userId": "NULL",
+      "email": "stripe.test@example.com",
+      "purchaseDate": "2025-12-17 17:22:49",
+      "expiryDate": "2026-03-17 17:22:49",
+      "price": "29800",
+      "status": "active",
+      "createdAt": "2025-12-17 17:22:49",
+      "stripeCustomerId": "cus_test_123",
+      "stripePaymentIntentId": "pi_test_123",
+      "loginId": "stripe.test@example.com",
+      "loginPassword": "TestPass2024",
+      "stripeSessionId": ""
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tuserId\temail\tpurchaseDate\texpiryDate\tprice\tstatus\tcreatedAt\tstripeCustomerId\tstripePaymentIntentId\tloginId\tloginPassword\tstripeSessionId\n1\tNULL\tstripe.test@example.com\t2025-12-17 17:21:01\t2026-03-17 16:21:01\t29800\tactive\t2025-12-17 17:21:01\tNULL\tpi_3SfOPHLfCI3Dz13H3ExG9ftC\tstripe.test@example.com\tx52xwN7rAZ3U\t\n2\tNULL\tstripe.test@example.com\t2025-12-17 17:22:49\t2026-03-17 17:22:49\t29800\tactive\t2025-12-17 17:22:49\tcus_test_123\tpi_test_123\tstripe.test@example.com\tTestPass2024\t\n",
+  "stderr": "",
+  "execution_time_ms": 1648
+}
