@@ -86,12 +86,12 @@ export default function Home() {
             {/* 左側：テキスト */}
             <div className="space-y-8">
               <div className="inline-block px-4 py-2 bg-accent/10 text-foreground rounded-full text-sm font-medium mb-4">
-                高収入DINKs向け Exit OS β版
+                高収入DINKs向け 意思決定OS β版
               </div>
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-balance">
                 人生の大きな選択を、<br className="hidden md:block" />
                 <span className="text-accent inline-block">「詰まない安心」</span>と<br className="hidden md:block" />
-                <span className="text-accent inline-block">「やりたいことの余白」</span>で<br className="hidden md:block" />
+                <span className="text-accent inline-block">「やりたいことの余白」で</span><br className="hidden md:block" />
                 判断する<span className="inline-block">意思決定OS</span>。
               </h1>
               <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
@@ -160,7 +160,7 @@ export default function Home() {
                     いまこのOSを使う段階か、Prepが先かを判定します。申込みではなく、次のステップを決めるためのチェックです。
                   </p>
                   <p className="text-xs text-muted-foreground text-center italic">
-                    ※表示は一部（例）です
+                    ※表示は一部です（全12問）
                   </p>
                 </div>
               </div>
@@ -365,7 +365,7 @@ export default function Home() {
 
               {/* Scenario 2 */}
               <Card className="p-8 bg-card">
-                <h3 className="text-xl font-bold mb-4">Scenario 2：賃貸継続＋ゆるExit準備</h3>
+                <h3 className="text-xl font-bold mb-4">Scenario 2：賃貸継続＋働き方ダウンシフト準備</h3>
                 <div className="space-y-3 text-sm">
                   <p><span className="font-semibold">前提：</span>世帯年収2,000万円／子ども1人／現在賃貸、数年後に年収800万円にダウン予定</p>
                   <p><span className="font-semibold">比較している世界線：</span>「賃貸継続＋年収維持」 vs 「賃貸継続＋年収ダウン」</p>
@@ -377,12 +377,12 @@ export default function Home() {
                     </ul>
                   </div>
                   <p className="text-muted-foreground leading-relaxed">
-                    <span className="font-semibold">インサイト：</span>年収を落とすと40代の余白は減るが、長期的には取り崩し開始が遅くなり、むしろ安心ライン的には「ゆるExit」の方が守られる、という逆転が見えます。
+                    <span className="font-semibold">インサイト：</span>年収を落とすと40代の余白は減るが、長期的には取り崩し開始が遅くなり、むしろ安心ライン的には「ダウンシフト」の方が守られる、という逆転が見えます。
                   </p>
                 </div>
                 <div className="flex gap-2 mt-4">
                   <span className="px-3 py-1 bg-accent/10 text-foreground rounded-full text-xs font-medium">住宅</span>
-                  <span className="px-3 py-1 bg-accent/10 text-foreground rounded-full text-xs font-medium">ゆるExit</span>
+                  <span className="px-3 py-1 bg-accent/10 text-foreground rounded-full text-xs font-medium">働き方</span>
                 </div>
               </Card>
 
@@ -766,7 +766,7 @@ export default function Home() {
             <p className="text-center text-muted-foreground mb-12 max-w-2xl mx-auto">
               ※ここから先はロードマップです（順次追加）。<br />
               住宅モジュールは入口に過ぎません。<br />
-              これから、「海外駐在」「ゆるExit」「子ども・イベント」などの世界線を横串で比較できるようにしていきます。
+              これから、「海外駐在」「働き方ダウンシフト」「子ども・イベント」などの世界線を横串で比較できるようにしていきます。
             </p>
             <div className="grid md:grid-cols-3 gap-8">
               {[
@@ -822,7 +822,7 @@ export default function Home() {
                   </li>
                   <li className="flex items-start gap-2">
                     <Check className="w-4 h-4 text-accent mt-0.5 flex-shrink-0" />
-                    <span>住宅だけでなく、「海外駐在」「ゆるExit」「子どもプラン」など、複数の選択肢を同時に考えている方。</span>
+                    <span>住宅だけでなく、「海外駐在」「働き方ダウンシフト」「子どもプラン」など、複数の選択肢を同時に考えている方。</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <Check className="w-4 h-4 text-accent mt-0.5 flex-shrink-0" />
@@ -886,7 +886,7 @@ export default function Home() {
                 </li>
                 <li className="flex items-start gap-3">
                   <div className="w-1.5 h-1.5 rounded-full bg-accent mt-2 flex-shrink-0" />
-                  <span>現時点では、住宅モジュールが中心です。海外駐在・ゆるExit・子どもプランなどの横串機能は、順次追加していきます。</span>
+                  <span>現時点では、住宅モジュールが中心です。海外駐在・働き方ダウンシフト・子どもプランなどの横串機能は、順次追加していきます。</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <div className="w-1.5 h-1.5 rounded-full bg-accent mt-2 flex-shrink-0" />
