@@ -88,18 +88,18 @@ export default function Home() {
               <div className="inline-block px-4 py-2 bg-accent/10 text-foreground rounded-full text-sm font-medium mb-4">
                 高収入DINKs向け 意思決定OS β版
               </div>
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-balance">
-                人生の大きな選択を、<br className="hidden md:block" />
-                <span className="text-accent inline-block">「詰まない安心」</span>と<br className="hidden md:block" />
-                <span className="text-accent inline-block">「やりたいことの余白」で</span><br className="hidden md:block" />
-                判断する<span className="inline-block">意思決定OS</span>。
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
+                人生の大きな選択を、<br />
+                <span className="text-accent inline-block">「詰まない安心」</span>と<br />
+                <span className="text-accent inline-block">「やりたいことの余白」で</span><br />
+                判断できる<span className="inline-block">意思決定OS</span>
               </h1>
               <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
                 家・仕事・家族イベントが同時に揺れる前提で、複数の未来を同じ前提で並べます。<br />
                 結論は押し付けず、納得できる判断の根拠と“次の一手”まで返します。
               </p>
               <p className="text-sm text-muted-foreground italic">
-                ※Exit＝働き方を緩めたり、辞めても詰まないための自由度のこと。
+                ※Exit＝働き方を緩めたり、连めても詰まないための「選択肢」のこと（企業売却ではありません）
               </p>
               <div className="flex flex-col gap-4">
                 <Button size="lg" className="w-full md:w-auto" onClick={() => {
@@ -180,9 +180,10 @@ export default function Home() {
                     <Check className="w-5 h-5 text-accent" />
                   </div>
                   <div>
-                    <h4 className="font-semibold mb-2">同じ前提で並べる（世界線比較）</h4>
+                    <h4 className="font-semibold mb-2">同じ前提で並べる（世界線）</h4>
                     <p className="text-sm text-muted-foreground leading-relaxed">
-                      未来を1本に決め打ちせず、賃貸/購入などを同じ前提で横並びにします。
+                      賃貸/購入を“同じ尺度”で比較します。<br />
+                      <span className="text-xs opacity-70">例：今買う vs 後で買う</span>
                     </p>
                   </div>
                 </div>
@@ -197,7 +198,8 @@ export default function Home() {
                   <div>
                     <h4 className="font-semibold mb-2">安心ラインを見える化</h4>
                     <p className="text-sm text-muted-foreground leading-relaxed">
-                      「ここを割ると厳しい」の境界が見えると、決断の基準が揃います。
+                      「ここを割ると厳しい」を先に掴みます。<br />
+                      <span className="text-xs opacity-70">例：取り崩し開始の目安</span>
                     </p>
                   </div>
                 </div>
@@ -210,9 +212,10 @@ export default function Home() {
                     <Check className="w-5 h-5 text-accent" />
                   </div>
                   <div>
-                    <h4 className="font-semibold mb-2">余白を“次の一手”に翻訳</h4>
+                    <h4 className="font-semibold mb-2">余白を次の一手に翻訳</h4>
                     <p className="text-sm text-muted-foreground leading-relaxed">
-                      余白が足りないなら、何をどれだけ変えると届くかを整理します。
+                      足りないなら、何を動かすかが分かります。<br />
+                      <span className="text-xs opacity-70">例：支出/収入/タイミング</span>
                     </p>
                   </div>
                 </div>
@@ -238,25 +241,32 @@ export default function Home() {
               {[
                 {
                   icon: <HomeIcon className="w-6 h-6" />,
-                  text: "「都内で家を買うかどうか」と同時に、「海外駐在に手を挙げるかどうか」も頭にある。",
+                  title: "家＋海外の両にらみ",
+                  text: "都内で買うか迷う一方で、海外駐在の可能性もある。",
                 },
                 {
                   icon: <Calendar className="w-6 h-6" />,
-                  text: "子どもを持つか / 持たないか、持つなら何歳差で、どんな教育プランを選ぶか、まだ決めきれていない。",
+                  title: "子どもプランが未確定",
+                  text: "何人/いつ/教育方針で、必要コストが変わる。",
                 },
-                {
+              {
                   icon: <Briefcase className="w-6 h-6" />,
-                  text: "5年後に年収を2〜3割落としても大丈夫なのか、家・子ども・場所を全部含めて見たうえで判断できていない。",
+                  title: "年収が落ちる未来が怖い",
+                  text: "2～3割落ちても耐えられるか分からない。",
                 },
                 {
                   icon: <Target className="w-6 h-6" />,
-                  text: "6,000万円で抑えるか、8,000万円まで攻めるか、その差が「40代・50代・退職後」のどこに効いてくるのかをイメージしきれていない。",
+                  title: "価格帯の差が“いつ効くか”不明",
+                  text: "6,000万と8,000万の差が、どの年代に効くか見えない。",
                 },
               ].map((item, index) => (
                 <Card key={index} className="p-6 bg-card">
                   <div className="flex items-start gap-4">
                     <div className="text-accent mt-1">{item.icon}</div>
-                    <p className="text-sm leading-relaxed">{item.text}</p>
+                    <div>
+                      <h4 className="font-semibold mb-1">{item.title}</h4>
+                      <p className="text-sm text-muted-foreground leading-relaxed">{item.text}</p>
+                    </div>
                   </div>
                 </Card>
               ))}
@@ -316,13 +326,21 @@ export default function Home() {
                 <Target className="w-6 h-6 text-accent" />
               </div>
               <div>
-                <h3 className="text-xl font-bold mb-3">フラットなOSであること ─ 何も「売らない」立場</h3>
-                <p className="text-muted-foreground leading-relaxed mb-3">
-                  FPツールは金融商品、住宅ツールは物件という「出口」があらかじめ決まっている。Exit Readiness OS は、特定の商品や物件に誘導することではなく、「どの世界線を選んでもよい状態」を作ることが目的である。
-                </p>
-                <p className="text-muted-foreground leading-relaxed">
-                  どのシナリオを選んでもこのツール側の利益は変わらないからこそ、フラットに数字を見せられる──それが、Exit Readiness OS の設計思想です。どの世界線を選んでも、このOSの側の利益は変わりません。だからこそ、「買った方が得」「この投資商品が正解」といったバイアスなしに、数字だけで比べることができます。
-                </p>
+                <h3 className="text-xl font-bold mb-4">フラットな立場（何も売らない）</h3>
+                <ul className="space-y-3 text-muted-foreground leading-relaxed">
+                  <li className="flex items-start gap-2">
+                    <Check className="w-5 h-5 text-accent mt-0.5 flex-shrink-0" />
+                    <span>物件・保険・投資商品に誘導しません</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <Check className="w-5 h-5 text-accent mt-0.5 flex-shrink-0" />
+                    <span>どの世界線を選んでも、このOSの利益は変わりません</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <Check className="w-5 h-5 text-accent mt-0.5 flex-shrink-0" />
+                    <span>だから“結論”ではなく、比較と判断の土台を返します</span>
+                  </li>
+                </ul>
               </div>
             </div>
           </Card>
@@ -346,11 +364,11 @@ export default function Home() {
                   <p><span className="font-semibold">前提：</span>世帯年収1,800万円／子ども0→1／検討中の物件8,000万円</p>
                   <p><span className="font-semibold">比較している世界線：</span>「賃貸継続＋40代で海外駐在5年」 vs 「8,000万購入＋日本ベース継続」</p>
                   <div className="bg-secondary/20 p-4 rounded-lg">
-                    <p className="font-semibold mb-2">指標差分（数字）：</p>
-                    <ul className="space-y-1 text-muted-foreground">
-                      <li>・40代の可処分キャッシュはほぼ同じ</li>
-                      <li>・60歳時点資産は駐在ありの方がわずかに多い</li>
-                      <li>・資産取り崩し開始は「駐在あり70歳」「購入のみ68歳」</li>
+                    <p className="font-semibold mb-2">指標差分：</p>
+                    <ul className="space-y-1">
+                      <li><span className="font-semibold">40代余白：</span>ほぼ同じ</li>
+                      <li><span className="font-semibold">60歳資産：</span>駐在ありがわずかに多い</li>
+                      <li><span className="font-semibold">取り崩し開始：</span>70歳 → 68歳</li>
                     </ul>
                   </div>
                   <p className="text-muted-foreground leading-relaxed">
@@ -370,10 +388,11 @@ export default function Home() {
                   <p><span className="font-semibold">前提：</span>世帯年収2,000万円／子ども1人／現在賃貸、数年後に年収800万円にダウン予定</p>
                   <p><span className="font-semibold">比較している世界線：</span>「賃貸継続＋年収維持」 vs 「賃貸継続＋年収ダウン」</p>
                   <div className="bg-secondary/20 p-4 rounded-lg">
-                    <p className="font-semibold mb-2">指標差分（数字）：</p>
-                    <ul className="space-y-1 text-muted-foreground">
-                      <li>・40代余剰は年収維持で＋25万円、60歳資産は年収維持で＋2,000万円</li>
-                      <li>・取り崩し開始は年収維持65歳・ダウン72歳</li>
+                    <p className="font-semibold mb-2">指標差分：</p>
+                    <ul className="space-y-1">
+                      <li><span className="font-semibold">40代余白：</span>＋25万円（維持）</li>
+                      <li><span className="font-semibold">60歳資産：</span>＋2,000万円（維持）</li>
+                      <li><span className="font-semibold">取り崩し開始：</span>65歳 → 72歳</li>
                     </ul>
                   </div>
                   <p className="text-muted-foreground leading-relaxed">
@@ -393,10 +412,11 @@ export default function Home() {
                   <p><span className="font-semibold">前提：</span>世帯年収1,500万円／子ども0→2（3歳差）／検討中の物件6,500万円</p>
                   <p><span className="font-semibold">比較している世界線：</span>「6,500万購入＋子ども2人」 vs 「賃貸継続＋子ども1人」</p>
                   <div className="bg-secondary/20 p-4 rounded-lg">
-                    <p className="font-semibold mb-2">指標差分（数字）：</p>
-                    <ul className="space-y-1 text-muted-foreground">
-                      <li>・40代余剰は購入＋2人で月−8万円、60歳資産は購入＋2人で−1,500万円</li>
-                      <li>・取り崩し開始は購入＋2人で65歳、賃貸＋1人で70歳</li>
+                    <p className="font-semibold mb-2">指標差分：</p>
+                    <ul className="space-y-1">
+                      <li><span className="font-semibold">40代余白：</span>−８万円/月（購入＋2人）</li>
+                      <li><span className="font-semibold">60歳資産：</span>−1,500万円（購入＋2人）</li>
+                      <li><span className="font-semibold">取り崩し開始：</span>65歳 → 70歳</li>
                     </ul>
                   </div>
                   <p className="text-muted-foreground leading-relaxed">
