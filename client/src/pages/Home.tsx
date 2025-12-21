@@ -713,6 +713,16 @@ export default function Home() {
                   未来を断定しません。正解を保証するサービスではなく、比較できる状態を作るためのOSです。
                 </AccordionContent>
               </AccordionItem>
+
+              <AccordionItem value="faq-6" className="border rounded-lg px-6">
+                <AccordionTrigger className="text-left font-semibold hover:no-underline">
+                  Q6. 投資助言や商品販売はしますか
+                </AccordionTrigger>
+                <AccordionContent className="text-muted-foreground leading-relaxed">
+                  いいえ、一切しません。投資助言でも、特定商品の販売でもありません。<br />
+                  比較と判断の土台を作ることに徹し、意思決定の根拠と次の一手を返します。
+                </AccordionContent>
+              </AccordionItem>
             </Accordion>
           </div>
         </section>
