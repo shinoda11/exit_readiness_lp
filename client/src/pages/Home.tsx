@@ -88,11 +88,11 @@ export default function Home() {
               <div className="inline-block px-4 py-2 bg-accent/10 text-foreground rounded-full text-sm font-medium mb-4">
                 高収入DINKs向け 意思決定OS β版
               </div>
-              <h1 className="text-2xl md:text-5xl lg:text-6xl font-bold leading-tight">
-                <span className="inline-block">人生の大きな</span><span className="inline-block">選択を、</span><br />
-                <span className="text-accent inline-block">「詰まない安心」と</span><br />
+              <h1 className="text-2xl md:text-4xl lg:text-5xl font-bold leading-tight">
+                <span className="inline-block">人生の大きな</span><span className="inline-block">選択を、</span><br className="lg:hidden" />
+                <span className="text-accent inline-block">「詰まない安心」と</span><br className="lg:hidden" />
                 <span className="text-accent inline-block">「やりたいこと</span><br className="md:hidden" />
-                <span className="text-accent inline-block">の余白」で</span><br />
+                <span className="text-accent inline-block">の余白」で</span><br className="lg:hidden" />
                 <span className="inline-block">判断できる</span><span className="inline-block">意思決定OS</span>
               </h1>
               <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
