@@ -85,22 +85,18 @@ export default function Home() {
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             {/* 左側：テキスト */}
             <div className="space-y-8">
-              <div className="inline-block px-4 py-2 bg-accent/10 text-foreground rounded-full text-sm font-medium mb-4">
-                高収入DINKs向け 意思決定OS β版
-              </div>
               <h1 className="text-2xl md:text-4xl lg:text-5xl font-bold leading-tight">
-                <span className="inline-block">人生の大きな</span><span className="inline-block">選択を、</span><br className="lg:hidden" />
-                <span className="text-accent inline-block">「詰まない安心」と</span><br className="lg:hidden" />
-                <span className="text-accent inline-block">「やりたいこと</span><br className="md:hidden" />
-                <span className="text-accent inline-block">の余白」で</span><br className="lg:hidden" />
-                <span className="inline-block">判断できる</span><span className="inline-block">意思決定OS</span>
+                <span className="inline-block">人生の大きな</span><span className="inline-block">選択を、</span><br />
+                <span className="text-accent inline-block">90日間で</span><span className="inline-block">確定させる</span>
               </h1>
               <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
-                家・仕事・家族イベントが同時に揺れる前提で、複数の未来を同じ前提で並べます。<br />
-                結論は押し付けず、納得できる判断の根拠と“次の一手”まで返します。
+                納得いくまで試行錯誤し、最良の選択を導き出すための、意思決定OS。<br />
+                家、仕事、家族、場所の選択肢を横串で比較し、後悔のない決断をサポートします。
               </p>
-              <p className="text-sm text-muted-foreground italic">                ※Exit＝働き方を緩めたり、辞めても詰まないための「選択肢」のこと（企業売却ではありません）
+              <p className="text-sm text-muted-foreground">
+                年1,000～2,000万円のDINKs/プレDINKs向け
               </p>
+
               <div className="flex flex-col gap-4">
                 <Button size="lg" className="w-full md:w-auto" onClick={() => {
                   trackEvent(AnalyticsEvents.LP_HERO_CTA_CLICKED);
@@ -233,9 +229,8 @@ export default function Home() {
               仕事も、子どもも、場所も、一緒に揺れている。
             </h2>
             <p className="text-center text-muted-foreground mb-12 max-w-2xl mx-auto">
-              止まっている理由は「損得が分からない」ではなく、<br />
-              安心ライン・余白・打ち手が同時に見えないから。<br />
-              だから“結論”ではなく、“比較できる状態”を先に作ります。
+              あなたの歩みを止めている理由は「損得が分からない」からではない。<br />
+              安心ライン・余白・次の一手が、同時に見えないからです。
             </p>
             <div className="grid md:grid-cols-2 gap-6">
               {[
@@ -660,6 +655,37 @@ export default function Home() {
                 </div>
               </Card>
             </div>
+          </div>
+        </section>
+
+        {/* S5: 価格正当化セクション */}
+        <section className="py-16 md:py-24 bg-secondary/30">
+          <div className="container max-w-4xl">
+            <h2 className="text-3xl md:text-4xl font-bold text-center mb-4 text-balance">
+              あなたの意思決定は、29,800円で「最高品質」になる
+            </h2>
+            <p className="text-center text-muted-foreground mb-12 max-w-2xl mx-auto">
+              YOHACK Passは、単なるツールの利用権ではありません。<br />
+              後悔のない選択をするための「90日間の集中スプリント」です。
+            </p>
+            <div className="bg-card border rounded-xl p-8 shadow-lg text-center mb-8">
+              <h3 className="text-xl font-bold mb-2">Passプラン</h3>
+              <p className="text-4xl font-bold mb-2">29,800円 <span className="text-lg font-normal text-muted-foreground">/ 90日間</span></p>
+              <p className="text-muted-foreground">1日あたり331円。毎日コーヒーを1杯我慢するだけの投資が、<br />あなたの10年後の未来を大きく変えます。</p>
+            </div>
+            <div className="grid md:grid-cols-2 gap-6 text-sm">
+              <div className="bg-card border rounded-lg p-6">
+                <h4 className="font-semibold mb-2">一般的なFP相談（2時間）との比較</h4>
+                <p className="text-muted-foreground">FP相談は「アドバイス」を提供しますが、YOHACKは「意思決定のOS」そのものを提供します。2時間の相談で約3万円。同じ価格で、あなたは90日間、納得いくまで何度でもシミュレーションできます。</p>
+              </div>
+              <div className="bg-card border rounded-lg p-6">
+                <h4 className="font-semibold mb-2">転職の失敗コストとの比較</h4>
+                <p className="text-muted-foreground">もし、焦って家を買い、キャリアの選択肢を狭めてしまったら？その機会損失は数百万円にのぼる可能性があります。この価格は、取り返しのつかない失敗を未然に防ぐための「意思決定の保険料」です。</p>
+              </div>
+            </div>
+            <p className="text-xs text-muted-foreground text-center mt-8">
+              ※Passプランで解決できない複雑な課題をお持ちの方には、特別な場合にのみ、非公開の個別セッションをご案内することがあります。
+            </p>
           </div>
         </section>
 
