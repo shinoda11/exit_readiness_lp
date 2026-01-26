@@ -29,7 +29,7 @@ export default function InvitePass() {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 to-slate-100 px-4">
         <Helmet>
-          <title>招待リンク無効 | Exit Readiness OS</title>
+          <title>招待リンク無効 | YOHACK</title>
           <meta name="robots" content="noindex, nofollow" />
         </Helmet>
         <Card className="max-w-md w-full p-8 text-center">
@@ -64,9 +64,9 @@ export default function InvitePass() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100">
       <Helmet>
-        <title>友人紹介枠: 家の意思決定を世界線比較で整理するPass | Exit Readiness OS</title>
+        <title>友人紹介枠: 家の意思決定を世界線比較で整理するPass | YOHACK</title>
         <meta name="robots" content="noindex, nofollow" />
-        <meta property="og:title" content="友人紹介枠: Exit Readiness OS Pass（招待制ページ）" />
+        <meta property="og:title" content="友人紹介枠: YOHACK Pass（招待制ページ）" />
       </Helmet>
 
       {/* Header */}
@@ -392,7 +392,7 @@ export default function InvitePass() {
       {/* Footer */}
       <footer className="border-t bg-white py-8">
         <div className="container mx-auto px-4 text-center text-sm text-muted-foreground">
-          <p>© 2025 Exit Readiness OS. All rights reserved.</p>
+          <p>© 2025 YOHACK. All rights reserved.</p>
         </div>
       </footer>
     </div>

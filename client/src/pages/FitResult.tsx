@@ -44,7 +44,7 @@ export default function FitResult() {
         {/* Header */}
         <header className="border-b bg-card">
           <div className="container py-4">
-            <h1 className="text-xl font-bold">Exit Readiness OS - 適合チェック結果</h1>
+            <h1 className="text-xl font-bold">YOHACK - 適合チェック結果</h1>
           </div>
         </header>
 
@@ -59,7 +59,7 @@ export default function FitResult() {
       {/* Footer */}
       <footer className="bg-card border-t py-8 mt-12">
         <div className="container text-center text-sm text-muted-foreground">
-          <p>© 2024 Exit Readiness OS. All rights reserved.</p>
+          <p>© 2024 YOHACK. All rights reserved.</p>
         </div>
       </footer>
     </div>
@@ -90,7 +90,7 @@ function PrepResult({ setLocation, prepBucket }: { setLocation: (path: string) =
         <div>
           <h3 className="font-semibold mb-3">Prep Mode とは</h3>
           <p className="text-sm text-muted-foreground leading-relaxed">
-            Exit Readiness OS を使いこなすための準備ガイドです。年収・資産・支出の整理方法、数字の扱い方、よくある質問への回答などを、メールレターでお届けします。無料です。
+            YOHACK を使いこなすための準備ガイドです。年収・資産・支出の整理方法、数字の扱い方、よくある質問への回答などを、メールレターでお届けします。無料です。
           </p>
         </div>
 
@@ -228,13 +228,13 @@ function ReadyResult() {
         </div>
         <h2 className="text-2xl font-bold mb-2">Ready：Passで比較と更新を回し始められます</h2>
         <p className="text-muted-foreground">
-          いますぐExit Readiness OS Passを使い始められる状態です
+          いますぐYOHACK Passを使い始められる状態です
         </p>
       </div>
 
       <div className="space-y-6">
         <div className="bg-accent/10 p-4 rounded-lg">
-          <h3 className="font-semibold mb-2">Exit Readiness OS Pass</h3>
+          <h3 className="font-semibold mb-2">YOHACK Pass</h3>
           <p className="text-2xl font-bold text-primary mb-2">¥29,800 <span className="text-sm font-normal text-muted-foreground">/ 90日間</span></p>
           <p className="text-sm text-muted-foreground leading-relaxed">
             シナリオ比較、レバー操作、意思決定メモ生成機能を90日間利用可能

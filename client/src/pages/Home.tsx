@@ -269,10 +269,10 @@ export default function Home() {
           </div>
         </section>
 
-        {/* S3: Exit Readiness OS とは何か */}
+        {/* S3: YOHACK とは何か */}
         <section ref={osRef} className="container py-16 md:py-24 opacity-0">
           <div className="max-w-4xl mx-auto text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-6 text-balance">Exit Readiness OS とは何か</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-6 text-balance">YOHACK とは何か</h2>
             <p className="text-lg text-muted-foreground leading-relaxed">
               縦割りの選択肢を、横串で比較する。<br />
               「どの人生を歩むか」を、安心ラインと人生の余白という2つの軸で見えるようにします。
@@ -908,11 +908,11 @@ export default function Home() {
                 <ul className="space-y-3 text-sm text-muted-foreground">
                   <li className="flex items-start gap-2">
                     <X className="w-4 h-4 text-destructive mt-0.5 flex-shrink-0" />
-                    <span>「とにかく今すぐ家を買いたい」「物件を紹介してほしい」という方（Exit Readiness OS は不動産仲介ではありません）。</span>
+                    <span>「とにかく今すぐ家を買いたい」「物件を紹介してほしい」という方（YOHACK は不動産仲介ではありません）。</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <X className="w-4 h-4 text-destructive mt-0.5 flex-shrink-0" />
-                    <span>特定の金融商品や保険、不動産物件の紹介・販売を期待している人。（Exit Readiness OS は販売代理ではなく、意思決定のためのOSです）</span>
+                    <span>特定の金融商品や保険、不動産物件の紹介・販売を期待している人。（YOHACK は販売代理ではなく、意思決定のためのOSです）</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <X className="w-4 h-4 text-destructive mt-0.5 flex-shrink-0" />
@@ -964,7 +964,7 @@ export default function Home() {
           <div className="container max-w-2xl text-center">
             <h2 className="text-3xl md:text-4xl font-bold mb-4 text-balance">次のステップ</h2>
             <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
-              Exit Readiness OS の利用には、適合チェックが必要です。<br />
+              YOHACK の利用には、適合チェックが必要です。<br />
               12問の質問に答えて、あなたに最適なステップを確認してください。
             </p>
             <Button
@@ -984,7 +984,7 @@ export default function Home() {
         {/* フッター */}
         <footer className="bg-card border-t py-8">
           <div className="container text-center text-sm text-muted-foreground">
-            <p>© 2024 Exit Readiness OS. All rights reserved.</p>
+            <p>© 2024 YOHACK. All rights reserved.</p>
           </div>
         </footer>
       </main>

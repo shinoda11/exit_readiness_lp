@@ -164,7 +164,7 @@ export default function PassUpgrade() {
       {/* Footer */}
       <footer className="bg-card border-t py-8 mt-12">
         <div className="container text-center text-sm text-muted-foreground">
-          <p>© 2024 Exit Readiness OS. All rights reserved.</p>
+          <p>© 2024 YOHACK. All rights reserved.</p>
         </div>
       </footer>
     </div>

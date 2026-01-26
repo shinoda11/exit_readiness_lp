@@ -84,7 +84,7 @@ export default function FitGate() {
         {/* Header */}
         <header className="border-b bg-card">
           <div className="container py-4">
-            <h1 className="text-xl font-bold">Exit Readiness OS - 適合チェック（12問）</h1>
+            <h1 className="text-xl font-bold">YOHACK - 適合チェック（12問）</h1>
           </div>
         </header>
 
@@ -500,7 +500,7 @@ export default function FitGate() {
       {/* Footer */}
       <footer className="bg-card border-t py-8 mt-12">
         <div className="container text-center text-sm text-muted-foreground">
-          <p>© 2024 Exit Readiness OS. All rights reserved.</p>
+          <p>© 2024 YOHACK. All rights reserved.</p>
         </div>
       </footer>
     </div>

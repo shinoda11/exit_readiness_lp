@@ -82,7 +82,7 @@ export default function PassOnboarding() {
         {/* Header */}
         <header className="border-b bg-card">
           <div className="container py-4">
-            <h1 className="text-xl font-bold">Exit Readiness OS - Pass</h1>
+            <h1 className="text-xl font-bold">YOHACK - Pass</h1>
           </div>
         </header>
 
@@ -94,7 +94,7 @@ export default function PassOnboarding() {
             </div>
             <h2 className="text-2xl font-bold mb-2">Pass購入ありがとうございます！</h2>
             <p className="text-muted-foreground">
-              まずは3つのタスクを完了して、Exit Readiness OS Passの価値を体験してください
+              まずは3つのタスクを完了して、YOHACK Passの価値を体験してください
             </p>
           </div>
 
@@ -102,7 +102,7 @@ export default function PassOnboarding() {
           <Card className="p-6 mb-8">
             <h3 className="font-semibold mb-4">ログイン情報</h3>
             <p className="text-sm text-muted-foreground mb-4">
-              以下のログインID/パスワードを使用して、Exit Readiness OS アプリにアクセスしてください。
+              以下のログインID/パスワードを使用して、YOHACK アプリにアクセスしてください。
             </p>
             
             <div className="space-y-4">
@@ -159,7 +159,7 @@ export default function PassOnboarding() {
                   }
                 }}
               >
-                Exit Readiness OS アプリを開く
+                YOHACK アプリを開く
                 <ExternalLink className="w-4 h-4 ml-2" />
               </Button>
             </div>
@@ -188,7 +188,7 @@ export default function PassOnboarding() {
                 <div className="flex-1">
                   <h4 className="font-medium mb-1">タスク1：アプリを開いた</h4>
                   <p className="text-sm text-muted-foreground mb-3">
-                    上の「Exit Readiness OS アプリを開く」ボタンをクリックしてアプリにアクセスしてください。
+                    上の「YOHACK アプリを開く」ボタンをクリックしてアプリにアクセスしてください。
                   </p>
                   {!task1Completed && (
                     <Button
@@ -290,7 +290,7 @@ export default function PassOnboarding() {
       {/* Footer */}
       <footer className="bg-card border-t py-8 mt-12">
         <div className="container text-center text-sm text-muted-foreground">
-          <p>© 2024 Exit Readiness OS. All rights reserved.</p>
+          <p>© 2024 YOHACK. All rights reserved.</p>
         </div>
       </footer>
     </div>

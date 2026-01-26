@@ -53,7 +53,7 @@ export default function PrepMode() {
         {/* Header */}
         <header className="border-b bg-card">
           <div className="container py-4">
-            <h1 className="text-xl font-bold">Exit Readiness OS - Prep Mode</h1>
+            <h1 className="text-xl font-bold">YOHACK - Prep Mode</h1>
           </div>
         </header>
 
@@ -65,7 +65,7 @@ export default function PrepMode() {
             </div>
             <h2 className="text-3xl md:text-4xl font-bold mb-4">Prep Mode</h2>
             <p className="text-lg text-muted-foreground leading-relaxed">
-              Exit Readiness OS を使いこなすための準備ガイド（無料）
+              YOHACK を使いこなすための準備ガイド（無料）
             </p>
           </div>
         </section>
@@ -75,7 +75,7 @@ export default function PrepMode() {
           <Card className="p-8 mb-8">
             <h3 className="text-2xl font-bold mb-4">Prep Mode とは</h3>
             <p className="text-muted-foreground leading-relaxed mb-6">
-              Exit Readiness OS 本体を使う前に、「年収・資産・支出の棚卸し」と「Rent vs Buy以前に決めておくべき前提（どこに住みたいか、どこまで働きたいか）」を整えることを目的としています。年収・資産・支出の整理方法、数字の扱い方、よくある質問への回答などを、メールレターでお届けします。無料です。
+              YOHACK 本体を使う前に、「年収・資産・支出の棚卸し」と「Rent vs Buy以前に決めておくべき前提（どこに住みたいか、どこまで働きたいか）」を整えることを目的としています。年収・資産・支出の整理方法、数字の扱い方、よくある質問への回答などを、メールレターでお届けします。無料です。
             </p>
             <p className="text-muted-foreground leading-relaxed">
               準備が整ったら、再度適合チェックにお越しください。招待トークンをお持ちの方は、適合チェック時に入力してください。
@@ -107,7 +107,7 @@ export default function PrepMode() {
                 <div>
                   <h4 className="font-semibold mb-2">2. 数字入力への心理的準備</h4>
                   <p className="text-sm text-muted-foreground leading-relaxed">
-                    Exit Readiness OS は、年収・資産・支出・物件価格などの数字を入力することで、世界線を比較します。数字を入力することに抵抗がある場合は、まずPrep Mode で準備を整えましょう。
+                    YOHACK は、年収・資産・支出・物件価格などの数字を入力することで、世界線を比較します。数字を入力することに抵抗がある場合は、まずPrep Mode で準備を整えましょう。
                   </p>
                 </div>
               </div>
@@ -196,7 +196,7 @@ export default function PrepMode() {
       {/* Footer */}
       <footer className="bg-card border-t py-8 mt-12">
         <div className="container text-center text-sm text-muted-foreground">
-          <p>© 2024 Exit Readiness OS. All rights reserved.</p>
+          <p>© 2024 YOHACK. All rights reserved.</p>
         </div>
       </footer>
     </div>
