@@ -658,36 +658,7 @@ export default function Home() {
           </div>
         </section>
 
-        {/* S5: 価格正当化セクション */}
-        <section className="py-16 md:py-24 bg-secondary/30">
-          <div className="container max-w-4xl">
-            <h2 className="text-3xl md:text-4xl font-bold text-center mb-4 text-balance">
-              あなたの意思決定は、29,800円で「最高品質」になる
-            </h2>
-            <p className="text-center text-muted-foreground mb-12 max-w-2xl mx-auto">
-              YOHACK Passは、単なるツールの利用権ではありません。<br />
-              後悔のない選択をするための「90日間の集中スプリント」です。
-            </p>
-            <div className="bg-card border rounded-xl p-8 shadow-lg text-center mb-8">
-              <h3 className="text-xl font-bold mb-2">Passプラン</h3>
-              <p className="text-4xl font-bold mb-2">29,800円 <span className="text-lg font-normal text-muted-foreground">/ 90日間</span></p>
-              <p className="text-muted-foreground">1日あたり331円。毎日コーヒーを1杯我慢するだけの投資が、<br />あなたの10年後の未来を大きく変えます。</p>
-            </div>
-            <div className="grid md:grid-cols-2 gap-6 text-sm">
-              <div className="bg-card border rounded-lg p-6">
-                <h4 className="font-semibold mb-2">一般的なFP相談（2時間）との比較</h4>
-                <p className="text-muted-foreground">FP相談は「アドバイス」を提供しますが、YOHACKは「意思決定のOS」そのものを提供します。2時間の相談で約3万円。同じ価格で、あなたは90日間、納得いくまで何度でもシミュレーションできます。</p>
-              </div>
-              <div className="bg-card border rounded-lg p-6">
-                <h4 className="font-semibold mb-2">転職の失敗コストとの比較</h4>
-                <p className="text-muted-foreground">もし、焦って家を買い、キャリアの選択肢を狭めてしまったら？その機会損失は数百万円にのぼる可能性があります。この価格は、取り返しのつかない失敗を未然に防ぐための「意思決定の保険料」です。</p>
-              </div>
-            </div>
-            <p className="text-xs text-muted-foreground text-center mt-8">
-              ※Passプランで解決できない複雑な課題をお持ちの方には、特別な場合にのみ、非公開の個別セッションをご案内することがあります。
-            </p>
-          </div>
-        </section>
+
 
         {/* Pass購入前の納得形成用FAQ 5問 */}
         <section className="py-16 md:py-24 bg-card border-y">
